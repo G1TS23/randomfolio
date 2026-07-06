@@ -83,12 +83,206 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
         }
       </p>
 
-      <p class="tm__line">
-        <span class="tm__prompt">{user}@site ~ %</span>
-        <span class="tm__cursor" aria-hidden="true"></span>
-      </p>
+      <!-- REPL interactif (easter egg) -->
+      <div class="tm__repl" data-repl>
+        <div class="tm__repl-out" data-repl-out></div>
+        <div class="tm__line tm__repl-line">
+          <span class="tm__prompt">{user}@site ~ %</span><span
+            class="tm__echo"
+            data-repl-echo></span><span
+            class="tm__cursor"
+            data-repl-cursor
+            aria-hidden="true"></span>
+          <input
+            class="tm__cmd"
+            data-repl-input
+            type="text"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Terminal interactif — tapez une commande"
+          />
+        </div>
+        <p class="tm__repl-hint">
+          indice&nbsp;: commence à taper — ou <b>help</b> puis Entrée
+        </p>
+      </div>
     </div>
   </div>
+
+  <script
+    is:inline
+    define:vars={{
+      user,
+      P: {
+        name: data.name,
+        role: data.role,
+        about: data.about,
+        location: data.location,
+        email: data.email,
+        projects: data.projects.map((p) => ({
+          title: p.title,
+          year: p.year,
+          description: p.description,
+        })),
+        skills: data.skills,
+        socials: data.socials,
+      },
+    }}
+  >
+    const root = document.querySelector("[data-repl]");
+    if (root) {
+      const input = root.querySelector("[data-repl-input]");
+      const echoEl = root.querySelector("[data-repl-echo]");
+      const out = root.querySelector("[data-repl-out]");
+      const prompt = user + "@site ~ % ";
+      const history = [];
+      let hix = -1;
+
+      // rendu d'une ligne de sortie : chaîne, ou objet { text, href } cliquable
+      function lineNode(item) {
+        const d = document.createElement("div");
+        d.className = "tm__repl-l";
+        if (item && typeof item === "object" && item.href) {
+          const a = document.createElement("a");
+          a.className = "tm__repl-link";
+          a.href = item.href;
+          a.textContent = item.text;
+          if (/^https?:/.test(item.href)) {
+            a.target = "_blank";
+            a.rel = "noopener";
+          }
+          d.appendChild(a);
+        } else {
+          d.textContent = item == null ? "" : String(item);
+        }
+        return d;
+      }
+      const print = (item) => out.appendChild(lineNode(item));
+
+      function echo(cmd) {
+        const d = document.createElement("div");
+        d.className = "tm__repl-l";
+        const p = document.createElement("span");
+        p.className = "tm__prompt";
+        p.textContent = prompt;
+        d.appendChild(p);
+        d.appendChild(document.createTextNode(cmd));
+        out.appendChild(d);
+      }
+
+      function run(raw) {
+        const cmd = raw.trim();
+        const [name, ...args] = cmd.split(/\s+/);
+        switch ((name || "").toLowerCase()) {
+          case "":
+            return [];
+          case "help":
+            return [
+              "commandes disponibles :",
+              "  help · whoami · about · ls · skills · contact",
+              "  echo <texte> · date · clear · sudo",
+            ];
+          case "whoami":
+            return [P.name + " — " + P.role, P.location];
+          case "about":
+          case "cat":
+            return [P.about];
+          case "ls":
+          case "ll":
+            return P.projects.map(
+              (p) => p.title + "/  (" + p.year + ")  — " + p.description,
+            );
+          case "skills":
+          case "stack":
+            return [P.skills.join(" · ")];
+          case "contact":
+          case "mail":
+            return [
+              { text: P.email, href: "mailto:" + P.email },
+              ...P.socials.map((s) => ({
+                text: s.label + " : " + s.url,
+                href: s.url,
+              })),
+            ];
+          case "echo":
+            return [args.join(" ")];
+          case "date":
+            return [new Date().toLocaleString("fr-FR")];
+          case "sudo":
+            return ["hé, pas de sudo ici 😏"];
+          case "rm":
+            return ["jamais je ne supprimerai mon propre portfolio 🙃"];
+          case "hello":
+          case "salut":
+            return ["salut 👋"];
+          case "clear":
+            return "CLEAR";
+          default:
+            return [name + " : commande introuvable. Tape « help »."];
+        }
+      }
+
+      const setLine = (v) => {
+        input.value = v;
+        echoEl.textContent = v;
+      };
+
+      // miroir : le texte tapé s'affiche à côté du prompt, le curseur le suit
+      input.addEventListener("input", () => {
+        echoEl.textContent = input.value;
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const raw = input.value;
+          echo(raw);
+          if (raw.trim()) {
+            history.push(raw);
+            hix = history.length;
+          }
+          const res = run(raw);
+          if (res === "CLEAR") out.replaceChildren();
+          else res.forEach(print);
+          setLine("");
+          input.scrollIntoView({ block: "nearest" });
+        } else if (e.key === "ArrowUp") {
+          if (hix > 0) setLine(history[--hix]);
+          e.preventDefault();
+        } else if (e.key === "ArrowDown") {
+          if (hix < history.length - 1) setLine(history[++hix]);
+          else {
+            hix = history.length;
+            setLine("");
+          }
+          e.preventDefault();
+        }
+      });
+
+      // clic dans le terminal → focus sans défiler (sauf sur un lien)
+      root.addEventListener("click", (e) => {
+        if (e.target.tagName !== "A") input.focus({ preventScroll: true });
+      });
+
+      // frappe directe : dès qu'on tape (terminal affiché), on capte la saisie
+      // sans faire défiler la page ni déclencher le raccourci « r » du switcher
+      document.addEventListener("keydown", (e) => {
+        if (
+          document.documentElement.getAttribute("data-universe") !== "terminal"
+        )
+          return;
+        const ae = document.activeElement;
+        if (ae === input) return;
+        if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA")) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (e.key.length === 1 || e.key === "Backspace" || e.key === "Enter") {
+          input.focus({ preventScroll: true });
+          e.stopImmediatePropagation();
+        }
+      });
+    }
+  </script>
 </section>
 
 <style>
@@ -101,7 +295,7 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
     color: var(--green);
     font-family: "JetBrains Mono", ui-monospace, monospace;
     min-height: 100vh;
-    padding: clamp(16px, 4vw, 48px);
+    padding: clamp(16px, 4vw, 48px) clamp(16px, 4vw, 48px) 104px;
     position: relative;
     overflow: hidden;
   }
@@ -300,6 +494,12 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
     color: #eafff0;
     font-weight: 700;
     text-shadow: 0 0 8px rgba(51, 255, 119, 0.4);
+    text-decoration: underline;
+    text-decoration-color: rgba(51, 255, 119, 0.5);
+    text-underline-offset: 3px;
+  }
+  .tm__proj:hover .tm__proj-name {
+    text-decoration-color: var(--green);
   }
   .tm__proj-year {
     grid-area: year;
@@ -322,11 +522,13 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
   }
   .tm__mail {
     color: var(--amber);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 207, 77, 0.6);
+    text-underline-offset: 2px;
     text-shadow: 0 0 8px rgba(255, 207, 77, 0.4);
   }
   .tm__mail:hover {
-    text-decoration: underline;
+    text-decoration-color: var(--amber);
   }
   .tm__links {
     display: flex;
@@ -335,10 +537,13 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
     margin-top: 4px;
   }
   .tm__links a {
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: rgba(51, 255, 119, 0.5);
+    text-underline-offset: 2px;
   }
   .tm__links a:hover {
     color: #eafff0;
+    text-decoration-color: var(--green);
   }
 
   .tm__cursor {
@@ -354,6 +559,72 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
     50% {
       opacity: 0;
     }
+  }
+
+  /* ————— REPL interactif ————— */
+  .tm__repl {
+    cursor: text;
+  }
+  .tm__repl-out {
+    display: grid;
+    gap: 2px;
+  }
+  .tm__repl-l {
+    color: #b7ffd0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .tm__repl-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 6px 0 0;
+    cursor: text;
+  }
+  /* texte tapé, affiché juste après le prompt ; le curseur bloc le suit */
+  .tm__echo {
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #eafff0;
+    text-shadow: 0 0 8px rgba(51, 255, 119, 0.35);
+  }
+  /* input réel : transparent, superposé à la ligne pour capter la frappe et
+     les clics ; le curseur visible est le bloc .tm__cursor ci-dessus */
+  .tm__cmd {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    color: transparent;
+    caret-color: transparent;
+  }
+  .tm__repl-hint {
+    margin: 12px 0 0;
+    font-size: 12px;
+    color: var(--dim);
+    opacity: 0.85;
+  }
+  .tm__repl-hint b {
+    color: var(--amber);
+    font-weight: 700;
+  }
+  /* liens dans la sortie interactive */
+  .tm__repl-link {
+    color: var(--amber);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 207, 77, 0.6);
+    text-underline-offset: 2px;
+  }
+  .tm__repl-link:hover {
+    text-decoration-color: var(--amber);
+    text-shadow: 0 0 8px rgba(255, 207, 77, 0.4);
   }
 
   @media (prefers-reduced-motion: reduce) {

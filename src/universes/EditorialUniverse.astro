@@ -42,7 +42,7 @@ const total = String(data.projects.length).padStart(2, "0");
       </div>
       {
         data.projects.map((p, i) => (
-          <article class="ed__feature">
+          <a class="ed__feature" href={p.url}>
             <span class="ed__feature-num">
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -51,13 +51,11 @@ const total = String(data.projects.length).padStart(2, "0");
                 <span>{p.role}</span>
                 <span class="ed__feature-year">{p.year}</span>
               </div>
-              <h3 class="ed__feature-title">
-                <a href={p.url}>{p.title}</a>
-              </h3>
+              <h3 class="ed__feature-title">{p.title}</h3>
               <p class="ed__feature-desc">{p.description}</p>
               <p class="ed__feature-tags">{p.tags.join(" / ")}</p>
             </div>
-          </article>
+          </a>
         ))
       }
     </section>
@@ -101,7 +99,7 @@ const total = String(data.projects.length).padStart(2, "0");
     color: var(--ink);
     font-family: "Newsreader", Georgia, serif;
     min-height: 100vh;
-    padding: clamp(18px, 4vw, 56px);
+    padding: clamp(18px, 4vw, 56px) clamp(18px, 4vw, 56px) 104px;
     -webkit-font-smoothing: antialiased;
   }
   .ed__page {
@@ -172,10 +170,6 @@ const total = String(data.projects.length).padStart(2, "0");
     text-align: justify;
     hyphens: auto;
   }
-  .ed__about::first-letter {
-    /* fallback si data-dropcap indisponible */
-    initial-letter: 3;
-  }
   .ed__about::before {
     content: attr(data-dropcap);
     float: left;
@@ -235,8 +229,18 @@ const total = String(data.projects.length).padStart(2, "0");
     display: grid;
     grid-template-columns: 90px 1fr;
     gap: clamp(16px, 4vw, 40px);
-    padding: clamp(24px, 4vw, 38px) 0;
+    padding: clamp(24px, 4vw, 38px) clamp(8px, 2vw, 16px);
     border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
+  }
+  .ed__feature:last-child {
+    /* évite le double trait avec le bord haut du colophon */
+    border-bottom: 0;
+  }
+  .ed__feature:hover {
+    background: #f0efe9;
   }
   .ed__feature-num {
     font-family: "Fraunces", serif;
@@ -263,16 +267,15 @@ const total = String(data.projects.length).padStart(2, "0");
     font-size: clamp(1.7rem, 4vw, 2.8rem);
     line-height: 1;
     margin: 0 0 12px;
-  }
-  .ed__feature-title a {
-    text-decoration: none;
+    display: inline-block;
     background-image: linear-gradient(var(--accent), var(--accent));
     background-size: 0% 2px;
     background-repeat: no-repeat;
     background-position: 0 100%;
     transition: background-size 0.3s ease;
   }
-  .ed__feature-title a:hover {
+  /* soulignement du titre au survol du bloc entier (désormais cliquable) */
+  .ed__feature:hover .ed__feature-title {
     background-size: 100% 2px;
   }
   .ed__feature-desc {
@@ -329,8 +332,13 @@ const total = String(data.projects.length).padStart(2, "0");
     font-size: 15px;
   }
   .ed__socials a {
-    text-decoration: none;
     font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+  .ed__socials a:hover {
+    color: var(--accent);
   }
   .ed__handle {
     color: #6a675e;

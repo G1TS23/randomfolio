@@ -280,6 +280,7 @@ const jsonLd = {
         border-radius: 999px;
         font-size: 13px;
         line-height: 1;
+        white-space: nowrap;
         transition: background 0.15s ease;
       }
       .switcher button:hover {
@@ -321,6 +322,27 @@ const jsonLd = {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
       }
+      /* Sur petit écran : barre compacte, on masque le nom d'univers (redondant)
+         pour que « Regénérer » et « Partager » tiennent sur une seule ligne. */
+      @media (max-width: 460px) {
+        .switcher {
+          gap: 2px;
+          padding: 5px;
+          max-width: calc(100vw - 16px);
+        }
+        .switcher button {
+          padding: 8px 12px;
+          font-size: 12px;
+        }
+        .switcher .switcher__label {
+          display: none;
+        }
+        .switcher__toast {
+          max-width: calc(100vw - 24px);
+          font-size: 12px;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .switcher button,
         .switcher__toast {
@@ -400,11 +422,13 @@ const jsonLd = {
           1800,
         );
       }
-      function setUniverse(id, { push = true } = {}) {
+      function setUniverse(id) {
         root.setAttribute("data-universe", id);
-        if (push) {
-          const url = new URL(location.href);
-          url.searchParams.set("u", id);
+        // URL nettoyée (sans ?u=) : un rechargement régénère un univers aléatoire.
+        // Seuls les liens « Partager » portent ?u= pour épingler un univers précis.
+        const url = new URL(location.href);
+        if (url.searchParams.has("u")) {
+          url.searchParams.delete("u");
           history.replaceState({}, "", url);
         }
         render();
@@ -498,6 +522,7 @@ const jsonLd = {
             quick: true,
             onReveal: () => setUniverse(next),
           });
+          // note : setUniverse retire ?u= pour garder le rechargement aléatoire
         });
 
       document

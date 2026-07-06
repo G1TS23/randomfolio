@@ -15,10 +15,10 @@ const ref = data.name
 <section class="universe bp" data-universe-id="blueprint">
   <div class="bp__grid" aria-hidden="true"></div>
   <div class="bp__frame">
-    <span class="bp__corner bp__corner--tl">+</span>
-    <span class="bp__corner bp__corner--tr">+</span>
-    <span class="bp__corner bp__corner--bl">+</span>
-    <span class="bp__corner bp__corner--br">+</span>
+    <span class="bp__corner bp__corner--tl" aria-hidden="true"></span>
+    <span class="bp__corner bp__corner--tr" aria-hidden="true"></span>
+    <span class="bp__corner bp__corner--bl" aria-hidden="true"></span>
+    <span class="bp__corner bp__corner--br" aria-hidden="true"></span>
 
     <div class="bp__sheet">
       <header class="bp__head">
@@ -130,7 +130,7 @@ const ref = data.name
     color: var(--cyan);
     font-family: "JetBrains Mono", ui-monospace, monospace;
     min-height: 100vh;
-    padding: clamp(14px, 3vw, 40px);
+    padding: clamp(14px, 3vw, 40px) clamp(14px, 3vw, 40px) 104px;
     position: relative;
     overflow: hidden;
   }
@@ -139,16 +139,13 @@ const ref = data.name
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    /* Une seule grille (pas de sous-grille fine), très discrète */
     background-image:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+      linear-gradient(rgba(143, 223, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(143, 223, 255, 0.06) 1px, transparent 1px);
     background-size:
-      100px 100px,
-      100px 100px,
-      20px 20px,
-      20px 20px;
+      120px 120px,
+      120px 120px;
     background-position: -1px -1px;
   }
 
@@ -160,27 +157,52 @@ const ref = data.name
     border: 1px solid var(--line);
     padding: clamp(16px, 3vw, 34px);
   }
+  /* croix dessinées, centrées exactement sur les coins du cadre */
   .bp__corner {
     position: absolute;
-    font-size: 18px;
-    line-height: 1;
-    opacity: 0.8;
+    width: 14px;
+    height: 14px;
+    opacity: 0.85;
+  }
+  .bp__corner::before,
+  .bp__corner::after {
+    content: "";
+    position: absolute;
+    background: var(--cyan);
+  }
+  .bp__corner::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+  .bp__corner::after {
+    top: 50%;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    transform: translateY(-50%);
   }
   .bp__corner--tl {
-    top: -9px;
-    left: -9px;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
   }
   .bp__corner--tr {
-    top: -9px;
-    right: -9px;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
   }
   .bp__corner--bl {
-    bottom: -9px;
-    left: -9px;
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 50%);
   }
   .bp__corner--br {
-    bottom: -9px;
-    right: -9px;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
   }
 
   .bp__head {
@@ -328,6 +350,12 @@ const ref = data.name
     font-size: clamp(1.3rem, 3vw, 1.9rem);
     color: #eaf9ff;
     line-height: 1;
+    text-decoration: underline;
+    text-decoration-color: rgba(143, 223, 255, 0.4);
+    text-underline-offset: 4px;
+  }
+  .bp__part:hover .bp__part-name {
+    text-decoration-color: var(--cyan);
   }
   .bp__part-year {
     grid-area: year;
@@ -427,10 +455,13 @@ const ref = data.name
     font-family: "Space Grotesk", sans-serif;
     font-size: 0.95rem;
     color: #bfe9ff;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: rgba(143, 223, 255, 0.5);
+    text-underline-offset: 3px;
   }
   .bp__tb-links a:hover {
     color: #eaf9ff;
+    text-decoration-color: var(--cyan);
   }
 
   @media (max-width: 680px) {
