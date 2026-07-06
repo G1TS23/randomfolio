@@ -12,6 +12,29 @@ const revealRules = UNIVERSE_IDS.map(
 
 const title = `${portfolio.name} — ${portfolio.role}`;
 const description = portfolio.tagline;
+
+// URL canonique (Astro.site vient de astro.config.mjs)
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Données structurées schema.org : une source canonique et unique pour les
+// moteurs, indépendante de l'univers tiré. Contourne la duplication du DOM.
+const [locality, country] = portfolio.location.split(",").map((s) => s.trim());
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: portfolio.name,
+  jobTitle: portfolio.role,
+  description: portfolio.about,
+  url: canonical,
+  email: `mailto:${portfolio.email}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: locality,
+    addressCountry: country ?? undefined,
+  },
+  sameAs: portfolio.socials.map((s) => s.url),
+  knowsAbout: portfolio.skills,
+};
 ---
 
 <!doctype html>
@@ -25,9 +48,20 @@ const description = portfolio.tagline;
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Données structurées (schema.org/Person) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+      is:inline
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Polices : chaque univers pioche dans ce jeu -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
