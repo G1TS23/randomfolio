@@ -1,5 +1,5 @@
 ---
-import type { Portfolio } from '../data/schema';
+import type { Portfolio } from "../data/schema";
 interface Props {
   data: Portfolio;
 }
@@ -8,7 +8,7 @@ const rev = new Date().getFullYear();
 const ref = data.name
   .split(/\s+/)
   .map((w) => w.charAt(0))
-  .join('')
+  .join("")
   .toUpperCase();
 ---
 
@@ -35,7 +35,9 @@ const ref = data.name
         <h1 class="bp__name">{data.name}</h1>
         <p class="bp__role">{data.role}</p>
         <p class="bp__tagline">{data.tagline}</p>
-        <span class="bp__badge">{data.available ? '● OPÉRATIONNEL' : '○ INDISPONIBLE'}</span>
+        <span class="bp__badge"
+          >{data.available ? "● OPÉRATIONNEL" : "○ INDISPONIBLE"}</span
+        >
       </div>
 
       <section class="bp__section">
@@ -49,7 +51,9 @@ const ref = data.name
           {
             data.projects.map((p, i) => (
               <a class="bp__part" href={p.url}>
-                <span class="bp__part-ref">{ref}-{String(i + 1).padStart(3, '0')}</span>
+                <span class="bp__part-ref">
+                  {ref}-{String(i + 1).padStart(3, "0")}
+                </span>
                 <span class="bp__part-name">{p.title}</span>
                 <span class="bp__part-year">RÉV. {p.year}</span>
                 <span class="bp__part-desc">{p.description}</span>
@@ -67,12 +71,14 @@ const ref = data.name
       <section class="bp__section">
         <p class="bp__label">MATÉRIAUX & OUTILLAGE</p>
         <ul class="bp__materials">
-          {data.skills.map((s, i) => (
-            <li>
-              <span class="bp__mat-n">{String(i + 1).padStart(2, '0')}</span>
-              {s}
-            </li>
-          ))}
+          {
+            data.skills.map((s, i) => (
+              <li>
+                <span class="bp__mat-n">{String(i + 1).padStart(2, "0")}</span>
+                {s}
+              </li>
+            ))
+          }
         </ul>
       </section>
 
@@ -88,7 +94,9 @@ const ref = data.name
         </div>
         <div class="bp__tb-cell bp__tb-cell--wide">
           <span class="bp__tb-k">CONTACT</span>
-          <a class="bp__tb-v bp__tb-link" href={`mailto:${data.email}`}>{data.email}</a>
+          <a class="bp__tb-v bp__tb-link" href={`mailto:${data.email}`}
+            >{data.email}</a
+          >
         </div>
         <div class="bp__tb-cell">
           <span class="bp__tb-k">FEUILLE</span>
@@ -97,9 +105,13 @@ const ref = data.name
         <div class="bp__tb-cell bp__tb-cell--full">
           <span class="bp__tb-k">RÉFÉRENCES</span>
           <span class="bp__tb-links">
-            {data.socials.map((s) => (
-              <a href={s.url}>{s.label} · {s.handle}</a>
-            ))}
+            {
+              data.socials.map((s) => (
+                <a href={s.url}>
+                  {s.label} · {s.handle}
+                </a>
+              ))
+            }
           </span>
         </div>
       </div>
@@ -116,7 +128,7 @@ const ref = data.name
     --line-soft: rgba(143, 223, 255, 0.12);
     background: var(--navy);
     color: var(--cyan);
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
     min-height: 100vh;
     padding: clamp(14px, 3vw, 40px);
     position: relative;
@@ -132,7 +144,11 @@ const ref = data.name
       linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
       linear-gradient(var(--line-soft) 1px, transparent 1px),
       linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-size:
+      100px 100px,
+      100px 100px,
+      20px 20px,
+      20px 20px;
     background-position: -1px -1px;
   }
 
@@ -150,10 +166,22 @@ const ref = data.name
     line-height: 1;
     opacity: 0.8;
   }
-  .bp__corner--tl { top: -9px; left: -9px; }
-  .bp__corner--tr { top: -9px; right: -9px; }
-  .bp__corner--bl { bottom: -9px; left: -9px; }
-  .bp__corner--br { bottom: -9px; right: -9px; }
+  .bp__corner--tl {
+    top: -9px;
+    left: -9px;
+  }
+  .bp__corner--tr {
+    top: -9px;
+    right: -9px;
+  }
+  .bp__corner--bl {
+    bottom: -9px;
+    left: -9px;
+  }
+  .bp__corner--br {
+    bottom: -9px;
+    right: -9px;
+  }
 
   .bp__head {
     display: flex;
@@ -190,15 +218,19 @@ const ref = data.name
   }
   .bp__dim--top::before,
   .bp__dim--top::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -4px;
     width: 1px;
     height: 9px;
     background: var(--line);
   }
-  .bp__dim--top::before { left: 0; }
-  .bp__dim--top::after { right: 0; }
+  .bp__dim--top::before {
+    left: 0;
+  }
+  .bp__dim--top::after {
+    right: 0;
+  }
   .bp__dim-label {
     position: absolute;
     top: -10px;
@@ -211,7 +243,7 @@ const ref = data.name
     opacity: 0.7;
   }
   .bp__name {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: clamp(2.6rem, 11vw, 7.5rem);
     line-height: 0.92;
@@ -227,7 +259,7 @@ const ref = data.name
     margin: 4px 0 0;
   }
   .bp__tagline {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: clamp(1rem, 2.4vw, 1.5rem);
     color: #eaf9ff;
     max-width: 28ch;
@@ -248,7 +280,7 @@ const ref = data.name
     border-bottom: 1px dashed var(--line);
   }
   .bp__note {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: clamp(1.05rem, 2vw, 1.35rem);
     line-height: 1.55;
     color: #eaf9ff;
@@ -265,9 +297,9 @@ const ref = data.name
     display: grid;
     grid-template-columns: 96px 1fr auto;
     grid-template-areas:
-      'ref  name year'
-      'ref  desc desc'
-      'ref  spec spec';
+      "ref  name year"
+      "ref  desc desc"
+      "ref  spec spec";
     gap: 4px 18px;
     padding: 16px 18px;
     text-decoration: none;
@@ -275,8 +307,12 @@ const ref = data.name
     border-bottom: 1px solid var(--line);
     transition: background 0.15s ease;
   }
-  .bp__part:last-child { border-bottom: 0; }
-  .bp__part:hover { background: rgba(143, 223, 255, 0.07); }
+  .bp__part:last-child {
+    border-bottom: 0;
+  }
+  .bp__part:hover {
+    background: rgba(143, 223, 255, 0.07);
+  }
   .bp__part-ref {
     grid-area: ref;
     align-self: start;
@@ -287,7 +323,7 @@ const ref = data.name
   }
   .bp__part-name {
     grid-area: name;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: clamp(1.3rem, 3vw, 1.9rem);
     color: #eaf9ff;
@@ -301,7 +337,7 @@ const ref = data.name
   }
   .bp__part-desc {
     grid-area: desc;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 15px;
     line-height: 1.45;
     color: #bfe9ff;
@@ -333,14 +369,14 @@ const ref = data.name
     display: flex;
     align-items: baseline;
     gap: 12px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 1.05rem;
     color: #eaf9ff;
     padding: 6px 0;
     border-bottom: 1px solid var(--line-soft);
   }
   .bp__mat-n {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     font-size: 12px;
     color: #ffd166;
   }
@@ -359,7 +395,9 @@ const ref = data.name
     flex-direction: column;
     gap: 4px;
   }
-  .bp__tb-cell--wide { grid-column: span 1; }
+  .bp__tb-cell--wide {
+    grid-column: span 1;
+  }
   .bp__tb-cell--full {
     grid-column: 1 / -1;
     border-right: 0;
@@ -371,29 +409,34 @@ const ref = data.name
     opacity: 0.65;
   }
   .bp__tb-v {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 1rem;
     color: #eaf9ff;
     word-break: break-word;
   }
-  .bp__tb-link { text-decoration: none; border-bottom: 1px solid var(--cyan); }
+  .bp__tb-link {
+    text-decoration: none;
+    border-bottom: 1px solid var(--cyan);
+  }
   .bp__tb-links {
     display: flex;
     flex-wrap: wrap;
     gap: 6px 20px;
   }
   .bp__tb-links a {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 0.95rem;
     color: #bfe9ff;
     text-decoration: none;
   }
-  .bp__tb-links a:hover { color: #eaf9ff; }
+  .bp__tb-links a:hover {
+    color: #eaf9ff;
+  }
 
   @media (max-width: 680px) {
     .bp__part {
       grid-template-columns: 1fr;
-      grid-template-areas: 'ref' 'name' 'year' 'desc' 'spec';
+      grid-template-areas: "ref" "name" "year" "desc" "spec";
     }
     .bp__titleblock {
       grid-template-columns: 1fr 1fr;

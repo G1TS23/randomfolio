@@ -13,12 +13,12 @@ export interface UniverseMeta {
 }
 
 export const UNIVERSES: UniverseMeta[] = [
-  { id: 'swiss', name: 'Swiss' },
-  { id: 'terminal', name: 'Terminal' },
-  { id: 'y2k', name: 'Y2K' },
-  { id: 'editorial', name: 'Editorial' },
-  { id: 'blueprint', name: 'Blueprint' },
-  { id: 'riso', name: 'Riso' },
+  { id: "swiss", name: "Swiss" },
+  { id: "terminal", name: "Terminal" },
+  { id: "y2k", name: "Y2K" },
+  { id: "editorial", name: "Editorial" },
+  { id: "blueprint", name: "Blueprint" },
+  { id: "riso", name: "Riso" },
 ];
 
 export const UNIVERSE_IDS = UNIVERSES.map((u) => u.id);

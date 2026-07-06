@@ -1,13 +1,14 @@
 ---
-import { UNIVERSE_IDS, UNIVERSES } from '../universes/index';
-import portfolio from '../data/portfolio.json';
+import { UNIVERSE_IDS, UNIVERSES } from "../universes/index";
+import portfolio from "../data/portfolio.json";
 
 // Génère les règles de révélation à partir du registre : chaque univers est
 // masqué par défaut, seul celui qui correspond à l'attribut <html data-universe>
 // est affiché. Ajouter un univers au registre suffit — aucune CSS à toucher ici.
 const revealRules = UNIVERSE_IDS.map(
-  (id) => `html[data-universe="${id}"] [data-universe-id="${id}"]{display:block}`
-).join('\n');
+  (id) =>
+    `html[data-universe="${id}"] [data-universe-id="${id}"]{display:block}`,
+).join("\n");
 
 const title = `${portfolio.name} — ${portfolio.role}`;
 const description = portfolio.tagline;
@@ -18,7 +19,10 @@ const description = portfolio.tagline;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E"
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
@@ -41,14 +45,15 @@ const description = portfolio.tagline;
     -->
     <script is:inline define:vars={{ ids: UNIVERSE_IDS }}>
       (function () {
-        var params = new URLSearchParams(location.search);
-        var seed = params.get('u');
-        var chosen = ids.indexOf(seed) !== -1
-          ? seed
-          : ids[Math.floor(Math.random() * ids.length)];
-        document.documentElement.setAttribute('data-universe', chosen);
+        const params = new URLSearchParams(location.search);
+        const seed = params.get("u");
+        const chosen =
+          ids.indexOf(seed) !== -1
+            ? seed
+            : ids[Math.floor(Math.random() * ids.length)];
+        document.documentElement.setAttribute("data-universe", chosen);
         // active l'overlay de génération uniquement si JS tourne (anti-flash + fallback sans JS)
-        document.documentElement.classList.add('js');
+        document.documentElement.classList.add("js");
       })();
     </script>
 
@@ -92,7 +97,7 @@ const description = portfolio.tagline;
         justify-content: center;
         background: #0a0a0c;
         color: #fff;
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: "Inter", system-ui, sans-serif;
       }
       html.js .genloader {
         display: flex;
@@ -126,9 +131,15 @@ const description = portfolio.tagline;
         animation: gen-roll 0.5s linear infinite;
       }
       @keyframes gen-roll {
-        0% { transform: rotate(0) scale(1); }
-        50% { transform: rotate(180deg) scale(1.15); }
-        100% { transform: rotate(360deg) scale(1); }
+        0% {
+          transform: rotate(0) scale(1);
+        }
+        50% {
+          transform: rotate(180deg) scale(1.15);
+        }
+        100% {
+          transform: rotate(360deg) scale(1);
+        }
       }
       .genloader__eyebrow {
         display: block;
@@ -149,7 +160,7 @@ const description = portfolio.tagline;
         padding: 0.12em 8px; /* marge pour le petit rebond de l'animation */
       }
       .genloader__name {
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: "Space Grotesk", sans-serif;
         font-weight: 700;
         font-size: 1em;
         line-height: 1;
@@ -209,7 +220,7 @@ const description = portfolio.tagline;
         backdrop-filter: blur(14px) saturate(1.2);
         -webkit-backdrop-filter: blur(14px) saturate(1.2);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: "Inter", system-ui, sans-serif;
         color: #fff;
       }
       .switcher button {
@@ -252,14 +263,16 @@ const description = portfolio.tagline;
         z-index: 9999;
         background: #fff;
         color: #111;
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: "Inter", system-ui, sans-serif;
         font-size: 13px;
         padding: 9px 16px;
         border-radius: 999px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.2s ease, transform 0.2s ease;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
       }
       .switcher__toast.is-visible {
         opacity: 1;
@@ -289,37 +302,47 @@ const description = portfolio.tagline;
 
     <!-- Barre de contrôle : regénérer + partager la variante -->
     <nav class="switcher" aria-label="Générateur d'univers">
-      <button type="button" data-action="regen" aria-label="Générer un nouvel univers">
+      <button
+        type="button"
+        data-action="regen"
+        aria-label="Générer un nouvel univers"
+      >
         <span class="switcher__dice" aria-hidden="true">🎲</span>
         <span>Regénérer</span>
       </button>
       <span class="switcher__label" data-current>—</span>
-      <button type="button" data-action="share" aria-label="Copier le lien de cette variante">
+      <button
+        type="button"
+        data-action="share"
+        aria-label="Copier le lien de cette variante"
+      >
         🔗 Partager
       </button>
     </nav>
     <div class="switcher__toast" role="status" aria-live="polite"></div>
 
-    <script define:vars={{ universes: UNIVERSES }}>
+    <script is:inline define:vars={{ universes: UNIVERSES }}>
       const root = document.documentElement;
       const ids = universes.map((u) => u.id);
       const names = universes.map((u) => u.name);
       const nameOf = (id) =>
         (universes.find((u) => u.id === id) || {}).name || id;
 
-      const label = document.querySelector('[data-current]');
-      const toast = document.querySelector('.switcher__toast');
+      const label = document.querySelector("[data-current]");
+      const toast = document.querySelector(".switcher__toast");
       let toastTimer;
 
-      const switcher = document.querySelector('.switcher');
-      const loader = document.querySelector('.genloader');
-      const reel = loader && loader.querySelector('.genloader__name');
-      const bar = loader && loader.querySelector('.genloader__bar span');
-      const hint = loader && loader.querySelector('.genloader__hint');
-      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const switcher = document.querySelector(".switcher");
+      const loader = document.querySelector(".genloader");
+      const reel = loader && loader.querySelector(".genloader__name");
+      const bar = loader && loader.querySelector(".genloader__bar span");
+      const hint = loader && loader.querySelector(".genloader__hint");
+      const reduceMotion = matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
       function current() {
-        return root.getAttribute('data-universe');
+        return root.getAttribute("data-universe");
       }
       function render() {
         if (label) label.textContent = nameOf(current());
@@ -327,16 +350,19 @@ const description = portfolio.tagline;
       function showToast(msg) {
         if (!toast) return;
         toast.textContent = msg;
-        toast.classList.add('is-visible');
+        toast.classList.add("is-visible");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+        toastTimer = setTimeout(
+          () => toast.classList.remove("is-visible"),
+          1800,
+        );
       }
       function setUniverse(id, { push = true } = {}) {
-        root.setAttribute('data-universe', id);
+        root.setAttribute("data-universe", id);
         if (push) {
           const url = new URL(location.href);
-          url.searchParams.set('u', id);
-          history.replaceState({}, '', url);
+          url.searchParams.set("u", id);
+          history.replaceState({}, "", url);
         }
         render();
         window.scrollTo({ top: 0 });
@@ -346,18 +372,22 @@ const description = portfolio.tagline;
       function pop(el) {
         el.animate(
           [
-            { transform: 'translateY(8px) scale(.88)', opacity: 0, filter: 'blur(3px)' },
-            { transform: 'none', opacity: 1, filter: 'blur(0)' },
+            {
+              transform: "translateY(8px) scale(.88)",
+              opacity: 0,
+              filter: "blur(3px)",
+            },
+            { transform: "none", opacity: 1, filter: "blur(0)" },
           ],
-          { duration: 130, easing: 'cubic-bezier(.2,.7,.2,1)' }
+          { duration: 130, easing: "cubic-bezier(.2,.7,.2,1)" },
         );
       }
       function dismissLoader() {
         if (!loader) return;
-        loader.classList.add('is-done');
-        if (switcher) switcher.style.visibility = '';
+        loader.classList.add("is-done");
+        if (switcher) switcher.style.visibility = "";
         setTimeout(() => {
-          loader.style.display = 'none';
+          loader.style.display = "none";
         }, 640);
       }
       // Fait défiler les noms d'univers en décélérant, s'arrête sur `targetName`.
@@ -368,21 +398,21 @@ const description = portfolio.tagline;
           if (opts.onReveal) opts.onReveal();
           return;
         }
-        loader.classList.remove('is-done');
-        loader.style.display = 'flex';
-        if (switcher) switcher.style.visibility = 'hidden'; // évite le bleed via backdrop-filter
-        reel.classList.remove('is-final');
-        if (hint) hint.textContent = 'génération d’un univers…';
-        bar.style.transition = 'none';
-        bar.style.width = '0%';
+        loader.classList.remove("is-done");
+        loader.style.display = "flex";
+        if (switcher) switcher.style.visibility = "hidden"; // évite le bleed via backdrop-filter
+        reel.classList.remove("is-final");
+        if (hint) hint.textContent = "génération d’un univers…";
+        bar.style.transition = "none";
+        bar.style.width = "0%";
         void bar.offsetWidth; // reflow pour rejouer la barre
 
         if (reduceMotion) {
           reel.textContent = targetName;
-          reel.classList.add('is-final');
-          if (hint) hint.textContent = 'univers sélectionné';
-          bar.style.transition = 'width .3s linear';
-          bar.style.width = '100%';
+          reel.classList.add("is-final");
+          if (hint) hint.textContent = "univers sélectionné";
+          bar.style.transition = "width .3s linear";
+          bar.style.width = "100%";
           if (opts.onReveal) opts.onReveal();
           setTimeout(dismissLoader, 480);
           return;
@@ -392,9 +422,9 @@ const description = portfolio.tagline;
           ? [40, 45, 55, 70, 95, 140, 200]
           : [45, 45, 50, 60, 70, 85, 105, 135, 180, 240];
         const total = delays.reduce((a, b) => a + b, 0);
-        bar.style.transition = 'width ' + total + 'ms cubic-bezier(.2,.6,.2,1)';
-        bar.style.width = '100%';
-        loader.classList.add('is-rolling');
+        bar.style.transition = "width " + total + "ms cubic-bezier(.2,.6,.2,1)";
+        bar.style.width = "100%";
+        loader.classList.add("is-rolling");
 
         let i = 0;
         (function tick() {
@@ -404,9 +434,9 @@ const description = portfolio.tagline;
             : names[Math.floor(Math.random() * names.length)];
           pop(reel);
           if (last) {
-            loader.classList.remove('is-rolling');
-            reel.classList.add('is-final');
-            if (hint) hint.textContent = 'univers sélectionné';
+            loader.classList.remove("is-rolling");
+            reel.classList.add("is-final");
+            if (hint) hint.textContent = "univers sélectionné";
             if (opts.onReveal) opts.onReveal();
             setTimeout(dismissLoader, 380);
             return;
@@ -417,8 +447,8 @@ const description = portfolio.tagline;
 
       document
         .querySelector('[data-action="regen"]')
-        ?.addEventListener('click', () => {
-          if (loader && loader.classList.contains('is-rolling')) return; // évite le spam
+        ?.addEventListener("click", () => {
+          if (loader && loader.classList.contains("is-rolling")) return; // évite le spam
           const others = ids.filter((id) => id !== current());
           const next = others[Math.floor(Math.random() * others.length)];
           runGenerator(nameOf(next), {
@@ -429,22 +459,22 @@ const description = portfolio.tagline;
 
       document
         .querySelector('[data-action="share"]')
-        ?.addEventListener('click', async () => {
+        ?.addEventListener("click", async () => {
           const url = new URL(location.href);
-          url.searchParams.set('u', current());
+          url.searchParams.set("u", current());
           try {
             await navigator.clipboard.writeText(url.toString());
-            showToast('Lien copié ✓');
+            showToast("Lien copié ✓");
           } catch {
             showToast(url.toString());
           }
         });
 
       // Raccourci clavier : "r" pour regénérer
-      addEventListener('keydown', (e) => {
-        if (e.key === 'r' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      addEventListener("keydown", (e) => {
+        if (e.key === "r" && !e.metaKey && !e.ctrlKey && !e.altKey) {
           const tag = document.activeElement?.tagName;
-          if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+          if (tag === "INPUT" || tag === "TEXTAREA") return;
           document.querySelector('[data-action="regen"]')?.click();
         }
       });

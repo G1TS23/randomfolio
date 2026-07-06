@@ -1,11 +1,11 @@
 ---
-import type { Portfolio } from '../data/schema';
+import type { Portfolio } from "../data/schema";
 interface Props {
   data: Portfolio;
 }
 const { data } = Astro.props;
 const year = new Date().getFullYear();
-const total = String(data.projects.length).padStart(2, '0');
+const total = String(data.projects.length).padStart(2, "0");
 ---
 
 <section class="universe ed" data-universe-id="editorial">
@@ -13,7 +13,9 @@ const total = String(data.projects.length).padStart(2, '0');
     <header class="ed__masthead">
       <span class="ed__issue">Numéro {year} · {data.location}</span>
       <span class="ed__folio">Portfolio</span>
-      <span class="ed__status">{data.available ? 'En commande' : 'Complet'}</span>
+      <span class="ed__status"
+        >{data.available ? "En commande" : "Complet"}</span
+      >
     </header>
 
     <div class="ed__hero">
@@ -41,7 +43,9 @@ const total = String(data.projects.length).padStart(2, '0');
       {
         data.projects.map((p, i) => (
           <article class="ed__feature">
-            <span class="ed__feature-num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ed__feature-num">
+              {String(i + 1).padStart(2, "0")}
+            </span>
             <div class="ed__feature-body">
               <div class="ed__feature-meta">
                 <span>{p.role}</span>
@@ -51,7 +55,7 @@ const total = String(data.projects.length).padStart(2, '0');
                 <a href={p.url}>{p.title}</a>
               </h3>
               <p class="ed__feature-desc">{p.description}</p>
-              <p class="ed__feature-tags">{p.tags.join(' / ')}</p>
+              <p class="ed__feature-tags">{p.tags.join(" / ")}</p>
             </div>
           </article>
         ))
@@ -61,7 +65,7 @@ const total = String(data.projects.length).padStart(2, '0');
     <section class="ed__colophon">
       <div class="ed__colophon-col">
         <h4>Savoir-faire</h4>
-        <p>{data.skills.join(' · ')}</p>
+        <p>{data.skills.join(" · ")}</p>
       </div>
       <div class="ed__colophon-col">
         <h4>Écrire</h4>
@@ -95,7 +99,7 @@ const total = String(data.projects.length).padStart(2, '0');
     --rule: #d6d3c9;
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Newsreader', Georgia, serif;
+    font-family: "Newsreader", Georgia, serif;
     min-height: 100vh;
     padding: clamp(18px, 4vw, 56px);
     -webkit-font-smoothing: antialiased;
@@ -113,7 +117,7 @@ const total = String(data.projects.length).padStart(2, '0');
     gap: 4px 18px;
     padding-bottom: 12px;
     border-bottom: 2px solid var(--ink);
-    font-family: 'Newsreader', serif;
+    font-family: "Newsreader", serif;
     font-size: 13px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -138,7 +142,7 @@ const total = String(data.projects.length).padStart(2, '0');
     letter-spacing: 0.02em;
   }
   .ed__name {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-weight: 900;
     font-size: clamp(3rem, 12vw, 9rem);
     line-height: 0.92;
@@ -146,7 +150,7 @@ const total = String(data.projects.length).padStart(2, '0');
     margin: 0;
   }
   .ed__tagline {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1.3rem, 3vw, 2.2rem);
@@ -175,7 +179,7 @@ const total = String(data.projects.length).padStart(2, '0');
   .ed__about::before {
     content: attr(data-dropcap);
     float: left;
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-weight: 900;
     font-size: clamp(3.6rem, 8vw, 5.4rem);
     line-height: 0.72;
@@ -189,7 +193,7 @@ const total = String(data.projects.length).padStart(2, '0');
     text-align: center;
   }
   .ed__quote blockquote {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1.6rem, 5vw, 3.4rem);
@@ -216,7 +220,7 @@ const total = String(data.projects.length).padStart(2, '0');
     margin-bottom: 8px;
   }
   .ed__section-head h2 {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-weight: 600;
     font-size: clamp(1.2rem, 3vw, 1.8rem);
     margin: 0;
@@ -235,7 +239,7 @@ const total = String(data.projects.length).padStart(2, '0');
     border-bottom: 1px solid var(--rule);
   }
   .ed__feature-num {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-size: clamp(2.4rem, 6vw, 4rem);
     font-weight: 900;
     line-height: 1;
@@ -254,7 +258,7 @@ const total = String(data.projects.length).padStart(2, '0');
     color: var(--accent);
   }
   .ed__feature-title {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-weight: 600;
     font-size: clamp(1.7rem, 4vw, 2.8rem);
     line-height: 1;
@@ -293,7 +297,7 @@ const total = String(data.projects.length).padStart(2, '0');
     margin-top: 20px;
   }
   .ed__colophon h4 {
-    font-family: 'Newsreader', serif;
+    font-family: "Newsreader", serif;
     font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -306,7 +310,7 @@ const total = String(data.projects.length).padStart(2, '0');
     line-height: 1.6;
   }
   .ed__mail {
-    font-family: 'Fraunces', serif;
+    font-family: "Fraunces", serif;
     font-size: clamp(1.3rem, 3vw, 2rem);
     text-decoration: none;
     border-bottom: 2px solid var(--accent);
