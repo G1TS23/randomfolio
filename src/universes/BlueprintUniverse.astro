@@ -1,0 +1,402 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const rev = new Date().getFullYear();
+const ref = data.name
+  .split(/\s+/)
+  .map((w) => w.charAt(0))
+  .join('')
+  .toUpperCase();
+---
+
+<section class="universe bp" data-universe-id="blueprint">
+  <div class="bp__grid" aria-hidden="true"></div>
+  <div class="bp__frame">
+    <span class="bp__corner bp__corner--tl">+</span>
+    <span class="bp__corner bp__corner--tr">+</span>
+    <span class="bp__corner bp__corner--bl">+</span>
+    <span class="bp__corner bp__corner--br">+</span>
+
+    <div class="bp__sheet">
+      <header class="bp__head">
+        <span>DOC. {ref}-01</span>
+        <span>PROJECTION ORTHOGONALE</span>
+        <span>ÉCH. 1:1</span>
+      </header>
+
+      <div class="bp__hero">
+        <span class="bp__dim bp__dim--top" aria-hidden="true">
+          <span class="bp__dim-label">{data.name.length} car.</span>
+        </span>
+        <p class="bp__label">FIG. 1 — SUJET</p>
+        <h1 class="bp__name">{data.name}</h1>
+        <p class="bp__role">{data.role}</p>
+        <p class="bp__tagline">{data.tagline}</p>
+        <span class="bp__badge">{data.available ? '● OPÉRATIONNEL' : '○ INDISPONIBLE'}</span>
+      </div>
+
+      <section class="bp__section">
+        <p class="bp__label">NOTE 01 — DESCRIPTION</p>
+        <p class="bp__note">{data.about}</p>
+      </section>
+
+      <section class="bp__section">
+        <p class="bp__label">NOMENCLATURE — {data.projects.length} ENSEMBLES</p>
+        <div class="bp__parts">
+          {
+            data.projects.map((p, i) => (
+              <a class="bp__part" href={p.url}>
+                <span class="bp__part-ref">{ref}-{String(i + 1).padStart(3, '0')}</span>
+                <span class="bp__part-name">{p.title}</span>
+                <span class="bp__part-year">RÉV. {p.year}</span>
+                <span class="bp__part-desc">{p.description}</span>
+                <span class="bp__part-spec">
+                  {p.tags.map((t) => (
+                    <span class="bp__spec">{t}</span>
+                  ))}
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="bp__section">
+        <p class="bp__label">MATÉRIAUX & OUTILLAGE</p>
+        <ul class="bp__materials">
+          {data.skills.map((s, i) => (
+            <li>
+              <span class="bp__mat-n">{String(i + 1).padStart(2, '0')}</span>
+              {s}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Cartouche façon plan technique -->
+      <div class="bp__titleblock">
+        <div class="bp__tb-cell bp__tb-cell--wide">
+          <span class="bp__tb-k">DESSINÉ PAR</span>
+          <span class="bp__tb-v">{data.name}</span>
+        </div>
+        <div class="bp__tb-cell">
+          <span class="bp__tb-k">RÉV.</span>
+          <span class="bp__tb-v">{rev}</span>
+        </div>
+        <div class="bp__tb-cell bp__tb-cell--wide">
+          <span class="bp__tb-k">CONTACT</span>
+          <a class="bp__tb-v bp__tb-link" href={`mailto:${data.email}`}>{data.email}</a>
+        </div>
+        <div class="bp__tb-cell">
+          <span class="bp__tb-k">FEUILLE</span>
+          <span class="bp__tb-v">1 / 1</span>
+        </div>
+        <div class="bp__tb-cell bp__tb-cell--full">
+          <span class="bp__tb-k">RÉFÉRENCES</span>
+          <span class="bp__tb-links">
+            {data.socials.map((s) => (
+              <a href={s.url}>{s.label} · {s.handle}</a>
+            ))}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bp {
+    --navy: #0a2540;
+    --navy-2: #071b30;
+    --cyan: #8fdfff;
+    --line: rgba(143, 223, 255, 0.28);
+    --line-soft: rgba(143, 223, 255, 0.12);
+    background: var(--navy);
+    color: var(--cyan);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    min-height: 100vh;
+    padding: clamp(14px, 3vw, 40px);
+    position: relative;
+    overflow: hidden;
+  }
+  .bp__grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -1px -1px;
+  }
+
+  .bp__frame {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    padding: clamp(16px, 3vw, 34px);
+  }
+  .bp__corner {
+    position: absolute;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0.8;
+  }
+  .bp__corner--tl { top: -9px; left: -9px; }
+  .bp__corner--tr { top: -9px; right: -9px; }
+  .bp__corner--bl { bottom: -9px; left: -9px; }
+  .bp__corner--br { bottom: -9px; right: -9px; }
+
+  .bp__head {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    opacity: 0.85;
+  }
+
+  .bp__label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: #ffd166;
+    margin: 0 0 12px;
+  }
+
+  .bp__hero {
+    position: relative;
+    text-align: center;
+    padding: clamp(40px, 8vw, 84px) 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .bp__dim--top {
+    position: absolute;
+    top: 22px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: var(--line);
+  }
+  .bp__dim--top::before,
+  .bp__dim--top::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 1px;
+    height: 9px;
+    background: var(--line);
+  }
+  .bp__dim--top::before { left: 0; }
+  .bp__dim--top::after { right: 0; }
+  .bp__dim-label {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    padding: 0 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+  .bp__name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 11vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 6px 0;
+    color: #eaf9ff;
+    text-shadow: 0 0 24px rgba(143, 223, 255, 0.25);
+  }
+  .bp__role {
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 4px 0 0;
+  }
+  .bp__tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 2.4vw, 1.5rem);
+    color: #eaf9ff;
+    max-width: 28ch;
+    margin: 16px auto 20px;
+    line-height: 1.25;
+  }
+  .bp__badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    border: 1px solid var(--line);
+    padding: 5px 14px;
+    border-radius: 2px;
+  }
+
+  .bp__section {
+    padding: clamp(28px, 5vw, 46px) 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .bp__note {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.55;
+    color: #eaf9ff;
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .bp__parts {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  .bp__part {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    grid-template-areas:
+      'ref  name year'
+      'ref  desc desc'
+      'ref  spec spec';
+    gap: 4px 18px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: var(--cyan);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+  .bp__part:last-child { border-bottom: 0; }
+  .bp__part:hover { background: rgba(143, 223, 255, 0.07); }
+  .bp__part-ref {
+    grid-area: ref;
+    align-self: start;
+    font-size: 12px;
+    color: #ffd166;
+    letter-spacing: 0.06em;
+    padding-top: 4px;
+  }
+  .bp__part-name {
+    grid-area: name;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    color: #eaf9ff;
+    line-height: 1;
+  }
+  .bp__part-year {
+    grid-area: year;
+    font-size: 12px;
+    opacity: 0.7;
+    align-self: center;
+  }
+  .bp__part-desc {
+    grid-area: desc;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    color: #bfe9ff;
+  }
+  .bp__part-spec {
+    grid-area: spec;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .bp__spec {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .bp__materials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px 20px;
+  }
+  .bp__materials li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    color: #eaf9ff;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .bp__mat-n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #ffd166;
+  }
+
+  .bp__titleblock {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr 1fr;
+    border: 1px solid var(--cyan);
+    margin-top: clamp(28px, 5vw, 46px);
+  }
+  .bp__tb-cell {
+    padding: 10px 14px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bp__tb-cell--wide { grid-column: span 1; }
+  .bp__tb-cell--full {
+    grid-column: 1 / -1;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .bp__tb-k {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    opacity: 0.65;
+  }
+  .bp__tb-v {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    color: #eaf9ff;
+    word-break: break-word;
+  }
+  .bp__tb-link { text-decoration: none; border-bottom: 1px solid var(--cyan); }
+  .bp__tb-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+  .bp__tb-links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    color: #bfe9ff;
+    text-decoration: none;
+  }
+  .bp__tb-links a:hover { color: #eaf9ff; }
+
+  @media (max-width: 680px) {
+    .bp__part {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'ref' 'name' 'year' 'desc' 'spec';
+    }
+    .bp__titleblock {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

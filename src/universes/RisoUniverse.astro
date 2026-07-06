@@ -1,0 +1,359 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+---
+
+<section class="universe rz" data-universe-id="riso">
+  <div class="rz__paper">
+    <header class="rz__head">
+      <span class="rz__stamp">RISO · ÉD. LIMITÉE</span>
+      <span class="rz__stamp rz__stamp--pink">{data.available ? 'OUVERT' : 'FERMÉ'}</span>
+    </header>
+
+    <div class="rz__hero">
+      <p class="rz__hi">{data.role}</p>
+      <h1 class="rz__name" data-text={data.name}>{data.name}</h1>
+      <p class="rz__tag">{data.tagline}</p>
+    </div>
+
+    <div class="rz__about">
+      <span class="rz__ticket">À PROPOS</span>
+      <p>{data.about}</p>
+    </div>
+
+    <h2 class="rz__h2" data-text="Projets">Projets</h2>
+    <div class="rz__zine">
+      {
+        data.projects.map((p, i) => (
+          <a class="rz__card" href={p.url} data-n={String(i + 1).padStart(2, '0')}>
+            <div class="rz__card-head">
+              <span class="rz__card-title">{p.title}</span>
+              <span class="rz__card-year">{p.year}</span>
+            </div>
+            <p class="rz__card-role">{p.role}</p>
+            <p class="rz__card-desc">{p.description}</p>
+            <div class="rz__card-tags">
+              {p.tags.map((t) => (
+                <span class="rz__tag-chip">{t}</span>
+              ))}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="rz__strip">
+      <span class="rz__ticket">FABRIQUÉ AVEC</span>
+      <div class="rz__skills">
+        {data.skills.map((s) => <span class="rz__skill">{s}</span>)}
+      </div>
+    </div>
+
+    <footer class="rz__foot">
+      <p class="rz__foot-hi">On imprime un projet ensemble&nbsp;?</p>
+      <a class="rz__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <div class="rz__socials">
+        {
+          data.socials.map((s) => (
+            <a href={s.url}>
+              {s.label} <span class="rz__handle">{s.handle}</span>
+            </a>
+          ))
+        }
+      </div>
+      <p class="rz__reg" aria-hidden="true">◉ ◉  ENCRES : ROSE FLUO + BLEU  ◉ ◉</p>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .rz {
+    --paper: #f2ebdd;
+    --pink: #ff4d79;
+    --blue: #2f3bd6;
+    --ink: #241a12;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding: clamp(18px, 4vw, 56px);
+    overflow: hidden;
+  }
+  /* grain d'impression riso */
+  .rz::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: radial-gradient(var(--ink) 0.5px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+  .rz__paper {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .rz__head {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .rz__stamp {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border: 2px solid var(--ink);
+    padding: 4px 12px;
+    transform: rotate(-1.5deg);
+  }
+  .rz__stamp--pink {
+    color: var(--pink);
+    border-color: var(--pink);
+    transform: rotate(1.5deg);
+  }
+
+  .rz__hero {
+    text-align: center;
+    padding: clamp(36px, 7vw, 80px) 0 clamp(20px, 4vw, 40px);
+  }
+  .rz__hi {
+    font-size: clamp(1rem, 2.4vw, 1.4rem);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 14px;
+  }
+  /* surimpression : le titre est dupliqué en rose, légèrement décalé */
+  .rz__name {
+    position: relative;
+    display: inline-block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(3rem, 15vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--blue);
+    margin: 0;
+    mix-blend-mode: multiply;
+  }
+  .rz__name::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 4px;
+    top: 3px;
+    color: var(--pink);
+    z-index: -1;
+    mix-blend-mode: multiply;
+  }
+  .rz__tag {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 500;
+    max-width: 24ch;
+    margin: 22px auto 0;
+    line-height: 1.15;
+  }
+
+  .rz__about {
+    position: relative;
+    border: 3px solid var(--ink);
+    padding: clamp(22px, 4vw, 38px);
+    margin: 40px 0;
+    background: transparent;
+  }
+  .rz__about p {
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    line-height: 1.4;
+    margin: 8px 0 0;
+    max-width: 52ch;
+  }
+  .rz__ticket {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--paper);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 4px 12px;
+    transform: rotate(-1deg);
+  }
+
+  .rz__h2 {
+    position: relative;
+    display: inline-block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.2rem, 8vw, 4.5rem);
+    color: var(--blue);
+    margin: 50px 0 28px;
+    mix-blend-mode: multiply;
+  }
+  .rz__h2::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 3px;
+    top: 2px;
+    color: var(--pink);
+    z-index: -1;
+    mix-blend-mode: multiply;
+  }
+
+  .rz__zine {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+  }
+  .rz__card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 22px 20px 20px;
+    background: transparent;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .rz__card::after {
+    content: attr(data-n);
+    position: absolute;
+    top: -14px;
+    right: 14px;
+    background: var(--blue);
+    color: var(--paper);
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    padding: 4px 9px;
+    transform: rotate(4deg);
+  }
+  .rz__card:hover {
+    transform: translateY(-4px) rotate(-0.6deg);
+    box-shadow: 8px 8px 0 var(--pink);
+  }
+  .rz__card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px;
+  }
+  .rz__card-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    line-height: 0.95;
+    color: var(--blue);
+  }
+  .rz__card-year {
+    font-weight: 700;
+    color: var(--pink);
+    font-size: 15px;
+  }
+  .rz__card-role {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 10px 0 6px;
+  }
+  .rz__card-desc {
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0 0 14px;
+  }
+  .rz__card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .rz__tag-chip {
+    font-size: 12px;
+    font-weight: 600;
+    border: 2px solid var(--ink);
+    padding: 2px 8px;
+  }
+
+  .rz__strip {
+    border: 3px solid var(--ink);
+    padding: clamp(20px, 4vw, 34px);
+    margin: 40px 0;
+  }
+  .rz__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .rz__skill {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    color: var(--paper);
+    background: var(--blue);
+    padding: 6px 14px;
+    transform: rotate(-1deg);
+  }
+  .rz__skill:nth-child(even) {
+    background: var(--pink);
+    transform: rotate(1.2deg);
+  }
+
+  .rz__foot {
+    text-align: center;
+    padding-top: clamp(30px, 5vw, 50px);
+    border-top: 3px solid var(--ink);
+  }
+  .rz__foot-hi {
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0 0 16px;
+  }
+  .rz__mail {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--pink);
+    color: var(--paper);
+    padding: 4px 14px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    word-break: break-all;
+  }
+  .rz__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .rz__socials a {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--blue);
+    border-bottom: 3px solid var(--pink);
+    padding-bottom: 2px;
+  }
+  .rz__handle {
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .rz__reg {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--pink);
+    margin-top: 26px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rz__card { transition: none; }
+  }
+</style>

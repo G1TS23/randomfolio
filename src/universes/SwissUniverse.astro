@@ -1,0 +1,351 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const total = String(data.projects.length).padStart(2, '0');
+---
+
+<section class="universe sw" data-universe-id="swiss">
+  <div class="sw__grid">
+    <header class="sw__head">
+      <div class="sw__mark">
+        <span class="sw__dot" aria-hidden="true"></span>
+        <span>{data.available ? 'Disponible' : 'Complet'}</span>
+      </div>
+      <div class="sw__meta">
+        <span>{data.location}</span>
+        <span>Portfolio ’{new Date().getFullYear().toString().slice(2)}</span>
+      </div>
+    </header>
+
+    <h1 class="sw__name">
+      {data.name}<span class="sw__period">.</span>
+    </h1>
+    <p class="sw__tagline">{data.tagline}</p>
+
+    <hr class="sw__rule" />
+
+    <div class="sw__intro">
+      <span class="sw__eyebrow">À propos</span>
+      <p class="sw__about">{data.about}</p>
+    </div>
+
+    <section class="sw__work" aria-label="Projets">
+      <div class="sw__work-head">
+        <span class="sw__eyebrow">Travaux sélectionnés</span>
+        <span class="sw__count">01 — {total}</span>
+      </div>
+      <ol class="sw__list">
+        {
+          data.projects.map((p, i) => (
+            <li class="sw__item">
+              <a class="sw__link" href={p.url}>
+                <span class="sw__num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="sw__title">{p.title}</span>
+                <span class="sw__desc">{p.description}</span>
+                <span class="sw__tags">
+                  {p.tags.map((t) => (
+                    <span class="sw__tag">{t}</span>
+                  ))}
+                </span>
+                <span class="sw__year">{p.year}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="sw__skills" aria-label="Compétences">
+      <span class="sw__eyebrow">Capacités</span>
+      <ul class="sw__skill-list">
+        {data.skills.map((s) => <li>{s}</li>)}
+      </ul>
+    </section>
+
+    <footer class="sw__foot">
+      <a class="sw__cta" href={`mailto:${data.email}`}>
+        {data.email}<span class="sw__arrow" aria-hidden="true">→</span>
+      </a>
+      <ul class="sw__socials">
+        {
+          data.socials.map((s) => (
+            <li>
+              <a href={s.url}>{s.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .sw {
+    --ink: #111111;
+    --paper: #ffffff;
+    --red: #e2231a;
+    --line: #d8d8d8;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: clamp(20px, 5vw, 64px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .sw__grid {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sw__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px 20px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .sw__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+  .sw__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 4px rgba(226, 35, 26, 0.15);
+  }
+  .sw__meta {
+    display: flex;
+    gap: 24px;
+    color: #6a6a6a;
+  }
+
+  .sw__name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3.2rem, 13vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    margin: clamp(28px, 6vw, 60px) 0 0;
+  }
+  .sw__period {
+    color: var(--red);
+  }
+  .sw__tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+    font-weight: 500;
+    max-width: 22ch;
+    margin: 20px 0 0;
+    line-height: 1.15;
+  }
+
+  .sw__rule {
+    border: 0;
+    border-top: 1px solid var(--ink);
+    margin: clamp(40px, 7vw, 72px) 0 0;
+  }
+
+  .sw__eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--red);
+  }
+
+  .sw__intro {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    padding: clamp(28px, 5vw, 48px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .sw__about {
+    margin: 0;
+    font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+    line-height: 1.4;
+    max-width: 40ch;
+  }
+
+  .sw__work {
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+  .sw__work-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .sw__count {
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: #6a6a6a;
+  }
+  .sw__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .sw__link {
+    display: grid;
+    grid-template-columns: 56px 1.4fr 2fr auto;
+    align-items: start;
+    gap: 24px;
+    padding: 26px 8px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    transition: background 0.2s ease, padding 0.2s ease;
+  }
+  .sw__link:hover {
+    background: var(--ink);
+    color: var(--paper);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .sw__link:hover .sw__num,
+  .sw__link:hover .sw__tag {
+    color: var(--paper);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .sw__num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--red);
+    font-size: 14px;
+    padding-top: 6px;
+  }
+  .sw__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .sw__desc {
+    font-size: 15px;
+    line-height: 1.5;
+    color: inherit;
+    opacity: 0.85;
+  }
+  .sw__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .sw__tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .sw__year {
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    text-align: right;
+    opacity: 0.7;
+  }
+
+  .sw__skills {
+    padding: clamp(44px, 6vw, 72px) 0;
+  }
+  .sw__skill-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 10px;
+  }
+  .sw__skill-list li {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    padding: 8px 16px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+  }
+
+  .sw__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-top: clamp(32px, 5vw, 48px);
+    border-top: 1px solid var(--ink);
+  }
+  .sw__cta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .sw__arrow {
+    color: var(--red);
+    transition: transform 0.2s ease;
+  }
+  .sw__cta:hover .sw__arrow {
+    transform: translateX(8px);
+  }
+  .sw__socials {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .sw__socials a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 2px;
+  }
+
+  @media (max-width: 720px) {
+    .sw__intro {
+      grid-template-columns: 1fr;
+    }
+    .sw__link {
+      grid-template-columns: 44px 1fr;
+      gap: 6px 16px;
+    }
+    .sw__desc,
+    .sw__tags,
+    .sw__year {
+      grid-column: 1 / -1;
+    }
+    .sw__year {
+      text-align: left;
+    }
+    .sw__meta {
+      gap: 12px;
+    }
+    .sw__cta {
+      font-size: clamp(1.25rem, 7vw, 2rem);
+    }
+  }
+</style>

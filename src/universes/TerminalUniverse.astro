@@ -1,0 +1,280 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const user = data.name.toLowerCase().replace(/[^a-z]+/g, '');
+---
+
+<section class="universe tm" data-universe-id="terminal">
+  <div class="tm__scanlines" aria-hidden="true"></div>
+  <div class="tm__glow" aria-hidden="true"></div>
+
+  <div class="tm__screen">
+    <div class="tm__bar">
+      <span class="tm__dot tm__dot--r"></span>
+      <span class="tm__dot tm__dot--y"></span>
+      <span class="tm__dot tm__dot--g"></span>
+      <span class="tm__bar-title">{user}@portfolio — zsh</span>
+    </div>
+
+    <div class="tm__body">
+      <p class="tm__boot">
+        [ ok ] système prêt · {data.location} · {data.available ? 'statut: DISPONIBLE' : 'statut: OCCUPÉ'}
+      </p>
+
+      <p class="tm__line"><span class="tm__prompt">{user}@site ~ %</span> whoami</p>
+      <p class="tm__out tm__out--big">{data.name}</p>
+      <p class="tm__out">{data.role} — {data.tagline}</p>
+
+      <p class="tm__line"><span class="tm__prompt">{user}@site ~ %</span> cat about.txt</p>
+      <p class="tm__out tm__wrap">{data.about}</p>
+
+      <p class="tm__line"><span class="tm__prompt">{user}@site ~ %</span> ls -la ./projets</p>
+      <div class="tm__projects">
+        {
+          data.projects.map((p) => (
+            <a class="tm__proj" href={p.url}>
+              <span class="tm__proj-perm">drwxr-xr-x</span>
+              <span class="tm__proj-name">{p.title}/</span>
+              <span class="tm__proj-year">{p.year}</span>
+              <span class="tm__proj-desc">{p.description}</span>
+              <span class="tm__proj-tags"># {p.tags.join(' · ')}</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="tm__line"><span class="tm__prompt">{user}@site ~ %</span> which -a $(skills)</p>
+      <p class="tm__out tm__skills">{data.skills.map((s) => `/usr/bin/${s.toLowerCase().replace(/[^a-z0-9]+/g, '')}`).join('\n')}</p>
+
+      <p class="tm__line"><span class="tm__prompt">{user}@site ~ %</span> contact --now</p>
+      <p class="tm__out">
+        <a class="tm__mail" href={`mailto:${data.email}`}>&gt; {data.email}</a>
+      </p>
+      <p class="tm__out tm__links">
+        {
+          data.socials.map((s) => (
+            <a href={s.url}>[{s.label}: {s.handle}]</a>
+          ))
+        }
+      </p>
+
+      <p class="tm__line">
+        <span class="tm__prompt">{user}@site ~ %</span>
+        <span class="tm__cursor" aria-hidden="true"></span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm {
+    --bg: #0a0f0a;
+    --green: #33ff77;
+    --dim: #1f8a49;
+    --amber: #ffcf4d;
+    background: radial-gradient(120% 120% at 50% 0%, #0d160d 0%, #060a06 70%);
+    color: var(--green);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    min-height: 100vh;
+    padding: clamp(16px, 4vw, 48px);
+    position: relative;
+    overflow: hidden;
+  }
+  .tm__scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.25) 3px,
+      rgba(0, 0, 0, 0.25) 3px
+    );
+    mix-blend-mode: multiply;
+  }
+  .tm__glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background: radial-gradient(
+      100% 80% at 50% 40%,
+      rgba(51, 255, 119, 0.06),
+      transparent 70%
+    );
+    animation: tm-flicker 4s infinite steps(60);
+  }
+  @keyframes tm-flicker {
+    0%, 97%, 100% { opacity: 1; }
+    98% { opacity: 0.82; }
+    99% { opacity: 0.94; }
+  }
+
+  .tm__screen {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    border: 1px solid rgba(51, 255, 119, 0.35);
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(51, 255, 119, 0.08),
+      0 0 60px rgba(51, 255, 119, 0.08) inset;
+    background: rgba(5, 12, 5, 0.6);
+  }
+  .tm__bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(51, 255, 119, 0.25);
+  }
+  .tm__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .tm__dot--r { background: #ff5f56; }
+  .tm__dot--y { background: #ffbd2e; }
+  .tm__dot--g { background: #27c93f; }
+  .tm__bar-title {
+    margin-left: 8px;
+    font-size: 12px;
+    opacity: 0.7;
+    letter-spacing: 0.04em;
+  }
+
+  .tm__body {
+    padding: clamp(18px, 4vw, 34px);
+    font-size: clamp(13px, 1.6vw, 15px);
+    line-height: 1.75;
+  }
+  .tm__body > * {
+    animation: tm-reveal 0.01s linear both;
+  }
+  /* révélation en cascade : chaque bloc apparaît après le précédent */
+  .tm__body > *:nth-child(1) { animation-delay: 0.05s; }
+  .tm__body > *:nth-child(2) { animation-delay: 0.3s; }
+  .tm__body > *:nth-child(3) { animation-delay: 0.5s; }
+  .tm__body > *:nth-child(4) { animation-delay: 0.7s; }
+  .tm__body > *:nth-child(5) { animation-delay: 0.95s; }
+  .tm__body > *:nth-child(6) { animation-delay: 1.15s; }
+  .tm__body > *:nth-child(7) { animation-delay: 1.4s; }
+  .tm__body > *:nth-child(8) { animation-delay: 1.7s; }
+  .tm__body > *:nth-child(9) { animation-delay: 1.95s; }
+  .tm__body > *:nth-child(n + 10) { animation-delay: 2.2s; }
+  @keyframes tm-reveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .tm__boot {
+    color: var(--amber);
+    opacity: 0.85;
+    margin: 0 0 18px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .tm__line {
+    margin: 18px 0 2px;
+    color: #eafff0;
+  }
+  .tm__prompt {
+    color: var(--dim);
+    margin-right: 10px;
+    user-select: none;
+  }
+  .tm__out {
+    margin: 0;
+    color: var(--green);
+    text-shadow: 0 0 8px rgba(51, 255, 119, 0.35);
+  }
+  .tm__out--big {
+    font-size: clamp(1.6rem, 6vw, 2.8rem);
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 4px 0;
+    letter-spacing: 0.01em;
+  }
+  .tm__wrap {
+    max-width: 66ch;
+    color: #b7ffd0;
+  }
+
+  .tm__projects {
+    display: grid;
+    gap: 2px;
+    margin: 6px 0;
+  }
+  .tm__proj {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'perm name year'
+      'desc desc desc'
+      'tags tags tags';
+    gap: 2px 16px;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: var(--green);
+    border: 1px dashed transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .tm__proj:hover {
+    background: rgba(51, 255, 119, 0.08);
+    border-color: rgba(51, 255, 119, 0.4);
+  }
+  .tm__proj-perm { grid-area: perm; color: var(--dim); }
+  .tm__proj-name {
+    grid-area: name;
+    color: #eafff0;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(51, 255, 119, 0.4);
+  }
+  .tm__proj-year { grid-area: year; color: var(--amber); }
+  .tm__proj-desc { grid-area: desc; color: #9fe6b8; }
+  .tm__proj-tags { grid-area: tags; color: var(--dim); font-size: 0.85em; }
+
+  .tm__skills {
+    white-space: pre-wrap;
+    color: #9fe6b8;
+    line-height: 1.5;
+  }
+  .tm__mail {
+    color: var(--amber);
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(255, 207, 77, 0.4);
+  }
+  .tm__mail:hover { text-decoration: underline; }
+  .tm__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 4px;
+  }
+  .tm__links a { text-decoration: none; }
+  .tm__links a:hover { color: #eafff0; }
+
+  .tm__cursor {
+    display: inline-block;
+    width: 9px;
+    height: 1.05em;
+    background: var(--green);
+    vertical-align: text-bottom;
+    box-shadow: 0 0 8px rgba(51, 255, 119, 0.6);
+    animation: tm-blink 1.05s steps(2, start) infinite;
+  }
+  @keyframes tm-blink {
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tm__body > *,
+    .tm__glow { animation: none; opacity: 1; }
+    .tm__cursor { animation: none; }
+  }
+</style>

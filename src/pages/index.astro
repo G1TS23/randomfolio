@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import portfolio from '../data/portfolio.json';
+
+import SwissUniverse from '../universes/SwissUniverse.astro';
+import TerminalUniverse from '../universes/TerminalUniverse.astro';
+import Y2KUniverse from '../universes/Y2KUniverse.astro';
+import EditorialUniverse from '../universes/EditorialUniverse.astro';
+import BlueprintUniverse from '../universes/BlueprintUniverse.astro';
+import RisoUniverse from '../universes/RisoUniverse.astro';
+---
+
+<Layout>
+  {/* Tous les univers sont rendus ; le moteur (Layout) n'en révèle qu'un.
+      Pour en ajouter un : registre dans universes/index.ts + import + rendu ici. */}
+  <SwissUniverse data={portfolio} />
+  <TerminalUniverse data={portfolio} />
+  <Y2KUniverse data={portfolio} />
+  <EditorialUniverse data={portfolio} />
+  <BlueprintUniverse data={portfolio} />
+  <RisoUniverse data={portfolio} />
+</Layout>

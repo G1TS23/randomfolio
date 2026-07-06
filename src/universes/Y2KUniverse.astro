@@ -1,0 +1,355 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const tilts = ['-2deg', '1.5deg', '-1deg', '2.5deg', '-2.2deg', '1deg'];
+---
+
+<section class="universe y2 y2--noise" data-universe-id="y2k">
+  <div class="y2__marquee" aria-hidden="true">
+    <div class="y2__marquee-track">
+      {
+        Array.from({ length: 4 }).map(() => (
+          <span>★ {data.role} ★ {data.location} ★ {data.available ? 'OUVERT AUX PROJETS' : 'COMPLET'} ★ WELCOME TO MY CORNER OF THE WEB&nbsp;</span>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="y2__wrap">
+    <header class="y2__hero">
+      <div class="y2__sticker y2__sticker--new">✦ v2.0 ✦</div>
+      <p class="y2__hi">·:¦:· bonjour, je suis ·:¦:·</p>
+      <h1 class="y2__name">{data.name}</h1>
+      <p class="y2__tag">{data.tagline}</p>
+      <a class="y2__enter" href={`mailto:${data.email}`}>&gt;&gt; me contacter &lt;&lt;</a>
+    </header>
+
+    <div class="y2__panel y2__about">
+      <span class="y2__badge">// about.exe</span>
+      <p>{data.about}</p>
+    </div>
+
+    <h2 class="y2__h2">◆ mes projets ◆</h2>
+    <div class="y2__cards">
+      {
+        data.projects.map((p, i) => (
+          <a
+            class="y2__card"
+            href={p.url}
+            style={`--tilt:${tilts[i % tilts.length]}`}
+          >
+            <div class="y2__card-top">
+              <span class="y2__card-year">{p.year}</span>
+              <span class="y2__card-role">{p.role}</span>
+            </div>
+            <h3 class="y2__card-title">{p.title}</h3>
+            <p class="y2__card-desc">{p.description}</p>
+            <div class="y2__card-tags">
+              {p.tags.map((t) => (
+                <span class="y2__chip">{t}</span>
+              ))}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="y2__panel y2__skills">
+      <span class="y2__badge">// stack.dll</span>
+      <div class="y2__skill-grid">
+        {data.skills.map((s) => <span class="y2__skill">{s}</span>)}
+      </div>
+    </div>
+
+    <footer class="y2__foot">
+      <p class="y2__foot-title">·:¦:· on bosse ensemble ? ·:¦:·</p>
+      <a class="y2__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <div class="y2__socials">
+        {
+          data.socials.map((s) => (
+            <a class="y2__soc" href={s.url}>
+              {s.label}
+            </a>
+          ))
+        }
+      </div>
+      <p class="y2__blink">▓▒░ best viewed with imagination ░▒▓</p>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .y2 {
+    --cyan: #00e5ff;
+    --magenta: #ff2ec4;
+    --yellow: #ffe600;
+    --ink: #0b0033;
+    --paper: #eafcff;
+    background: var(--paper);
+    background-image:
+      linear-gradient(135deg, rgba(0, 229, 255, 0.18), transparent 40%),
+      linear-gradient(315deg, rgba(255, 46, 196, 0.18), transparent 40%);
+    color: var(--ink);
+    font-family: 'VT323', 'Courier New', monospace;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .y2--noise::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: radial-gradient(rgba(11, 0, 51, 0.12) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  .y2__marquee {
+    background: var(--ink);
+    color: var(--yellow);
+    border-bottom: 4px solid var(--magenta);
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 2;
+  }
+  .y2__marquee-track {
+    display: inline-block;
+    padding: 8px 0;
+    animation: y2-scroll 22s linear infinite;
+  }
+  @keyframes y2-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .y2__wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 40px) 80px;
+  }
+
+  .y2__hero {
+    position: relative;
+    text-align: center;
+    padding: clamp(30px, 6vw, 60px) 0;
+  }
+  .y2__sticker {
+    position: absolute;
+    top: 8px;
+    right: clamp(0px, 6vw, 60px);
+    background: var(--yellow);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 8px 14px;
+    font-size: 22px;
+    transform: rotate(9deg);
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+  .y2__hi {
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--magenta);
+    margin: 0;
+    letter-spacing: 0.06em;
+  }
+  .y2__name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(3rem, 15vw, 8.5rem);
+    line-height: 0.92;
+    margin: 8px 0;
+    letter-spacing: -0.01em;
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      var(--cyan) 38%,
+      var(--magenta) 74%,
+      var(--ink) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 5px 5px 0 rgba(11, 0, 51, 0.14);
+    -webkit-text-stroke: 2px var(--ink);
+  }
+  .y2__tag {
+    font-size: clamp(22px, 3.4vw, 34px);
+    margin: 4px auto 22px;
+    max-width: 24ch;
+  }
+  .y2__enter {
+    display: inline-block;
+    font-size: clamp(22px, 3vw, 30px);
+    background: var(--magenta);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border: 4px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--cyan);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .y2__enter:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0 var(--cyan);
+  }
+
+  .y2__panel {
+    background: #fff;
+    border: 4px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+    padding: clamp(20px, 4vw, 34px);
+    margin: 40px 0;
+    position: relative;
+  }
+  .y2__badge {
+    position: absolute;
+    top: -16px;
+    left: 20px;
+    background: var(--cyan);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 2px 12px;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+  }
+  .y2__about p {
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.35;
+    margin: 8px 0 0;
+    max-width: 52ch;
+  }
+
+  .y2__h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2rem, 7vw, 4rem);
+    text-align: center;
+    color: var(--ink);
+    margin: 54px 0 30px;
+    text-shadow: 3px 3px 0 var(--cyan), 6px 6px 0 var(--magenta);
+  }
+  .y2__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 26px;
+  }
+  .y2__card {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    border: 4px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--ink);
+    padding: 20px;
+    transform: rotate(var(--tilt));
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .y2__card:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 10px 12px 0 var(--magenta);
+  }
+  .y2__card-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 19px;
+    color: var(--magenta);
+    border-bottom: 2px dashed var(--ink);
+    padding-bottom: 6px;
+  }
+  .y2__card-role { color: #6b48a8; }
+  .y2__card-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    margin: 12px 0 6px;
+    line-height: 0.95;
+  }
+  .y2__card-desc {
+    font-size: 21px;
+    line-height: 1.3;
+    margin: 0 0 14px;
+  }
+  .y2__card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .y2__chip {
+    font-size: 16px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    padding: 1px 8px;
+  }
+
+  .y2__skill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .y2__skill {
+    font-size: 22px;
+    background: linear-gradient(180deg, #fff, var(--cyan));
+    border: 3px solid var(--ink);
+    padding: 4px 14px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .y2__foot {
+    text-align: center;
+    margin-top: 60px;
+  }
+  .y2__foot-title {
+    font-size: clamp(24px, 4vw, 38px);
+    color: var(--magenta);
+    margin: 0 0 10px;
+  }
+  .y2__mail {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 5px solid var(--yellow);
+    word-break: break-all;
+  }
+  .y2__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .y2__soc {
+    font-size: 22px;
+    text-decoration: none;
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 6px 18px;
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--magenta);
+    transition: transform 0.08s ease;
+  }
+  .y2__soc:hover { transform: translateY(-3px); }
+  .y2__blink {
+    font-size: 20px;
+    color: var(--ink);
+    opacity: 0.7;
+    margin-top: 30px;
+    animation: y2-blink 1.4s steps(2, start) infinite;
+  }
+  @keyframes y2-blink {
+    50% { opacity: 0.2; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .y2__marquee-track,
+    .y2__blink { animation: none; }
+    .y2__card { transform: none; }
+  }
+</style>

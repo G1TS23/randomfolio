@@ -1,0 +1,367 @@
+---
+import type { Portfolio } from '../data/schema';
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const year = new Date().getFullYear();
+const total = String(data.projects.length).padStart(2, '0');
+---
+
+<section class="universe ed" data-universe-id="editorial">
+  <div class="ed__page">
+    <header class="ed__masthead">
+      <span class="ed__issue">Numéro {year} · {data.location}</span>
+      <span class="ed__folio">Portfolio</span>
+      <span class="ed__status">{data.available ? 'En commande' : 'Complet'}</span>
+    </header>
+
+    <div class="ed__hero">
+      <p class="ed__kicker">{data.role}</p>
+      <h1 class="ed__name">{data.name}</h1>
+      <p class="ed__tagline">{data.tagline}</p>
+    </div>
+
+    <div class="ed__lede">
+      <p class="ed__about" data-dropcap={data.about.charAt(0)}>
+        {data.about.slice(1)}
+      </p>
+    </div>
+
+    <figure class="ed__quote">
+      <blockquote>« {data.tagline} »</blockquote>
+      <figcaption>— {data.name}</figcaption>
+    </figure>
+
+    <section class="ed__features" aria-label="Projets">
+      <div class="ed__section-head">
+        <h2>Les travaux</h2>
+        <span class="ed__count">01–{total}</span>
+      </div>
+      {
+        data.projects.map((p, i) => (
+          <article class="ed__feature">
+            <span class="ed__feature-num">{String(i + 1).padStart(2, '0')}</span>
+            <div class="ed__feature-body">
+              <div class="ed__feature-meta">
+                <span>{p.role}</span>
+                <span class="ed__feature-year">{p.year}</span>
+              </div>
+              <h3 class="ed__feature-title">
+                <a href={p.url}>{p.title}</a>
+              </h3>
+              <p class="ed__feature-desc">{p.description}</p>
+              <p class="ed__feature-tags">{p.tags.join(' / ')}</p>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="ed__colophon">
+      <div class="ed__colophon-col">
+        <h4>Savoir-faire</h4>
+        <p>{data.skills.join(' · ')}</p>
+      </div>
+      <div class="ed__colophon-col">
+        <h4>Écrire</h4>
+        <a class="ed__mail" href={`mailto:${data.email}`}>{data.email}</a>
+        <ul class="ed__socials">
+          {
+            data.socials.map((s) => (
+              <li>
+                <a href={s.url}>{s.label}</a>
+                <span class="ed__handle">{s.handle}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <footer class="ed__foot">
+      <span>{data.name}</span>
+      <span class="ed__foot-orn">✦</span>
+      <span>{year}</span>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .ed {
+    --paper: #f7f6f2;
+    --ink: #17140f;
+    --accent: #1f3bd6;
+    --rule: #d6d3c9;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    min-height: 100vh;
+    padding: clamp(18px, 4vw, 56px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .ed__page {
+    max-width: 940px;
+    margin: 0 auto;
+  }
+
+  .ed__masthead {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'Newsreader', serif;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ed__folio {
+    font-weight: 500;
+  }
+  .ed__status {
+    color: var(--accent);
+  }
+
+  .ed__hero {
+    text-align: center;
+    padding: clamp(40px, 8vw, 90px) 0 clamp(24px, 4vw, 44px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .ed__kicker {
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--accent);
+    margin: 0 0 12px;
+    letter-spacing: 0.02em;
+  }
+  .ed__name {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 12vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .ed__tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    max-width: 26ch;
+    margin: 22px auto 0;
+    line-height: 1.2;
+  }
+
+  .ed__lede {
+    columns: 2;
+    column-gap: 42px;
+    padding: clamp(32px, 5vw, 56px) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ed__about {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    text-align: justify;
+    hyphens: auto;
+  }
+  .ed__about::first-letter {
+    /* fallback si data-dropcap indisponible */
+    initial-letter: 3;
+  }
+  .ed__about::before {
+    content: attr(data-dropcap);
+    float: left;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(3.6rem, 8vw, 5.4rem);
+    line-height: 0.72;
+    padding: 6px 12px 0 0;
+    color: var(--accent);
+  }
+
+  .ed__quote {
+    margin: 0;
+    padding: clamp(40px, 7vw, 72px) 0;
+    text-align: center;
+  }
+  .ed__quote blockquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 5vw, 3.4rem);
+    line-height: 1.15;
+    margin: 0;
+    max-width: 20ch;
+    margin-inline: auto;
+  }
+  .ed__quote figcaption {
+    margin-top: 20px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6a675e;
+  }
+
+  .ed__section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    margin-bottom: 8px;
+  }
+  .ed__section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin: 0;
+  }
+  .ed__count {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: #6a675e;
+  }
+
+  .ed__feature {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: clamp(16px, 4vw, 40px);
+    padding: clamp(24px, 4vw, 38px) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ed__feature-num {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--rule);
+  }
+  .ed__feature-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6a675e;
+    margin-bottom: 8px;
+  }
+  .ed__feature-year {
+    color: var(--accent);
+  }
+  .ed__feature-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    line-height: 1;
+    margin: 0 0 12px;
+  }
+  .ed__feature-title a {
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.3s ease;
+  }
+  .ed__feature-title a:hover {
+    background-size: 100% 2px;
+  }
+  .ed__feature-desc {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.5;
+    max-width: 54ch;
+    margin: 0 0 12px;
+  }
+  .ed__feature-tags {
+    font-style: italic;
+    font-size: 15px;
+    color: #6a675e;
+    margin: 0;
+  }
+
+  .ed__colophon {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: clamp(36px, 6vw, 64px) 0;
+    border-top: 2px solid var(--ink);
+    margin-top: 20px;
+  }
+  .ed__colophon h4 {
+    font-family: 'Newsreader', serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6a675e;
+    margin: 0 0 12px;
+  }
+  .ed__colophon p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .ed__mail {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    word-break: break-all;
+  }
+  .ed__socials {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+  }
+  .ed__socials li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+  }
+  .ed__socials a {
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .ed__handle {
+    color: #6a675e;
+    font-style: italic;
+  }
+
+  .ed__foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6a675e;
+  }
+  .ed__foot-orn {
+    color: var(--accent);
+  }
+
+  @media (max-width: 680px) {
+    .ed__lede {
+      columns: 1;
+    }
+    .ed__colophon {
+      grid-template-columns: 1fr;
+    }
+    .ed__feature {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .ed__feature-num {
+      font-size: 2rem;
+    }
+  }
+</style>
