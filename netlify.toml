@@ -9,6 +9,15 @@
   # Même version que la CI, pour un build identique
   NODE_VERSION = "22.12.0"
 
+# Redirige l'ancienne URL Netlify vers le domaine principal (301).
+# Le host est spécifié dans `from`, donc seule randomfolio.netlify.app est
+# concernée — les requêtes vers olivier.falahi.org ne matchent pas (pas de boucle).
+[[redirects]]
+  from = "https://randomfolio.netlify.app/*"
+  to = "https://olivier.falahi.org/:splat"
+  status = 301
+  force = true
+
 # Cache long pour les assets fingerprintés générés par Astro (_astro/*)
 [[headers]]
   for = "/_astro/*"
