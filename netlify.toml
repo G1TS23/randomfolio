@@ -1,0 +1,16 @@
+# Configuration de déploiement Netlify
+# Site statique Astro : `astro build` génère dist/, servi tel quel.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Même version que la CI, pour un build identique
+  NODE_VERSION = "22.12.0"
+
+# Cache long pour les assets fingerprintés générés par Astro (_astro/*)
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
