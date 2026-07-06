@@ -15,6 +15,7 @@ const description = portfolio.tagline;
 
 // URL canonique (Astro.site vient de astro.config.mjs)
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("/og.png", Astro.site).href;
 
 // Données structurées schema.org : une source canonique et unique pour les
 // moteurs, indépendante de l'univers tiré. Contourne la duplication du DOM.
@@ -54,6 +55,14 @@ const jsonLd = {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Données structurées (schema.org/Person) -->
     <script
