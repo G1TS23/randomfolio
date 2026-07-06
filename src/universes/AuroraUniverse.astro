@@ -1,0 +1,340 @@
+---
+import type { Portfolio } from "../data/schema";
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+---
+
+<section class="universe au" data-universe-id="aurora">
+  <div class="au__blobs" aria-hidden="true">
+    <span class="au__blob au__blob--1"></span>
+    <span class="au__blob au__blob--2"></span>
+    <span class="au__blob au__blob--3"></span>
+  </div>
+
+  <div class="au__wrap">
+    <header class="au__hero">
+      <span class="au__eyebrow">
+        <span class="au__dot" data-on={data.available}></span>
+        {data.role} · {data.location}
+      </span>
+      <h1 class="au__name">{data.name}</h1>
+      <p class="au__tagline">{data.tagline}</p>
+    </header>
+
+    <div class="au__card au__about">
+      <p>{data.about}</p>
+    </div>
+
+    <section class="au__work" aria-label="Projets">
+      <h2 class="au__h2">Projets</h2>
+      <div class="au__grid">
+        {
+          data.projects.map((p) => (
+            <a class="au__card au__proj" href={p.url}>
+              <div class="au__proj-top">
+                <span>{p.role}</span>
+                <span>{p.year}</span>
+              </div>
+              <h3 class="au__proj-title">{p.title}</h3>
+              <p class="au__proj-desc">{p.description}</p>
+              <div class="au__tags">
+                {p.tags.map((t) => (
+                  <span class="au__tag">{t}</span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="au__card au__skills">
+      <h2 class="au__h2">Stack</h2>
+      <div class="au__pills">
+        {data.skills.map((s) => <span class="au__pill">{s}</span>)}
+      </div>
+    </section>
+
+    <footer class="au__foot">
+      <p class="au__foot-hi">Travaillons ensemble</p>
+      <a class="au__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <div class="au__socials">
+        {
+          data.socials.map((s) => (
+            <a class="au__card au__soc" href={s.url}>
+              {s.label}
+            </a>
+          ))
+        }
+      </div>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .au {
+    --bg: #0a0b16;
+    --ink: #eef0ff;
+    --muted: #a6a9c8;
+    --c1: #7c5cff;
+    --c2: #23d5c8;
+    --c3: #ff5c9d;
+    --glass: rgba(255, 255, 255, 0.055);
+    --stroke: rgba(255, 255, 255, 0.14);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(20px, 4vw, 56px) clamp(20px, 4vw, 56px) 104px;
+  }
+  .au__blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(70px);
+  }
+  .au__blob {
+    position: absolute;
+    width: 46vw;
+    height: 46vw;
+    max-width: 620px;
+    max-height: 620px;
+    border-radius: 50%;
+    opacity: 0.55;
+  }
+  .au__blob--1 {
+    background: var(--c1);
+    top: -10%;
+    left: -6%;
+    animation: au-drift 22s ease-in-out infinite;
+  }
+  .au__blob--2 {
+    background: var(--c2);
+    top: 20%;
+    right: -12%;
+    animation: au-drift 26s ease-in-out infinite reverse;
+  }
+  .au__blob--3 {
+    background: var(--c3);
+    bottom: -14%;
+    left: 24%;
+    animation: au-drift 30s ease-in-out infinite;
+  }
+  @keyframes au-drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(6%, 8%) scale(1.12);
+    }
+  }
+
+  .au__wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .au__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .au__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c2);
+    box-shadow: 0 0 12px var(--c2);
+  }
+  .au__dot[data-on="false"] {
+    background: var(--muted);
+    box-shadow: none;
+  }
+  .au__name {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 12vw, 8rem);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    margin: 18px 0 0;
+    background: linear-gradient(120deg, #fff, var(--c2) 55%, var(--c1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .au__tagline {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.2rem, 2.6vw, 1.9rem);
+    color: var(--ink);
+    max-width: 26ch;
+    margin: 18px 0 clamp(28px, 5vw, 44px);
+    line-height: 1.2;
+  }
+
+  .au__card {
+    background: var(--glass);
+    border: 1px solid var(--stroke);
+    border-radius: 20px;
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  }
+  .au__about {
+    padding: clamp(22px, 4vw, 34px);
+  }
+  .au__about p {
+    margin: 0;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.5;
+    max-width: 60ch;
+    color: #dfe2f7;
+  }
+
+  .au__h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    margin: clamp(38px, 6vw, 56px) 0 20px;
+    letter-spacing: -0.01em;
+  }
+  .au__skills .au__h2 {
+    margin-top: 0;
+  }
+  .au__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .au__proj {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 24px 22px;
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease,
+      background 0.18s ease;
+  }
+  .au__proj:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.09);
+  }
+  .au__proj-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .au__proj-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin: 14px 0 8px;
+    text-decoration: underline;
+    text-decoration-color: rgba(124, 92, 255, 0.55);
+    text-underline-offset: 4px;
+  }
+  .au__proj:hover .au__proj-title {
+    text-decoration-color: var(--c2);
+  }
+  .au__proj-desc {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #c9ccea;
+    margin: 0 0 16px;
+  }
+  .au__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .au__tag {
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--stroke);
+    color: var(--muted);
+  }
+
+  .au__skills {
+    padding: clamp(22px, 4vw, 32px);
+    margin-top: clamp(38px, 6vw, 56px);
+  }
+  .au__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .au__pill {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--stroke);
+  }
+
+  .au__foot {
+    text-align: center;
+    padding-top: clamp(44px, 7vw, 72px);
+  }
+  .au__foot-hi {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .au__mail {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-decoration: underline;
+    text-decoration-color: var(--c3);
+    text-underline-offset: 6px;
+    word-break: break-all;
+    background: linear-gradient(120deg, var(--c2), var(--c1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .au__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .au__soc {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 999px;
+  }
+  .au__soc:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .au__blob {
+      animation: none;
+    }
+    .au__proj {
+      transition: none;
+    }
+  }
+</style>

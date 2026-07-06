@@ -1,0 +1,346 @@
+---
+import type { Portfolio } from "../data/schema";
+interface Props {
+  data: Portfolio;
+}
+const { data } = Astro.props;
+const year = new Date().getFullYear();
+const total = String(data.projects.length).padStart(2, "0");
+---
+
+<section class="universe bo" data-universe-id="botanical">
+  <div class="bo__sheet">
+    <header class="bo__head">
+      <span class="bo__label">Herbier · Planche {year}</span>
+      <span class="bo__label">{data.location}</span>
+    </header>
+
+    <div class="bo__hero">
+      <p class="bo__kicker">{data.role}</p>
+      <h1 class="bo__name">{data.name}</h1>
+      <p class="bo__tagline">{data.tagline}</p>
+      <svg
+        class="bo__branch"
+        viewBox="0 0 200 60"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M10 30 H190"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></path>
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <path d="M60 30 q-14 -18 -30 -14 q6 16 30 14Z"></path>
+          <path d="M100 30 q14 -18 30 -14 q-6 16 -30 14Z"></path>
+          <path d="M140 30 q-12 16 -26 13 q4 -15 26 -13Z"></path>
+        </g>
+        <circle cx="190" cy="30" r="3.5" fill="currentColor"></circle>
+      </svg>
+    </div>
+
+    <div class="bo__about">
+      <span class="bo__note">Note du naturaliste</span>
+      <p>{data.about}</p>
+    </div>
+
+    <section class="bo__specimens" aria-label="Projets">
+      <div class="bo__sec-head">
+        <h2>Spécimens</h2>
+        <span class="bo__label">01 – {total}</span>
+      </div>
+      {
+        data.projects.map((p, i) => (
+          <a class="bo__item" href={p.url}>
+            <span class="bo__item-n">
+              N<sup>o</sup> {String(i + 1).padStart(2, "0")}
+            </span>
+            <div class="bo__item-body">
+              <div class="bo__item-meta">
+                <span class="bo__latin">{p.role}</span>
+                <span>{p.year}</span>
+              </div>
+              <h3 class="bo__item-title">{p.title}</h3>
+              <p class="bo__item-desc">{p.description}</p>
+              <p class="bo__item-tags">{p.tags.join(" · ")}</p>
+            </div>
+          </a>
+        ))
+      }
+    </section>
+
+    <section class="bo__flora">
+      <h4>Flora — savoir-faire</h4>
+      <p>{data.skills.join(" · ")}</p>
+    </section>
+
+    <footer class="bo__foot">
+      <span class="bo__note">Correspondance</span>
+      <a class="bo__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <ul class="bo__socials">
+        {
+          data.socials.map((s) => (
+            <li>
+              <a href={s.url}>{s.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <span class="bo__stamp"
+        >✿ {data.available ? "Ouvert aux projets" : "Complet"}</span
+      >
+    </footer>
+  </div>
+</section>
+
+<style>
+  .bo {
+    --paper: #f2f0e4;
+    --ink: #23201a;
+    --green: #285141;
+    --green-2: #3c6f5a;
+    --gold: #9c7a2e;
+    --rule: #cfccba;
+    background: radial-gradient(
+      120% 90% at 50% -10%,
+      #f6f4ea 0%,
+      var(--paper) 55%
+    );
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    min-height: 100vh;
+    padding: clamp(18px, 4vw, 52px) clamp(18px, 4vw, 52px) 104px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bo__sheet {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid var(--rule);
+    background: rgba(255, 255, 255, 0.35);
+    padding: clamp(20px, 4vw, 48px);
+  }
+
+  .bo__head {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--green);
+  }
+  .bo__label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .bo__hero {
+    text-align: center;
+    padding: clamp(30px, 6vw, 60px) 0 clamp(16px, 3vw, 28px);
+  }
+  .bo__kicker {
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .bo__name {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: clamp(2.8rem, 10vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--green);
+    margin: 0;
+  }
+  .bo__tagline {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    max-width: 26ch;
+    margin: 16px auto 0;
+    line-height: 1.2;
+  }
+  .bo__branch {
+    display: block;
+    width: min(280px, 70%);
+    height: auto;
+    margin: 22px auto 0;
+    color: var(--green-2);
+  }
+
+  .bo__about {
+    columns: 2;
+    column-gap: 40px;
+    padding: clamp(26px, 5vw, 44px) 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bo__note {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    column-span: all;
+  }
+  .bo__about p {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .bo__sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: clamp(28px, 4vw, 40px) 0 6px;
+  }
+  .bo__sec-head h2 {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin: 0;
+    color: var(--green);
+  }
+  .bo__item {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: clamp(14px, 3vw, 32px);
+    padding: clamp(20px, 3vw, 30px) 8px;
+    border-top: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
+  }
+  .bo__item:hover {
+    background: rgba(40, 81, 65, 0.06);
+  }
+  .bo__item-n {
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--gold);
+    padding-top: 4px;
+  }
+  .bo__item-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-2);
+    margin-bottom: 6px;
+  }
+  .bo__latin {
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 14px;
+  }
+  .bo__item-title {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+    line-height: 1;
+    margin: 0 0 8px;
+    color: var(--green);
+    display: inline-block;
+    text-decoration: underline;
+    text-decoration-color: rgba(156, 122, 46, 0.5);
+    text-underline-offset: 5px;
+  }
+  .bo__item:hover .bo__item-title {
+    text-decoration-color: var(--gold);
+  }
+  .bo__item-desc {
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    line-height: 1.5;
+    max-width: 52ch;
+    margin: 0 0 10px;
+  }
+  .bo__item-tags {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--green-2);
+    margin: 0;
+  }
+
+  .bo__flora {
+    padding: clamp(28px, 4vw, 44px) 0;
+    border-top: 1px solid var(--green);
+    margin-top: 12px;
+  }
+  .bo__flora h4 {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .bo__flora p {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    line-height: 1.6;
+    color: var(--green);
+  }
+
+  .bo__foot {
+    text-align: center;
+    padding-top: clamp(28px, 4vw, 44px);
+    border-top: 1px solid var(--rule);
+  }
+  .bo__mail {
+    display: block;
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 5px;
+    word-break: break-all;
+    margin: 8px 0 18px;
+  }
+  .bo__socials {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin: 0 0 20px;
+    padding: 0;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .bo__socials a {
+    text-decoration: underline;
+    text-decoration-color: var(--green-2);
+    text-underline-offset: 4px;
+  }
+  .bo__socials a:hover {
+    color: var(--green);
+  }
+  .bo__stamp {
+    display: inline-block;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 5px 16px;
+  }
+
+  @media (max-width: 640px) {
+    .bo__about {
+      columns: 1;
+    }
+    .bo__item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>
