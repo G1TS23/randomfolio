@@ -6,6 +6,6 @@ import sitemap from "@astrojs/sitemap";
 // côté client (voir src/layouts/Layout.astro). Hébergeable partout.
 export default defineConfig({
   // URL de prod : sert au canonical, à l'OG et au sitemap.
-  site: "https://randomfolio.netlify.app",
+  site: "https://olivier.falahi.org",
   integrations: [sitemap()],
 });
