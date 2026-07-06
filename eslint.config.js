@@ -10,6 +10,8 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
+  // les catch vides sont volontaires (ex. localStorage indisponible)
+  { rules: { "no-empty": ["error", { allowEmptyCatch: true }] } },
   {
     // Scripts client des .astro : globals navigateur + variables injectées par define:vars
     files: ["**/*.astro"],

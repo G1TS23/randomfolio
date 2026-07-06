@@ -88,12 +88,46 @@ const jsonLd = {
     -->
     <script is:inline define:vars={{ ids: UNIVERSE_IDS }}>
       (function () {
-        const params = new URLSearchParams(location.search);
-        const seed = params.get("u");
-        const chosen =
-          ids.indexOf(seed) !== -1
-            ? seed
-            : ids[Math.floor(Math.random() * ids.length)];
+        const KEY = "rf.seen.v1";
+        const read = () => {
+          try {
+            return JSON.parse(localStorage.getItem(KEY)) || {};
+          } catch {
+            return {};
+          }
+        };
+        const write = (s) => {
+          try {
+            localStorage.setItem(KEY, JSON.stringify(s));
+          } catch {}
+        };
+        // Tire un univers pas encore vu dans le cycle courant (donc jamais deux
+        // fois le même tant qu'on ne les a pas tous parcourus), en évitant
+        // `avoid` (ex. l'univers actuel) — donc jamais deux fois d'affilée.
+        const pick = (avoid) => {
+          const st = read();
+          let seen = Array.isArray(st.seen)
+            ? st.seen.filter((id) => ids.indexOf(id) !== -1)
+            : [];
+          let pool = ids.filter(
+            (id) => seen.indexOf(id) === -1 && id !== avoid,
+          );
+          if (pool.length === 0) {
+            // cycle terminé → on repart, en évitant seulement le dernier affiché
+            seen = [];
+            const skip = avoid != null ? avoid : st.last;
+            pool = ids.filter((id) => id !== skip);
+            if (pool.length === 0) pool = ids.slice();
+          }
+          const chosen = pool[Math.floor(Math.random() * pool.length)];
+          seen.push(chosen);
+          write({ seen, last: chosen });
+          return chosen;
+        };
+        window.__rfPick = pick;
+
+        const seed = new URLSearchParams(location.search).get("u");
+        const chosen = ids.indexOf(seed) !== -1 ? seed : pick(null);
         document.documentElement.setAttribute("data-universe", chosen);
         // active l'overlay de génération uniquement si JS tourne (anti-flash + fallback sans JS)
         document.documentElement.classList.add("js");
@@ -412,6 +446,29 @@ const jsonLd = {
       function render() {
         if (label) label.textContent = nameOf(current());
       }
+
+      // Variation de couleur « dans le même ton » : légère rotation de teinte +
+      // saturation appliquée à l'univers affiché (masquée par le loader → pas de
+      // flash). Amplitude par univers pour rester dans la bonne famille.
+      const TINT = {
+        swiss: 60,
+        terminal: 34,
+        y2k: 46,
+        editorial: 65,
+        blueprint: 44,
+        riso: 52,
+        bauhaus: 50,
+      };
+      function applyTint(id) {
+        const node = document.querySelector('[data-universe-id="' + id + '"]');
+        if (!node) return;
+        const range = TINT[id] != null ? TINT[id] : 40;
+        // amplitude min. garantie (45–100 % de la plage) → toujours perceptible
+        const sign = Math.random() < 0.5 ? -1 : 1;
+        const hue = Math.round(sign * range * (0.45 + Math.random() * 0.55));
+        const sat = (0.85 + Math.random() * 0.4).toFixed(2);
+        node.style.filter = "hue-rotate(" + hue + "deg) saturate(" + sat + ")";
+      }
       function showToast(msg) {
         if (!toast) return;
         toast.textContent = msg;
@@ -516,13 +573,19 @@ const jsonLd = {
         .querySelector('[data-action="regen"]')
         ?.addEventListener("click", () => {
           if (loader && loader.classList.contains("is-rolling")) return; // évite le spam
+          // même mémoire que le rechargement : jamais un univers déjà vu dans
+          // le cycle, ni l'actuel (fallback si le head n'a pas exposé __rfPick)
           const others = ids.filter((id) => id !== current());
-          const next = others[Math.floor(Math.random() * others.length)];
+          const next = window.__rfPick
+            ? window.__rfPick(current())
+            : others[Math.floor(Math.random() * others.length)];
           runGenerator(nameOf(next), {
             quick: true,
-            onReveal: () => setUniverse(next),
+            onReveal: () => {
+              setUniverse(next); // retire ?u= → rechargement reste aléatoire
+              applyTint(next); // nouvelle teinte, masquée par le loader
+            },
           });
-          // note : setUniverse retire ?u= pour garder le rechargement aléatoire
         });
 
       document
@@ -548,6 +611,7 @@ const jsonLd = {
       });
 
       render();
+      applyTint(current()); // teinte de l'univers au chargement (masquée par le loader)
       // Mise en scène du tirage au chargement (univers déjà posé par le head)
       runGenerator(nameOf(current()));
     </script>

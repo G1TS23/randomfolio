@@ -19,6 +19,7 @@ export const UNIVERSES: UniverseMeta[] = [
   { id: "editorial", name: "Editorial" },
   { id: "blueprint", name: "Blueprint" },
   { id: "riso", name: "Riso" },
+  { id: "bauhaus", name: "Bauhaus" },
 ];
 
 export const UNIVERSE_IDS = UNIVERSES.map((u) => u.id);
