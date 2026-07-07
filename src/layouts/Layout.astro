@@ -375,7 +375,7 @@ const jsonLd = {
       ———————————————————————————————————————————————— */
       .switcher {
         position: fixed;
-        bottom: 18px;
+        bottom: 26px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 9999;
@@ -388,7 +388,10 @@ const jsonLd = {
         border: 1px solid rgba(255, 255, 255, 0.14);
         backdrop-filter: blur(14px) saturate(1.2);
         -webkit-backdrop-filter: blur(14px) saturate(1.2);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+        /* spread négatif : ombre resserrée qui s'estompe avant le bord de l'écran */
+        box-shadow:
+          0 8px 22px -8px rgba(0, 0, 0, 0.45),
+          0 2px 6px rgba(0, 0, 0, 0.28);
         font-family: "Inter", system-ui, sans-serif;
         color: #fff;
       }
