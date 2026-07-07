@@ -23,7 +23,7 @@ const ref = data.name
     <div class="bp__sheet">
       <header class="bp__head">
         <span>DOC. {ref}-01</span>
-        <span>PROJECTION ORTHOGONALE</span>
+        <span data-i18n="bp.projection">PROJECTION ORTHOGONALE</span>
         <span>ÉCH. 1:1</span>
       </header>
 
@@ -31,22 +31,27 @@ const ref = data.name
         <span class="bp__dim bp__dim--top" aria-hidden="true">
           <span class="bp__dim-label">{data.name.length} car.</span>
         </span>
-        <p class="bp__label">FIG. 1 — SUJET</p>
+        <p class="bp__label" data-i18n="bp.fig1">FIG. 1 — SUJET</p>
         <h1 class="bp__name">{data.name}</h1>
-        <p class="bp__role">{data.role}</p>
-        <p class="bp__tagline">{data.tagline}</p>
-        <span class="bp__badge"
+        <p class="bp__role" data-i18n="role">{data.role}</p>
+        <p class="bp__tagline" data-i18n="tagline">{data.tagline}</p>
+        <span
+          class="bp__badge"
+          data-i18n={data.available ? "bp.available" : "bp.busy"}
           >{data.available ? "● OPÉRATIONNEL" : "○ INDISPONIBLE"}</span
         >
       </div>
 
       <section class="bp__section">
         <p class="bp__label">NOTE 01 — DESCRIPTION</p>
-        <p class="bp__note">{data.about}</p>
+        <p class="bp__note" data-i18n="about">{data.about}</p>
       </section>
 
       <section class="bp__section">
-        <p class="bp__label">NOMENCLATURE — {data.projects.length} ENSEMBLES</p>
+        <p class="bp__label">
+          NOMENCLATURE — {data.projects.length}{" "}
+          <span data-i18n="bp.assemblies">ENSEMBLES</span>
+        </p>
         <div class="bp__parts">
           {
             data.projects.map((p, i) => (
@@ -54,12 +59,26 @@ const ref = data.name
                 <span class="bp__part-ref">
                   {ref}-{String(i + 1).padStart(3, "0")}
                 </span>
-                <span class="bp__part-name">{p.title}</span>
-                <span class="bp__part-year">RÉV. {p.year}</span>
-                <span class="bp__part-desc">{p.description}</span>
+                <span class="bp__part-name" data-i18n={`projects.${i}.title`}>
+                  {p.title}
+                </span>
+                <span class="bp__part-year">
+                  <span data-i18n="bp.rev">RÉV.</span> {p.year}
+                </span>
+                <span
+                  class="bp__part-desc"
+                  data-i18n={`projects.${i}.description`}
+                >
+                  {p.description}
+                </span>
                 <span class="bp__part-spec">
-                  {p.tags.map((t) => (
-                    <span class="bp__spec">{t}</span>
+                  {p.tags.map((t, j) => (
+                    <span
+                      class="bp__spec"
+                      data-i18n={`projects.${i}.tags.${j}`}
+                    >
+                      {t}
+                    </span>
                   ))}
                 </span>
               </a>
@@ -69,13 +88,13 @@ const ref = data.name
       </section>
 
       <section class="bp__section">
-        <p class="bp__label">MATÉRIAUX & OUTILLAGE</p>
+        <p class="bp__label" data-i18n="bp.materials">MATÉRIAUX & OUTILLAGE</p>
         <ul class="bp__materials">
           {
             data.skills.map((s, i) => (
               <li>
                 <span class="bp__mat-n">{String(i + 1).padStart(2, "0")}</span>
-                {s}
+                <span data-i18n={`skills.${i}`}>{s}</span>
               </li>
             ))
           }
@@ -85,11 +104,11 @@ const ref = data.name
       <!-- Cartouche façon plan technique -->
       <div class="bp__titleblock">
         <div class="bp__tb-cell bp__tb-cell--wide">
-          <span class="bp__tb-k">DESSINÉ PAR</span>
+          <span class="bp__tb-k" data-i18n="bp.drawnby">DESSINÉ PAR</span>
           <span class="bp__tb-v">{data.name}</span>
         </div>
         <div class="bp__tb-cell">
-          <span class="bp__tb-k">RÉV.</span>
+          <span class="bp__tb-k" data-i18n="bp.rev">RÉV.</span>
           <span class="bp__tb-v">{rev}</span>
         </div>
         <div class="bp__tb-cell bp__tb-cell--wide">
@@ -99,11 +118,11 @@ const ref = data.name
           >
         </div>
         <div class="bp__tb-cell">
-          <span class="bp__tb-k">FEUILLE</span>
+          <span class="bp__tb-k" data-i18n="bp.sheet">FEUILLE</span>
           <span class="bp__tb-v">1 / 1</span>
         </div>
         <div class="bp__tb-cell bp__tb-cell--full">
-          <span class="bp__tb-k">RÉFÉRENCES</span>
+          <span class="bp__tb-k" data-i18n="bp.refs">RÉFÉRENCES</span>
           <span class="bp__tb-links">
             {
               data.socials.map((s) => (

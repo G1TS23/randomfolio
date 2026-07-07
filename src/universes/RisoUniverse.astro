@@ -9,24 +9,26 @@ const { data } = Astro.props;
 <section class="universe rz" data-universe-id="riso">
   <div class="rz__paper">
     <header class="rz__head">
-      <span class="rz__stamp">RISO · ÉD. LIMITÉE</span>
-      <span class="rz__stamp rz__stamp--pink"
+      <span class="rz__stamp" data-i18n="rz.stamp">RISO · ÉD. LIMITÉE</span>
+      <span
+        class="rz__stamp rz__stamp--pink"
+        data-i18n={data.available ? "rz.available" : "rz.busy"}
         >{data.available ? "OUVERT" : "FERMÉ"}</span
       >
     </header>
 
     <div class="rz__hero">
-      <p class="rz__hi">{data.role}</p>
+      <p class="rz__hi" data-i18n="role">{data.role}</p>
       <h1 class="rz__name" data-text={data.name}>{data.name}</h1>
-      <p class="rz__tag">{data.tagline}</p>
+      <p class="rz__tag" data-i18n="tagline">{data.tagline}</p>
     </div>
 
     <div class="rz__about">
-      <span class="rz__ticket">À PROPOS</span>
-      <p>{data.about}</p>
+      <span class="rz__ticket" data-i18n="rz.about">À PROPOS</span>
+      <p data-i18n="about">{data.about}</p>
     </div>
 
-    <h2 class="rz__h2" data-text="Projets">Projets</h2>
+    <h2 class="rz__h2" data-text="Projets" data-i18n="rz.projects">Projets</h2>
     <div class="rz__zine">
       {
         data.projects.map((p, i) => (
@@ -36,14 +38,25 @@ const { data } = Astro.props;
             data-n={String(i + 1).padStart(2, "0")}
           >
             <div class="rz__card-head">
-              <span class="rz__card-title">{p.title}</span>
+              <span class="rz__card-title" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </span>
               <span class="rz__card-year">{p.year}</span>
             </div>
-            <p class="rz__card-role">{p.role}</p>
-            <p class="rz__card-desc">{p.description}</p>
+            <p class="rz__card-role" data-i18n={`projects.${i}.role`}>
+              {p.role}
+            </p>
+            <p class="rz__card-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </p>
             <div class="rz__card-tags">
-              {p.tags.map((t) => (
-                <span class="rz__tag-chip">{t}</span>
+              {p.tags.map((t, j) => (
+                <span
+                  class="rz__tag-chip"
+                  data-i18n={`projects.${i}.tags.${j}`}
+                >
+                  {t}
+                </span>
               ))}
             </div>
           </a>
@@ -52,14 +65,22 @@ const { data } = Astro.props;
     </div>
 
     <div class="rz__strip">
-      <span class="rz__ticket">FABRIQUÉ AVEC</span>
+      <span class="rz__ticket" data-i18n="rz.madewith">FABRIQUÉ AVEC</span>
       <div class="rz__skills">
-        {data.skills.map((s) => <span class="rz__skill">{s}</span>)}
+        {
+          data.skills.map((s, i) => (
+            <span class="rz__skill" data-i18n={`skills.${i}`}>
+              {s}
+            </span>
+          ))
+        }
       </div>
     </div>
 
     <footer class="rz__foot">
-      <p class="rz__foot-hi">On imprime un projet ensemble&nbsp;?</p>
+      <p class="rz__foot-hi" data-i18n="rz.together">
+        On imprime un projet ensemble&nbsp;?
+      </p>
       <a class="rz__mail" href={`mailto:${data.email}`}>{data.email}</a>
       <div class="rz__socials">
         {
@@ -70,7 +91,7 @@ const { data } = Astro.props;
           ))
         }
       </div>
-      <p class="rz__reg" aria-hidden="true">
+      <p class="rz__reg" aria-hidden="true" data-i18n="rz.reg">
         ◉ ◉ RISOGRAPHIE · IMPRESSION 2 COULEURS ◉ ◉
       </p>
     </footer>
