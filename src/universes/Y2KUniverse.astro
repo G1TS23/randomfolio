@@ -272,7 +272,7 @@ const tilts = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.2deg", "1deg"];
     border: 4px solid var(--ink);
     box-shadow: 7px 7px 0 var(--ink);
     padding: 20px;
-    transform: rotate(var(--tilt));
+    transform: rotate(var(--tilt, 0deg));
     transition:
       transform 0.12s ease,
       box-shadow 0.12s ease;
