@@ -194,86 +194,128 @@ const jsonLd = {
         }
       }
       .genloader__inner {
-        text-align: center;
-        padding: 24px;
-        width: min(90vw, 540px);
+        width: min(94vw, 720px);
+        padding: 20px;
       }
-      .genloader__dice {
-        display: inline-block;
-        font-size: 30px;
-        line-height: 1;
-        margin-bottom: 20px;
+      /* ——— panneau à palettes façon Solari (aéroport / gare) ——— */
+      .sf {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        background: linear-gradient(#15151a, #0d0d11);
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        padding: clamp(14px, 3vw, 26px);
+        font-family: "JetBrains Mono", ui-monospace, monospace;
       }
-      .genloader.is-rolling .genloader__dice {
-        animation: gen-roll 0.5s linear infinite;
-      }
-      @keyframes gen-roll {
-        0% {
-          transform: rotate(0) scale(1);
-        }
-        50% {
-          transform: rotate(180deg) scale(1.15);
-        }
-        100% {
-          transform: rotate(360deg) scale(1);
-        }
-      }
-      .genloader__eyebrow {
-        display: block;
-        font-size: 12px;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: #83838d;
-        margin-bottom: 14px;
-      }
-      .genloader__reel {
+      .sf__head,
+      .sf__meta {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        /* taille portée par le conteneur pour que le em du min-height soit correct */
-        font-size: clamp(2.4rem, 9vw, 4.6rem);
-        line-height: 1;
-        min-height: 1.25em; /* contient entièrement le nom, ascendantes comprises */
-        padding: 0.12em 8px; /* marge pour le petit rebond de l'animation */
-      }
-      .genloader__name {
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 700;
-        font-size: 1em;
-        line-height: 1;
-        letter-spacing: -0.02em;
-        color: #f4f4f6;
-        will-change: transform, opacity, filter;
-      }
-      .genloader__name.is-final {
-        color: #fff;
-        text-shadow: 0 0 34px rgba(255, 255, 255, 0.28);
-      }
-      .genloader__bar {
-        margin: 28px auto 0;
-        width: 100%;
-        height: 2px;
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 2px;
-        overflow: hidden;
-      }
-      .genloader__bar span {
-        display: block;
-        height: 100%;
-        width: 0;
-        background: #fff;
-      }
-      .genloader__hint {
-        display: block;
-        margin-top: 16px;
-        font-size: 11px;
+        font-size: 12px;
         letter-spacing: 0.16em;
         text-transform: uppercase;
+      }
+      .sf__head {
+        color: #ffcf5a;
+        padding-bottom: 14px;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.14);
+      }
+      .sf__head-r {
         color: #83838d;
       }
+      .sf__board {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: clamp(3px, 0.8vw, 6px);
+        padding: clamp(16px, 3vw, 26px) 0;
+        perspective: 340px;
+      }
+      .sf__cell {
+        position: relative;
+        display: inline-grid;
+        place-items: center;
+        width: clamp(22px, 6.2vw, 50px);
+        height: clamp(34px, 9vw, 72px);
+        border-radius: 4px;
+        overflow: hidden;
+        perspective: 200px;
+        background: linear-gradient(#2c2c34 0 50%, #1d1d23 50% 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 1px 2px rgba(0, 0, 0, 0.4);
+      }
+      /* volet supérieur qui se rabat à chaque changement de palette */
+      .sf__flap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 50%;
+        border-radius: 4px 4px 0 0;
+        background: linear-gradient(#34343f, #26262e);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.65);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transform-origin: 50% 100%;
+        transform: rotateX(0deg);
+        backface-visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .sf__cell::after {
+        /* la fente horizontale au milieu de la palette */
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 2px;
+        transform: translateY(-1px);
+        background: rgba(0, 0, 0, 0.55);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+      .sf__char {
+        font-weight: 700;
+        font-size: clamp(1.15rem, 4.2vw, 2.5rem);
+        line-height: 1;
+        color: #f1ead4;
+        will-change: transform;
+        backface-visibility: hidden;
+      }
+      .sf__cell.is-set .sf__char {
+        color: #fff;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.16);
+      }
+      .sf__meta {
+        color: #9a9aa4;
+        padding-top: 14px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.14);
+      }
+      .sf__status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #ffcf5a;
+      }
+      .sf__status::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ffcf5a;
+        box-shadow: 0 0 10px #ffcf5a;
+        animation: sf-blink 1s steps(2, start) infinite;
+      }
       @media (prefers-reduced-motion: reduce) {
-        .genloader.is-rolling .genloader__dice {
+        .sf__status::before {
           animation: none;
+        }
+      }
+      @keyframes sf-blink {
+        50% {
+          opacity: 0.25;
         }
       }
 
@@ -333,6 +375,13 @@ const jsonLd = {
         border-right: 1px solid rgba(255, 255, 255, 0.14);
         white-space: nowrap;
       }
+      .switcher__icon {
+        font-size: 15px;
+        border-left: 1px solid rgba(255, 255, 255, 0.14);
+      }
+      .switcher__icon.is-muted {
+        opacity: 0.5;
+      }
       .switcher__toast {
         position: fixed;
         bottom: 74px;
@@ -386,14 +435,20 @@ const jsonLd = {
     </style>
   </head>
   <body>
-    <!-- Overlay de génération : mis en scène le tirage aléatoire de l'univers -->
+    <!-- Overlay de génération : panneau à palettes (Solari) qui « affiche » l'univers -->
     <div class="genloader" role="status" aria-live="polite">
       <div class="genloader__inner">
-        <span class="genloader__dice" aria-hidden="true">🎲</span>
-        <span class="genloader__eyebrow">Portfolio aléatoire</span>
-        <div class="genloader__reel"><span class="genloader__name"></span></div>
-        <div class="genloader__bar"><span></span></div>
-        <span class="genloader__hint">génération d’un univers…</span>
+        <div class="sf">
+          <div class="sf__head">
+            <span class="sf__head-l">✦ Départs</span>
+            <span class="sf__head-r">Portfolio · vol RF</span>
+          </div>
+          <div class="sf__board" data-sf-board aria-hidden="true"></div>
+          <div class="sf__meta">
+            <span class="sf__status" data-sf-status>Embarquement</span>
+            <span class="sf__gate" data-sf-gate>Porte ∞</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -417,13 +472,21 @@ const jsonLd = {
       >
         🔗 Partager
       </button>
+      <button
+        type="button"
+        data-action="sound"
+        class="switcher__icon"
+        aria-label="Activer ou couper le son du panneau"
+        aria-pressed="true"
+      >
+        <span data-sound-on>🔊</span>
+      </button>
     </nav>
     <div class="switcher__toast" role="status" aria-live="polite"></div>
 
     <script is:inline define:vars={{ universes: UNIVERSES }}>
       const root = document.documentElement;
       const ids = universes.map((u) => u.id);
-      const names = universes.map((u) => u.name);
       const nameOf = (id) =>
         (universes.find((u) => u.id === id) || {}).name || id;
 
@@ -433,12 +496,13 @@ const jsonLd = {
 
       const switcher = document.querySelector(".switcher");
       const loader = document.querySelector(".genloader");
-      const reel = loader && loader.querySelector(".genloader__name");
-      const bar = loader && loader.querySelector(".genloader__bar span");
-      const hint = loader && loader.querySelector(".genloader__hint");
+      const board = loader && loader.querySelector("[data-sf-board]");
+      const statusEl = loader && loader.querySelector("[data-sf-status]");
+      const gateEl = loader && loader.querySelector("[data-sf-gate]");
       const reduceMotion = matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
+      let sfTimer = null;
 
       function current() {
         return root.getAttribute("data-universe");
@@ -496,20 +560,6 @@ const jsonLd = {
         window.scrollTo({ top: 0 });
       }
 
-      // ————— Animation de génération (machine à sous → univers tiré) —————
-      function pop(el) {
-        el.animate(
-          [
-            {
-              transform: "translateY(8px) scale(.88)",
-              opacity: 0,
-              filter: "blur(3px)",
-            },
-            { transform: "none", opacity: 1, filter: "blur(0)" },
-          ],
-          { duration: 130, easing: "cubic-bezier(.2,.7,.2,1)" },
-        );
-      }
       function dismissLoader() {
         if (!loader) return;
         loader.classList.add("is-done");
@@ -518,65 +568,186 @@ const jsonLd = {
           loader.style.display = "none";
         }, 640);
       }
-      // Fait défiler les noms d'univers en décélérant, s'arrête sur `targetName`.
-      // `onReveal` est appelé à l'atterrissage (pour poser l'univers sous l'overlay).
+
+      // ————— Écran de chargement : panneau à palettes (Solari) —————
+      const SF_CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ·.-0123456789";
+      const SF_MIN_W = 8; // largeur minimale du panneau (nombre de palettes)
+      const SF_INTERVAL = 76; // ms par palette (assez lent pour bien voir le volet)
+      const SF_BASE = 13; // palettes minimales (1re colonne)
+      const SF_STEP = 3; // palettes en plus par colonne → cascade gauche→droite
+      const NBSP = "\u00A0";
+
+      // ——— son mécanique du panneau (Web Audio, synthétisé — aucun fichier) ———
+      let soundOn = true;
+      try {
+        soundOn = localStorage.getItem("rf.sound") !== "off";
+      } catch {}
+      let actx = null;
+      function audioCtx() {
+        const AC =
+          window.AudioContext || /** @type {any} */ (window).webkitAudioContext;
+        if (!AC) return null;
+        if (!actx) {
+          try {
+            actx = new AC();
+          } catch {
+            return null;
+          }
+        }
+        if (actx.state === "suspended") actx.resume();
+        return actx;
+      }
+      // un « clac » = courte bouffée de bruit filtrée, façon volet plastique
+      function clack(intensity) {
+        if (!soundOn || !actx || actx.state !== "running") return;
+        const t = actx.currentTime;
+        const vol = 0.16 + 0.24 * Math.min(1, intensity || 0.3);
+        const dur = 0.04;
+        const n = Math.floor(actx.sampleRate * dur);
+        const buf = actx.createBuffer(1, n, actx.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < n; i++) {
+          const env = (1 - i / n) * (1 - i / n); // attaque percussive
+          d[i] = (Math.random() * 2 - 1) * env;
+        }
+        const src = actx.createBufferSource();
+        src.buffer = buf;
+        const flt = actx.createBiquadFilter();
+        flt.type = "bandpass";
+        flt.frequency.value = 1700 + Math.random() * 1000;
+        flt.Q.value = 1.1;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(vol, t);
+        g.gain.exponentialRampToValueAtTime(0.0008, t + dur);
+        src.connect(flt);
+        flt.connect(g);
+        g.connect(actx.destination);
+        src.start(t);
+      }
+
+      // Nom mis en majuscules et centré sur une largeur fixe de palettes
+      function sfPad(name) {
+        const t = name.toUpperCase();
+        const w = Math.max(SF_MIN_W, t.length);
+        const left = Math.floor((w - t.length) / 2);
+        return " ".repeat(left) + t + " ".repeat(w - t.length - left);
+      }
+      function sfBuild(text) {
+        board.replaceChildren();
+        const cells = [];
+        for (let i = 0; i < text.length; i++) {
+          const cell = document.createElement("span");
+          cell.className = "sf__cell";
+          const ch = document.createElement("span");
+          ch.className = "sf__char";
+          ch.textContent = NBSP;
+          const flap = document.createElement("span");
+          flap.className = "sf__flap";
+          cell.appendChild(ch);
+          cell.appendChild(flap);
+          board.appendChild(cell);
+          cells.push({ cell, ch, flap });
+        }
+        return cells;
+      }
+      // le volet supérieur se rabat vers l'avant puis disparaît (mécanique)
+      function sfFlip(flap) {
+        flap.animate(
+          [
+            { transform: "rotateX(0deg)", opacity: 1 },
+            { transform: "rotateX(-90deg)", opacity: 1, offset: 0.72 },
+            { transform: "rotateX(-90deg)", opacity: 0 },
+          ],
+          { duration: SF_INTERVAL, easing: "cubic-bezier(.3,0,.4,1)" },
+        );
+      }
+      const sfSet = (ch, i) =>
+        (ch.textContent = SF_CHARS[i] === " " ? NBSP : SF_CHARS[i]);
+
+      // Fait tourner les palettes jusqu'à afficher `targetName`, puis `onReveal`.
       function runGenerator(targetName, opts) {
         opts = opts || {};
         if (!loader) {
           if (opts.onReveal) opts.onReveal();
           return;
         }
+        if (sfTimer) {
+          clearInterval(sfTimer);
+          sfTimer = null;
+        }
         loader.classList.remove("is-done");
         loader.style.display = "flex";
-        if (switcher) switcher.style.visibility = "hidden"; // évite le bleed via backdrop-filter
-        reel.classList.remove("is-final");
-        if (hint) hint.textContent = "génération d’un univers…";
-        bar.style.transition = "none";
-        bar.style.width = "0%";
-        void bar.offsetWidth; // reflow pour rejouer la barre
+        if (switcher) switcher.style.visibility = "hidden";
+        if (statusEl) statusEl.textContent = "Embarquement";
+        if (gateEl)
+          gateEl.textContent = "Porte " + (1 + Math.floor(Math.random() * 42));
+
+        const text = sfPad(targetName);
+        const cells = sfBuild(text);
+        const len = SF_CHARS.length;
+
+        const arrive = () => {
+          if (statusEl) statusEl.textContent = "À l'heure";
+          if (opts.onReveal) opts.onReveal();
+          setTimeout(dismissLoader, 620); // pause pour profiter du panneau
+        };
 
         if (reduceMotion) {
-          reel.textContent = targetName;
-          reel.classList.add("is-final");
-          if (hint) hint.textContent = "univers sélectionné";
-          bar.style.transition = "width .3s linear";
-          bar.style.width = "100%";
-          if (opts.onReveal) opts.onReveal();
-          setTimeout(dismissLoader, 480);
+          cells.forEach((c, i) => {
+            const idx = SF_CHARS.indexOf(text[i]);
+            sfSet(c.ch, idx < 0 ? 0 : idx);
+            if (text[i] !== " ") c.cell.classList.add("is-set");
+          });
+          arrive();
           return;
         }
 
-        const delays = opts.quick
-          ? [40, 45, 55, 70, 95, 140, 200]
-          : [45, 45, 50, 60, 70, 85, 105, 135, 180, 240];
-        const total = delays.reduce((a, b) => a + b, 0);
-        bar.style.transition = "width " + total + "ms cubic-bezier(.2,.6,.2,1)";
-        bar.style.width = "100%";
-        loader.classList.add("is-rolling");
+        const state = cells.map((c, i) => {
+          let ti = SF_CHARS.indexOf(text[i]);
+          if (ti < 0) ti = 0;
+          const flips = SF_BASE + i * SF_STEP;
+          const cur = (((ti - flips) % len) + len) % len;
+          sfSet(c.ch, cur);
+          return {
+            cell: c.cell,
+            ch: c.ch,
+            flap: c.flap,
+            cur,
+            target: ti,
+            done: false,
+          };
+        });
 
-        let i = 0;
-        (function tick() {
-          const last = i === delays.length - 1;
-          reel.textContent = last
-            ? targetName
-            : names[Math.floor(Math.random() * names.length)];
-          pop(reel);
-          if (last) {
-            loader.classList.remove("is-rolling");
-            reel.classList.add("is-final");
-            if (hint) hint.textContent = "univers sélectionné";
-            if (opts.onReveal) opts.onReveal();
-            setTimeout(dismissLoader, 380);
-            return;
+        sfTimer = setInterval(() => {
+          let moved = 0;
+          let remaining = 0;
+          for (const s of state) {
+            if (s.done) continue;
+            s.cur = (s.cur + 1) % len;
+            sfSet(s.ch, s.cur);
+            sfFlip(s.flap);
+            moved++;
+            if (s.cur === s.target) {
+              s.done = true;
+              if (SF_CHARS[s.cur] !== " ") s.cell.classList.add("is-set");
+            } else {
+              remaining++;
+            }
           }
-          setTimeout(tick, delays[i++]);
-        })();
+          if (moved > 0) clack(moved / state.length);
+          if (remaining === 0) {
+            clearInterval(sfTimer);
+            sfTimer = null;
+            arrive();
+          }
+        }, SF_INTERVAL);
       }
 
       document
         .querySelector('[data-action="regen"]')
         ?.addEventListener("click", () => {
-          if (loader && loader.classList.contains("is-rolling")) return; // évite le spam
+          if (sfTimer) return; // évite le spam pendant que le panneau tourne
+          audioCtx(); // débloque l'audio (geste utilisateur)
           // même mémoire que le rechargement : jamais un univers déjà vu dans
           // le cycle, ni l'actuel (fallback si le head n'a pas exposé __rfPick)
           const others = ids.filter((id) => id !== current());
@@ -604,6 +775,46 @@ const jsonLd = {
             showToast(url.toString());
           }
         });
+
+      // Bouton son : coupe / active le « clac » du panneau (préférence mémorisée)
+      const soundBtn = document.querySelector('[data-action="sound"]');
+      function renderSound() {
+        if (!soundBtn) return;
+        soundBtn.classList.toggle("is-muted", !soundOn);
+        soundBtn.setAttribute("aria-pressed", String(soundOn));
+        const ic = soundBtn.querySelector("[data-sound-on]");
+        if (ic) ic.textContent = soundOn ? "🔊" : "🔇";
+      }
+      soundBtn?.addEventListener("click", () => {
+        soundOn = !soundOn;
+        try {
+          localStorage.setItem("rf.sound", soundOn ? "on" : "off");
+        } catch {}
+        if (soundOn) {
+          audioCtx();
+          clack(0.7); // petit retour audio à l'activation
+        }
+        renderSound();
+      });
+      renderSound();
+
+      // Débloque le contexte audio dès la 1re interaction (anti-autoplay des
+      // navigateurs). Ainsi le « clac » du bouton Regénérer / touche R marche.
+      const unlockAudio = () => {
+        const ac = audioCtx();
+        if (ac) {
+          // buffer silencieux joué dans le geste → débloque iOS Safari
+          const b = ac.createBuffer(1, 1, ac.sampleRate);
+          const s = ac.createBufferSource();
+          s.buffer = b;
+          s.connect(ac.destination);
+          s.start(0);
+        }
+        removeEventListener("pointerdown", unlockAudio);
+        removeEventListener("keydown", unlockAudio);
+      };
+      addEventListener("pointerdown", unlockAudio);
+      addEventListener("keydown", unlockAudio);
 
       // Raccourci clavier : "r" pour regénérer
       addEventListener("keydown", (e) => {
