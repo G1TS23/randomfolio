@@ -1,5 +1,11 @@
 # Portfolio aléatoire 🎲
 
+[![CI](https://github.com/G1TS23/randomfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/G1TS23/randomfolio/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/github/package-json/v/G1TS23/randomfolio?color=BC52EE)](https://github.com/G1TS23/randomfolio)
+[![License](https://img.shields.io/github/license/G1TS23/randomfolio?color=BC52EE)](LICENSE)
+[![Astro](https://img.shields.io/github/package-json/dependency-version/G1TS23/randomfolio/astro?logo=astro&logoColor=white&label=Astro&color=BC52EE)](https://astro.build)
+[![Live](https://img.shields.io/badge/live-olivier.falahi.org-BC52EE?logo=netlify&logoColor=white)](https://olivier.falahi.org)
+
 Un portfolio qui se réinvente à chaque visite : le contenu est unique, mais
 chaque visiteur tombe sur un **univers de design** complet et cohérent, tiré au
 sort — et même sa couleur varie légèrement à chaque passage.
@@ -111,3 +117,7 @@ Test · Build à chaque push et PR.
 - **SEO** : `<title>` / meta / `canonical` fixes (indépendants de l'univers),
   **JSON-LD `schema.org/Person`** comme source canonique, `sitemap.xml`,
   `robots.txt`, et une **image Open Graph** (`public/og.png`).
+
+## Licence
+
+[MIT](LICENSE) © Olivier Falahi
