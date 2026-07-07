@@ -187,6 +187,54 @@ const jsonLd = {
         transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
         pointer-events: none;
       }
+      /* panneau en attente d'un geste (pour jouer le son) */
+      .genloader.is-armed {
+        cursor: pointer;
+      }
+      .sf__go {
+        display: none;
+      }
+      .genloader.is-armed .sf__go {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        cursor: pointer;
+        appearance: none;
+        border: 1px solid rgba(255, 207, 90, 0.6);
+        background: rgba(255, 207, 90, 0.14);
+        color: #ffcf5a;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: clamp(15px, 2.4vw, 20px);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 12px 26px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+        max-width: calc(100% - 24px);
+        white-space: nowrap;
+        animation: sf-pulse 1.2s ease-in-out infinite;
+      }
+      .genloader.is-armed .sf__go:hover {
+        background: rgba(255, 207, 90, 0.24);
+      }
+      @keyframes sf-pulse {
+        50% {
+          opacity: 0.62;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .genloader.is-armed .sf__go {
+          animation: none;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .genloader.is-done {
           transform: none;
@@ -200,6 +248,7 @@ const jsonLd = {
       }
       /* ——— panneau à palettes façon Solari (aéroport / gare) ——— */
       .sf {
+        position: relative;
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         background: linear-gradient(#15151a, #0d0d11);
@@ -445,6 +494,9 @@ const jsonLd = {
             <span class="sf__head-r">Portfolio · vol RF</span>
           </div>
           <div class="sf__board" data-sf-board aria-hidden="true"></div>
+          <button class="sf__go" data-sf-go type="button">
+            🎲 Générer mon univers
+          </button>
           <div class="sf__meta">
             <span class="sf__status" data-sf-status>Embarquement</span>
             <span class="sf__gate" data-sf-gate>Porte ∞</span>
@@ -856,14 +908,46 @@ const jsonLd = {
         }
       });
 
+      // Chargement HYBRIDE : le panneau attend un geste (clic → animation AVEC
+      // son, car le clic débloque l'audio), sinon il se lance tout seul après un
+      // court délai (SANS son) → visiteurs passifs & crawlers non bloqués (SEO).
+      function armLoader() {
+        if (!loader) return;
+        if (reduceMotion) {
+          runGenerator(nameOf(current()), {});
+          return;
+        }
+        loader.classList.remove("is-done");
+        loader.style.display = "flex";
+        loader.classList.add("is-armed");
+        if (switcher) switcher.style.visibility = "hidden";
+        if (statusEl) statusEl.textContent = "En attente";
+        if (gateEl) gateEl.textContent = "🔊 son";
+        sfBuild(sfPad(nameOf(current()))); // palettes vides : panneau en attente
+
+        let started = false;
+        let t = 0;
+        const start = (gesture) => {
+          if (started) return;
+          started = true;
+          clearTimeout(t);
+          loader.removeEventListener("pointerdown", onTap);
+          loader.classList.remove("is-armed");
+          if (gesture) audioCtx(); // clic = geste → débloque le son
+          runGenerator(nameOf(current()), {});
+        };
+        const onTap = () => start(true);
+        loader.addEventListener("pointerdown", onTap);
+        t = setTimeout(() => start(false), 2200);
+      }
+
       render();
       // teinte au chargement : figée si présente dans l'URL (lien partagé), sinon aléatoire
       applyTint(
         current(),
         parseTint(new URLSearchParams(location.search).get("t")),
       );
-      // Mise en scène du tirage au chargement (univers déjà posé par le head)
-      runGenerator(nameOf(current()), {});
+      armLoader();
     </script>
   </body>
 </html>
