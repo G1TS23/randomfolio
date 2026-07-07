@@ -655,8 +655,8 @@ const jsonLd = {
       // ————— Écran de chargement : panneau à palettes (Solari) —————
       const SF_CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ·.-0123456789";
       const SF_MIN_W = 8; // largeur minimale du panneau (nombre de palettes)
-      const SF_INTERVAL = 76; // ms par palette (assez lent pour bien voir le volet)
-      const SF_BASE = 13; // palettes minimales (1re colonne)
+      const SF_INTERVAL = 64; // ms par palette (assez lent pour bien voir le volet)
+      const SF_BASE = 10; // palettes minimales (1re colonne)
       const SF_STEP = 3; // palettes en plus par colonne → cascade gauche→droite
       const NBSP = "\u00A0";
 
@@ -941,7 +941,9 @@ const jsonLd = {
         };
         const onTap = () => start(true);
         loader.addEventListener("pointerdown", onTap);
-        t = setTimeout(() => start(false), 2200);
+        // délai d'auto-lancement : laisse le temps de remarquer/cliquer le bouton
+        // (n'arrive qu'à la 1re arrivée d'une session) ; filet pour passifs & crawlers
+        t = setTimeout(() => start(false), 4500);
       }
 
       render();
