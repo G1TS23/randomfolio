@@ -93,7 +93,10 @@ Deux garde-fous testés (`tests/i18n.test.ts`) :
 - **synchronisation** — compare le dictionnaire au lock (`tests/i18n.lock.json`)
   et signale toute traduction changée d'un seul côté (FR sans EN, ou l'inverse).
 
-Après avoir mis à jour **FR et EN**, régénère la référence :
+Le lock est **synchronisé automatiquement** : un hook de pre-commit (activé par
+`npm install`) régénère `i18n.lock.json` quand FR et EN ont changé de façon
+cohérente, et **bloque le commit** si une seule langue a bougé (oubli). Au besoin,
+régénération manuelle :
 
 ```bash
 npm run i18n:lock

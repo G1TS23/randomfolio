@@ -1,0 +1,7 @@
+#!/bin/sh
+# Synchronise automatiquement le lock i18n avant chaque commit :
+# - régénère tests/i18n.lock.json si les traductions sont cohérentes (fr+en) ;
+# - bloque le commit si une traduction n'a bougé que d'un côté (oubli).
+# Voir scripts/i18n-lock.mjs (--check). Activé via `core.hooksPath` (script prepare).
+node scripts/i18n-lock.mjs --check || exit 1
+git add tests/i18n.lock.json

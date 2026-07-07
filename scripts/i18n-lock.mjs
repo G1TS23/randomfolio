@@ -44,6 +44,40 @@ const dict = buildI18nDict(
   read("src/data/portfolio.en.json"),
   read("src/data/ui.json"),
 );
+// Mode --check (hook pre-commit) : on ne régénère QUE si aucune traduction n'a
+// bougé d'un seul côté. Une modif one-sided (FR sans EN, ou l'inverse) bloque —
+// régénérer automatiquement dans ce cas « bénirait » l'oubli et viderait le
+// garde-fou de son sens. Les cas légitimes (fr+en modifiés, clé ajoutée/retirée)
+// régénèrent le lock silencieusement.
+if (process.argv.includes("--check")) {
+  let previous = {};
+  try {
+    previous = read("tests/i18n.lock.json");
+  } catch {
+    // pas encore de lock : previous reste {}
+  }
+  const oneSided = [];
+  for (const [key, cur] of Object.entries(dict)) {
+    const old = previous[key];
+    if (!old) continue; // nouvelle clé → OK, sera lockée
+    const frChanged = cur.fr !== old.fr;
+    const enChanged = cur.en !== old.en;
+    if (frChanged && !enChanged) {
+      oneSided.push(`⚠ « ${key} » : FR modifié mais EN inchangé`);
+    } else if (enChanged && !frChanged) {
+      oneSided.push(`⚠ « ${key} » : EN modifié mais FR inchangé`);
+    }
+  }
+  if (oneSided.length) {
+    console.error(
+      "\nTraductions désynchronisées :\n" +
+        oneSided.join("\n") +
+        "\n\n→ Mets à jour l'autre langue, puis recommite.\n",
+    );
+    process.exit(1);
+  }
+}
+
 // tri des clés → diff git stable
 const sorted = {};
 for (const key of Object.keys(dict).sort()) sorted[key] = dict[key];
