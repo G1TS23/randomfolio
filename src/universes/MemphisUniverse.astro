@@ -26,11 +26,14 @@ const accents = ["teal", "coral", "yellow", "purple"];
 
   <div class="mp__wrap">
     <header class="mp__hero">
-      <span class="mp__badge">Bonjour !</span>
+      <span class="mp__badge" data-i18n="mp.hi">Bonjour !</span>
       <h1 class="mp__name">{data.name}</h1>
-      <p class="mp__tagline">{data.tagline}</p>
+      <p class="mp__tagline" data-i18n="tagline">{data.tagline}</p>
       <span class="mp__meta">
-        {data.role} — {data.location} · {data.available ? "dispo ✦" : "complet"}
+        <span data-i18n="role">{data.role}</span> — {data.location} ·{" "}
+        <span data-i18n={data.available ? "mp.available" : "mp.busy"}>
+          {data.available ? "dispo ✦" : "complet"}
+        </span>
       </span>
     </header>
 
@@ -47,10 +50,10 @@ const accents = ["teal", "coral", "yellow", "purple"];
           stroke-width="5"
           stroke-linecap="round"></path>
       </svg>
-      <p>{data.about}</p>
+      <p data-i18n="about">{data.about}</p>
     </div>
 
-    <h2 class="mp__h2">Mes projets</h2>
+    <h2 class="mp__h2" data-i18n="mp.projects">Mes projets</h2>
     <div class="mp__grid">
       {
         data.projects.map((p, i) => (
@@ -61,13 +64,19 @@ const accents = ["teal", "coral", "yellow", "purple"];
             <span class="mp__card-shape" aria-hidden="true" />
             <div class="mp__card-top">
               <span>{p.year}</span>
-              <span>{p.role}</span>
+              <span data-i18n={`projects.${i}.role`}>{p.role}</span>
             </div>
-            <h3 class="mp__card-title">{p.title}</h3>
-            <p class="mp__card-desc">{p.description}</p>
+            <h3 class="mp__card-title" data-i18n={`projects.${i}.title`}>
+              {p.title}
+            </h3>
+            <p class="mp__card-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </p>
             <div class="mp__tags">
-              {p.tags.map((t) => (
-                <span class="mp__tag">{t}</span>
+              {p.tags.map((t, j) => (
+                <span class="mp__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                  {t}
+                </span>
               ))}
             </div>
           </a>
@@ -76,14 +85,20 @@ const accents = ["teal", "coral", "yellow", "purple"];
     </div>
 
     <div class="mp__skills">
-      <h2 class="mp__h2">Ma boîte à outils</h2>
+      <h2 class="mp__h2" data-i18n="mp.toolbox">Ma boîte à outils</h2>
       <div class="mp__pills">
-        {data.skills.map((s) => <span class="mp__pill">{s}</span>)}
+        {
+          data.skills.map((s, i) => (
+            <span class="mp__pill" data-i18n={`skills.${i}`}>
+              {s}
+            </span>
+          ))
+        }
       </div>
     </div>
 
     <footer class="mp__foot">
-      <p class="mp__foot-hi">On papote ?</p>
+      <p class="mp__foot-hi" data-i18n="mp.chat">On papote ?</p>
       <a class="mp__mail" href={`mailto:${data.email}`}>{data.email}</a>
       <div class="mp__socials">
         {data.socials.map((s) => <a href={s.url}>{s.label}</a>)}

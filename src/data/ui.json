@@ -63,5 +63,23 @@
   "ba.available": { "fr": "Disponible", "en": "Available" },
   "ba.busy": { "fr": "Complet", "en": "Fully booked" },
   "ba.work": { "fr": "Travaux", "en": "Work" },
-  "ba.tools": { "fr": "Outils", "en": "Tools" }
+  "ba.tools": { "fr": "Outils", "en": "Tools" },
+
+  "au.projects": { "fr": "Projets", "en": "Projects" },
+  "au.together": { "fr": "Travaillons ensemble", "en": "Let's work together" },
+
+  "mp.hi": { "fr": "Bonjour !", "en": "Hi there!" },
+  "mp.available": { "fr": "dispo ✦", "en": "open ✦" },
+  "mp.busy": { "fr": "complet", "en": "booked" },
+  "mp.projects": { "fr": "Mes projets", "en": "My projects" },
+  "mp.toolbox": { "fr": "Ma boîte à outils", "en": "My toolbox" },
+  "mp.chat": { "fr": "On papote ?", "en": "Let's chat?" },
+
+  "bo.plate": { "fr": "Herbier · Planche", "en": "Herbarium · Plate" },
+  "bo.note": { "fr": "Note du naturaliste", "en": "Naturalist's note" },
+  "bo.specimens": { "fr": "Spécimens", "en": "Specimens" },
+  "bo.flora": { "fr": "Flora — savoir-faire", "en": "Flora — craft" },
+  "bo.correspondence": { "fr": "Correspondance", "en": "Correspondence" },
+  "bo.available": { "fr": "Ouvert aux projets", "en": "Open to work" },
+  "bo.busy": { "fr": "Complet", "en": "Fully booked" }
 }
