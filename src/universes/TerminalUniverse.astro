@@ -245,7 +245,14 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
           if (res === "CLEAR") out.replaceChildren();
           else res.forEach(print);
           setLine("");
-          input.scrollIntoView({ block: "nearest" });
+          // défile jusqu'en bas pour garder la ligne de saisie visible
+          // (la réserve de 104px sous l'univers la dégage de la barre d'action)
+          requestAnimationFrame(() => {
+            window.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: "smooth",
+            });
+          });
         } else if (e.key === "ArrowUp") {
           if (hix > 0) setLine(history[--hix]);
           e.preventDefault();
