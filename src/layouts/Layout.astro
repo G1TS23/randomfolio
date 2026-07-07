@@ -529,8 +529,12 @@ Object.assign(i18n, uiStrings);
       <div class="genloader__inner">
         <div class="sf">
           <div class="sf__head">
-            <span class="sf__head-l">✦ Départs</span>
-            <span class="sf__head-r">Portfolio · vol RF</span>
+            <span class="sf__head-l" data-i18n="loader.departures"
+              >✦ Départs</span
+            >
+            <span class="sf__head-r" data-i18n="loader.flight">
+              Portfolio · vol RF
+            </span>
           </div>
           <div class="sf__board" data-sf-board aria-hidden="true"></div>
           <button class="sf__go" data-sf-go type="button">
@@ -601,6 +605,11 @@ Object.assign(i18n, uiStrings);
       // Chaque texte traduisible porte data-i18n="<clé>". On échange son contenu
       // (et son data-text, ex. surimpression Riso) selon la langue.
       const langLabel = document.querySelector("[data-lang-label]");
+      // traduit une clé selon la langue active (pour les textes posés en JS)
+      const tr = (key) => {
+        const e = i18n[key];
+        return e ? e[root.lang === "en" ? "en" : "fr"] : key;
+      };
       function currentLang() {
         try {
           return localStorage.getItem("rf.lang") === "en" ? "en" : "fr";
@@ -839,16 +848,17 @@ Object.assign(i18n, uiStrings);
         loader.classList.remove("is-done");
         loader.style.display = "flex";
         if (switcher) switcher.style.visibility = "hidden";
-        if (statusEl) statusEl.textContent = "Embarquement";
+        if (statusEl) statusEl.textContent = tr("loader.boarding");
         if (gateEl)
-          gateEl.textContent = "Porte " + (1 + Math.floor(Math.random() * 42));
+          gateEl.textContent =
+            tr("loader.gate") + " " + (1 + Math.floor(Math.random() * 42));
 
         const text = sfPad(targetName);
         const cells = sfBuild(text);
         const len = SF_CHARS.length;
 
         const arrive = () => {
-          if (statusEl) statusEl.textContent = "À l'heure";
+          if (statusEl) statusEl.textContent = tr("loader.ontime");
           if (opts.onReveal) opts.onReveal();
           setTimeout(dismissLoader, 620); // pause pour profiter du panneau
         };
@@ -1002,8 +1012,8 @@ Object.assign(i18n, uiStrings);
         loader.style.display = "flex";
         loader.classList.add("is-armed");
         if (switcher) switcher.style.visibility = "hidden";
-        if (statusEl) statusEl.textContent = "En attente";
-        if (gateEl) gateEl.textContent = "🔊 son";
+        if (statusEl) statusEl.textContent = tr("loader.waiting");
+        if (gateEl) gateEl.textContent = tr("loader.sound");
         sfBuild(sfPad(nameOf(current()))); // palettes vides : panneau en attente
 
         let started = false;

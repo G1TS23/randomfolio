@@ -3,6 +3,26 @@
   "ui.share": { "fr": "Partager", "en": "Share" },
   "ui.loaderGo": { "fr": "Générer mon univers", "en": "Generate my universe" },
 
+  "loader.departures": { "fr": "✦ Départs", "en": "✦ Departures" },
+  "loader.flight": {
+    "fr": "Portfolio · vol RF",
+    "en": "Portfolio · flight RF"
+  },
+  "loader.waiting": { "fr": "En attente", "en": "Waiting" },
+  "loader.sound": { "fr": "🔊 son", "en": "🔊 sound" },
+  "loader.boarding": { "fr": "Embarquement", "en": "Boarding" },
+  "loader.ontime": { "fr": "À l'heure", "en": "On time" },
+  "loader.gate": { "fr": "Porte", "en": "Gate" },
+
+  "tm.ready": { "fr": "système prêt", "en": "system ready" },
+  "tm.available": { "fr": "statut: DISPONIBLE", "en": "status: AVAILABLE" },
+  "tm.busy": { "fr": "statut: OCCUPÉ", "en": "status: BUSY" },
+  "tm.hintpre": {
+    "fr": "indice : commence à taper ou",
+    "en": "hint: start typing or"
+  },
+  "tm.hintpost": { "fr": "puis Entrée", "en": "then Enter" },
+
   "sw.available": { "fr": "Disponible", "en": "Available" },
   "sw.busy": { "fr": "Complet", "en": "Fully booked" },
   "sw.about": { "fr": "À propos", "en": "About" },
