@@ -304,8 +304,8 @@
     "en": "status: BUSY"
   },
   "tm.hintpost": {
-    "fr": "puis Entrée",
-    "en": "then Enter"
+    "fr": " puis Entrée",
+    "en": " then Enter"
   },
   "tm.hintpre": {
     "fr": "indice : commence à taper ou",

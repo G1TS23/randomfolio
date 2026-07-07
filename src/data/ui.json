@@ -1,7 +1,7 @@
 {
-  "ui.regen": { "fr": "Regénérer", "en": "Regenerate" },
+  "ui.regen": { "fr": "Régénérer", "en": "Regenerate" },
   "ui.share": { "fr": "Partager", "en": "Share" },
-  "ui.loaderGo": { "fr": "Générer mon univers", "en": "Generate my universe" },
+  "ui.loaderGo": { "fr": "Générer l'univers", "en": "Generate the universe" },
 
   "loader.departures": { "fr": "✦ Départs", "en": "✦ Departures" },
   "loader.flight": {
