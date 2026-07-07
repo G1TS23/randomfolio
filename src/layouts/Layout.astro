@@ -946,6 +946,13 @@ const jsonLd = {
         t = setTimeout(() => start(false), 4500);
       }
 
+      // tous les liens externes (projets, réseaux) s'ouvrent dans un nouvel
+      // onglet ; les mailto restent gérés par le client mail (pas d'onglet vide)
+      for (const a of document.querySelectorAll('a[href^="http"]')) {
+        a.target = "_blank";
+        a.rel = "noopener";
+      }
+
       render();
       // teinte au chargement : figée si présente dans l'URL (lien partagé), sinon aléatoire
       applyTint(
