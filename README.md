@@ -46,10 +46,15 @@ npm run build    # site statique dans dist/
 Un panneau à palettes façon aéroport (Solari) qui égrène les lettres jusqu'à
 « annoncer » l'univers, puis se lève comme un rideau.
 
-- Un bouton **🎲 Générer mon univers** lance l'animation **avec le son** (un clac
-  mécanique synthétisé en Web Audio — le clic débloque l'audio du navigateur).
-- Sans clic, l'animation **se lance seule après ~2,2 s** (silencieuse), pour ne
-  pas bloquer les visiteurs passifs ni les crawlers.
+- À la **première arrivée d'une session**, un bouton **🎲 Générer mon univers**
+  lance l'animation **avec le son** (un clac mécanique synthétisé en Web Audio —
+  le clic débloque l'audio du navigateur). Sans clic, l'animation **se lance
+  seule après ~4,5 s** (silencieuse), pour ne pas bloquer les visiteurs passifs
+  ni les crawlers.
+- Ensuite dans la même session (**rechargement**, **Regénérer**, touche **R**),
+  l'animation se relance **directement**, sans bouton. Mémorisé via
+  `sessionStorage` : le geste n'est reproposé qu'à une nouvelle session, quand le
+  navigateur a de toute façon reverrouillé l'audio.
 - Bouton **🔊 / 🔇** dans la barre pour couper le son (préférence mémorisée).
 - `prefers-reduced-motion` respecté (pas d'animation ni de son).
 

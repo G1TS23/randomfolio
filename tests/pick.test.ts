@@ -64,4 +64,18 @@ describe("pickNext", () => {
     expect(pickNext(["a"], [], null, null).chosen).toBe("a");
     expect(pickNext(["a"], [], null, "a").chosen).toBe("a");
   });
+
+  it("traite `seen` absent (null) comme un cycle vierge", () => {
+    const r = pickNext(IDS, null, null, null);
+    expect(IDS).toContain(r.chosen);
+    expect(r.seen).toEqual([r.chosen]);
+  });
+
+  it("à la bascule sans `avoid`, évite quand même le dernier affiché", () => {
+    const ids = ["a", "b"];
+    // tout est vu → cycle réinitialisé ; avoid=null donc on retombe sur `last`
+    for (let i = 0; i < 50; i++) {
+      expect(pickNext(ids, ["a", "b"], "b", null).chosen).toBe("a");
+    }
+  });
 });
