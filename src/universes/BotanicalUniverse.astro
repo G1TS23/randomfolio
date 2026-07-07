@@ -11,14 +11,17 @@ const total = String(data.projects.length).padStart(2, "0");
 <section class="universe bo" data-universe-id="botanical">
   <div class="bo__sheet">
     <header class="bo__head">
-      <span class="bo__label">Herbier · Planche {year}</span>
+      <span class="bo__label">
+        <span data-i18n="bo.plate">Herbier · Planche</span>
+        {year}
+      </span>
       <span class="bo__label">{data.location}</span>
     </header>
 
     <div class="bo__hero">
-      <p class="bo__kicker">{data.role}</p>
+      <p class="bo__kicker" data-i18n="role">{data.role}</p>
       <h1 class="bo__name">{data.name}</h1>
-      <p class="bo__tagline">{data.tagline}</p>
+      <p class="bo__tagline" data-i18n="tagline">{data.tagline}</p>
       <svg
         class="bo__branch"
         viewBox="0 0 200 60"
@@ -40,13 +43,13 @@ const total = String(data.projects.length).padStart(2, "0");
     </div>
 
     <div class="bo__about">
-      <span class="bo__note">Note du naturaliste</span>
-      <p>{data.about}</p>
+      <span class="bo__note" data-i18n="bo.note">Note du naturaliste</span>
+      <p data-i18n="about">{data.about}</p>
     </div>
 
     <section class="bo__specimens" aria-label="Projets">
       <div class="bo__sec-head">
-        <h2>Spécimens</h2>
+        <h2 data-i18n="bo.specimens">Spécimens</h2>
         <span class="bo__label">01 – {total}</span>
       </div>
       {
@@ -57,11 +60,17 @@ const total = String(data.projects.length).padStart(2, "0");
             </span>
             <div class="bo__item-body">
               <div class="bo__item-meta">
-                <span class="bo__latin">{p.role}</span>
+                <span class="bo__latin" data-i18n={`projects.${i}.role`}>
+                  {p.role}
+                </span>
                 <span>{p.year}</span>
               </div>
-              <h3 class="bo__item-title">{p.title}</h3>
-              <p class="bo__item-desc">{p.description}</p>
+              <h3 class="bo__item-title" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </h3>
+              <p class="bo__item-desc" data-i18n={`projects.${i}.description`}>
+                {p.description}
+              </p>
               <p class="bo__item-tags">{p.tags.join(" · ")}</p>
             </div>
           </a>
@@ -70,12 +79,12 @@ const total = String(data.projects.length).padStart(2, "0");
     </section>
 
     <section class="bo__flora">
-      <h4>Flora — savoir-faire</h4>
+      <h4 data-i18n="bo.flora">Flora — savoir-faire</h4>
       <p>{data.skills.join(" · ")}</p>
     </section>
 
     <footer class="bo__foot">
-      <span class="bo__note">Correspondance</span>
+      <span class="bo__note" data-i18n="bo.correspondence">Correspondance</span>
       <a class="bo__mail" href={`mailto:${data.email}`}>{data.email}</a>
       <ul class="bo__socials">
         {
@@ -86,9 +95,12 @@ const total = String(data.projects.length).padStart(2, "0");
           ))
         }
       </ul>
-      <span class="bo__stamp"
-        >✿ {data.available ? "Ouvert aux projets" : "Complet"}</span
-      >
+      <span class="bo__stamp">
+        ✿{" "}
+        <span data-i18n={data.available ? "bo.available" : "bo.busy"}>
+          {data.available ? "Ouvert aux projets" : "Complet"}
+        </span>
+      </span>
     </footer>
   </div>
 </section>

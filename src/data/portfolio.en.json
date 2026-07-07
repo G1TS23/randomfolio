@@ -1,0 +1,68 @@
+{
+  "name": "Olivier Falahi",
+  "role": "Full-stack developer",
+  "tagline": "From leading teams to software architecture.",
+  "location": "Bordeaux, France",
+  "email": "olivier@falahi.org",
+  "available": true,
+  "about": "After twenty years leading teams, I chose to rebuild my craft around code. A full-stack developer on a work-study contract at CGI in Bordeaux, I'm training in software architecture: Java, Spring Boot and Quarkus on the server side, Angular and TypeScript on the interface. What drives me hasn't changed: care for detail and a taste for clear systems. This portfolio is a nod to that — it reinvents itself on every visit.",
+  "socials": [
+    {
+      "label": "GitHub",
+      "handle": "@G1TS23",
+      "url": "https://github.com/G1TS23"
+    },
+    {
+      "label": "LinkedIn",
+      "handle": "in/olivier-falahi",
+      "url": "https://linkedin.com/in/olivier-falahi"
+    }
+  ],
+  "projects": [
+    {
+      "title": "radiant-radiation",
+      "year": "2026",
+      "role": "Design & Developer",
+      "description": "A minimalist terminal puzzle: flip 2×2 blocks until the grid is uniform.",
+      "tags": ["Astro", "Claude", "Puzzle", "Game"],
+      "url": "https://radiant-radiation.netlify.app/"
+    },
+    {
+      "title": "Pont Chaban",
+      "year": "2024",
+      "role": "Design & Developer",
+      "description": "Closure calendar for the Chaban-Delmas bridge in Bordeaux",
+      "tags": ["Vue.js", "Bordeaux", "Calendar", "Open data"],
+      "url": "https://pont-chaban.netlify.app"
+    },
+    {
+      "title": "Démineur",
+      "year": "2024",
+      "role": "Design & Developer",
+      "description": "A minesweeper game.",
+      "tags": ["Minesweeper", "Game", "Angular", "TypeScript"],
+      "url": "https://boom-boom-boom.netlify.app/"
+    },
+    {
+      "title": "Library",
+      "year": "2026",
+      "role": "Developer",
+      "description": "A library management app in Quarkus: CDI, Panache, Repository pattern and a REST client to OpenLibrary.",
+      "tags": ["Quarkus", "Java", "REST"],
+      "url": "https://github.com/G1TS23/Library"
+    }
+  ],
+  "skills": [
+    "TypeScript",
+    "Java",
+    "Angular",
+    "Spring Boot",
+    "Quarkus",
+    "Astro",
+    "React",
+    "Design systems",
+    "Figma",
+    "Motion design",
+    "Accessibility"
+  ]
+}

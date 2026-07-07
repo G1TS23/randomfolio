@@ -1,6 +1,9 @@
 ---
 import { UNIVERSE_IDS, UNIVERSES } from "../universes";
 import portfolio from "../data/portfolio.json";
+import portfolioEn from "../data/portfolio.en.json";
+import uiStrings from "../data/ui.json";
+import { buildI18nDict, type Dict } from "../lib/i18n";
 
 // Génère les règles de révélation à partir du registre : chaque univers est
 // masqué par défaut, seul celui qui correspond à l'attribut <html data-universe>
@@ -36,6 +39,12 @@ const jsonLd = {
   sameAs: portfolio.socials.map((s) => s.url),
   knowsAbout: portfolio.skills,
 };
+
+// Dictionnaire i18n {clé: {fr, en}} injecté côté client pour la bascule de
+// langue (contenu traduit + libellés d'interface). Logique dans src/lib/i18n.ts,
+// couverte par les tests. Les univers marquent chaque texte traduisible avec
+// `data-i18n="<clé>"` ; le script client échange le texte selon la langue.
+const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 ---
 
 <!doctype html>
@@ -493,12 +502,16 @@ const jsonLd = {
       <div class="genloader__inner">
         <div class="sf">
           <div class="sf__head">
-            <span class="sf__head-l">✦ Départs</span>
-            <span class="sf__head-r">Portfolio · vol RF</span>
+            <span class="sf__head-l" data-i18n="loader.departures"
+              >✦ Départs</span
+            >
+            <span class="sf__head-r" data-i18n="loader.flight">
+              Portfolio · vol RF
+            </span>
           </div>
           <div class="sf__board" data-sf-board aria-hidden="true"></div>
           <button class="sf__go" data-sf-go type="button">
-            🎲 Générer mon univers
+            🎲 <span data-i18n="ui.loaderGo">Générer l'univers</span>
           </button>
           <div class="sf__meta">
             <span class="sf__status" data-sf-status>Embarquement</span>
@@ -518,7 +531,7 @@ const jsonLd = {
         aria-label="Générer un nouvel univers"
       >
         <span class="switcher__dice" aria-hidden="true">🎲</span>
-        <span>Regénérer</span>
+        <span data-i18n="ui.regen">Régénérer</span>
       </button>
       <span class="switcher__label" data-current>—</span>
       <button
@@ -526,7 +539,15 @@ const jsonLd = {
         data-action="share"
         aria-label="Copier le lien de cette variante"
       >
-        🔗 Partager
+        🔗 <span data-i18n="ui.share">Partager</span>
+      </button>
+      <button
+        type="button"
+        data-action="lang"
+        class="switcher__icon"
+        aria-label="Changer la langue (français / anglais)"
+      >
+        <span data-lang-label>EN</span>
       </button>
       <button
         type="button"
@@ -540,7 +561,7 @@ const jsonLd = {
     </nav>
     <div class="switcher__toast" role="status" aria-live="polite"></div>
 
-    <script is:inline define:vars={{ universes: UNIVERSES }}>
+    <script is:inline define:vars={{ universes: UNIVERSES, i18n }}>
       const root = document.documentElement;
       const ids = universes.map((u) => u.id);
       const nameOf = (id) =>
@@ -552,6 +573,45 @@ const jsonLd = {
 
       const switcher = document.querySelector(".switcher");
       const loader = document.querySelector(".genloader");
+
+      // --- i18n : bascule FR/EN côté client (préférence en localStorage) ---
+      // Chaque texte traduisible porte data-i18n="<clé>". On échange son contenu
+      // (et son data-text, ex. surimpression Riso) selon la langue.
+      const langLabel = document.querySelector("[data-lang-label]");
+      // traduit une clé selon la langue active (pour les textes posés en JS)
+      const tr = (key) => {
+        const e = i18n[key];
+        return e ? e[root.lang === "en" ? "en" : "fr"] : key;
+      };
+      function currentLang() {
+        try {
+          return localStorage.getItem("rf.lang") === "en" ? "en" : "fr";
+        } catch {
+          return "fr";
+        }
+      }
+      function applyLang(lang) {
+        for (const el of document.querySelectorAll("[data-i18n]")) {
+          const entry = i18n[el.getAttribute("data-i18n")];
+          if (!entry || entry[lang] == null) continue;
+          el.textContent = entry[lang];
+          if (el.hasAttribute("data-text"))
+            el.setAttribute("data-text", entry[lang]);
+        }
+        root.lang = lang;
+        if (langLabel) langLabel.textContent = lang === "fr" ? "EN" : "FR";
+        try {
+          localStorage.setItem("rf.lang", lang);
+        } catch {
+          /* pas de stockage : la langue ne persiste pas */
+        }
+      }
+      document
+        .querySelector('[data-action="lang"]')
+        ?.addEventListener("click", () =>
+          applyLang(root.lang === "en" ? "fr" : "en"),
+        );
+      applyLang(currentLang());
       const board = loader && loader.querySelector("[data-sf-board]");
       const statusEl = loader && loader.querySelector("[data-sf-status]");
       const gateEl = loader && loader.querySelector("[data-sf-gate]");
@@ -761,16 +821,17 @@ const jsonLd = {
         loader.classList.remove("is-done");
         loader.style.display = "flex";
         if (switcher) switcher.style.visibility = "hidden";
-        if (statusEl) statusEl.textContent = "Embarquement";
+        if (statusEl) statusEl.textContent = tr("loader.boarding");
         if (gateEl)
-          gateEl.textContent = "Porte " + (1 + Math.floor(Math.random() * 42));
+          gateEl.textContent =
+            tr("loader.gate") + " " + (1 + Math.floor(Math.random() * 42));
 
         const text = sfPad(targetName);
         const cells = sfBuild(text);
         const len = SF_CHARS.length;
 
         const arrive = () => {
-          if (statusEl) statusEl.textContent = "À l'heure";
+          if (statusEl) statusEl.textContent = tr("loader.ontime");
           if (opts.onReveal) opts.onReveal();
           setTimeout(dismissLoader, 620); // pause pour profiter du panneau
         };
@@ -924,8 +985,8 @@ const jsonLd = {
         loader.style.display = "flex";
         loader.classList.add("is-armed");
         if (switcher) switcher.style.visibility = "hidden";
-        if (statusEl) statusEl.textContent = "En attente";
-        if (gateEl) gateEl.textContent = "🔊 son";
+        if (statusEl) statusEl.textContent = tr("loader.waiting");
+        if (gateEl) gateEl.textContent = tr("loader.sound");
         sfBuild(sfPad(nameOf(current()))); // palettes vides : panneau en attente
 
         let started = false;

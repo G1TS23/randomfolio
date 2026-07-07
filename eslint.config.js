@@ -18,6 +18,11 @@ export default [
     languageOptions: { globals: { ...globals.browser } },
     rules: { "no-undef": "off" },
   },
+  {
+    // Scripts d'outillage exécutés en Node
+    files: ["scripts/**/*.mjs"],
+    languageOptions: { globals: { ...globals.node } },
+  },
   // désactive les règles de style en conflit avec Prettier — doit rester en dernier
   prettier,
 ];

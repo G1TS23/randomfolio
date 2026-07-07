@@ -12,7 +12,9 @@ const total = String(data.projects.length).padStart(2, "0");
     <header class="sw__head">
       <div class="sw__mark">
         <span class="sw__dot" aria-hidden="true"></span>
-        <span>{data.available ? "Disponible" : "Complet"}</span>
+        <span data-i18n={data.available ? "sw.available" : "sw.busy"}>
+          {data.available ? "Disponible" : "Complet"}
+        </span>
       </div>
       <div class="sw__meta">
         <span>{data.location}</span>
@@ -23,18 +25,20 @@ const total = String(data.projects.length).padStart(2, "0");
     <h1 class="sw__name">
       {data.name}<span class="sw__period">.</span>
     </h1>
-    <p class="sw__tagline">{data.tagline}</p>
+    <p class="sw__tagline" data-i18n="tagline">{data.tagline}</p>
 
     <hr class="sw__rule" />
 
     <div class="sw__intro">
-      <span class="sw__eyebrow">À propos</span>
-      <p class="sw__about">{data.about}</p>
+      <span class="sw__eyebrow" data-i18n="sw.about">À propos</span>
+      <p class="sw__about" data-i18n="about">{data.about}</p>
     </div>
 
     <section class="sw__work" aria-label="Projets">
       <div class="sw__work-head">
-        <span class="sw__eyebrow">Travaux sélectionnés</span>
+        <span class="sw__eyebrow" data-i18n="sw.selected">
+          Travaux sélectionnés
+        </span>
         <span class="sw__count">01 — {total}</span>
       </div>
       <ol class="sw__list">
@@ -43,11 +47,17 @@ const total = String(data.projects.length).padStart(2, "0");
             <li class="sw__item">
               <a class="sw__link" href={p.url}>
                 <span class="sw__num">{String(i + 1).padStart(2, "0")}</span>
-                <span class="sw__title">{p.title}</span>
-                <span class="sw__desc">{p.description}</span>
+                <span class="sw__title" data-i18n={`projects.${i}.title`}>
+                  {p.title}
+                </span>
+                <span class="sw__desc" data-i18n={`projects.${i}.description`}>
+                  {p.description}
+                </span>
                 <span class="sw__tags">
-                  {p.tags.map((t) => (
-                    <span class="sw__tag">{t}</span>
+                  {p.tags.map((t, j) => (
+                    <span class="sw__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                      {t}
+                    </span>
                   ))}
                 </span>
                 <span class="sw__year">{p.year}</span>
@@ -59,9 +69,9 @@ const total = String(data.projects.length).padStart(2, "0");
     </section>
 
     <section class="sw__skills" aria-label="Compétences">
-      <span class="sw__eyebrow">Capacités</span>
+      <span class="sw__eyebrow" data-i18n="sw.capabilities">Capacités</span>
       <ul class="sw__skill-list">
-        {data.skills.map((s) => <li>{s}</li>)}
+        {data.skills.map((s, i) => <li data-i18n={`skills.${i}`}>{s}</li>)}
       </ul>
     </section>
 

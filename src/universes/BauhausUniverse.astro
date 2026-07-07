@@ -13,7 +13,9 @@ const total = String(data.projects.length).padStart(2, "0");
 <section class="universe ba" data-universe-id="bauhaus">
   <div class="ba__wrap">
     <header class="ba__head">
-      <span class="ba__eyebrow">{data.role} — {data.location}</span>
+      <span class="ba__eyebrow">
+        <span data-i18n="role">{data.role}</span> — {data.location}
+      </span>
       <div class="ba__hero">
         <h1 class="ba__name">{data.name}</h1>
         <div class="ba__shapes" aria-hidden="true">
@@ -22,20 +24,24 @@ const total = String(data.projects.length).padStart(2, "0");
           <span class="ba__shape ba__shape--bar"></span>
         </div>
       </div>
-      <p class="ba__tagline">{data.tagline}</p>
-      <span class="ba__status" data-on={data.available}>
+      <p class="ba__tagline" data-i18n="tagline">{data.tagline}</p>
+      <span
+        class="ba__status"
+        data-on={data.available}
+        data-i18n={data.available ? "ba.available" : "ba.busy"}
+      >
         {data.available ? "Disponible" : "Complet"}
       </span>
     </header>
 
     <section class="ba__about">
       <span class="ba__tri" aria-hidden="true"></span>
-      <p>{data.about}</p>
+      <p data-i18n="about">{data.about}</p>
     </section>
 
     <section class="ba__work" aria-label="Projets">
       <div class="ba__work-head">
-        <h2>Travaux</h2>
+        <h2 data-i18n="ba.work">Travaux</h2>
         <span class="ba__count">01 / {total}</span>
       </div>
       <div class="ba__grid">
@@ -50,14 +56,20 @@ const total = String(data.projects.length).padStart(2, "0");
                 aria-hidden="true"
               />
               <span class="ba__card-meta">
-                <span>{p.role}</span>
+                <span data-i18n={`projects.${i}.role`}>{p.role}</span>
                 <span>{p.year}</span>
               </span>
-              <h3 class="ba__card-title">{p.title}</h3>
-              <p class="ba__card-desc">{p.description}</p>
+              <h3 class="ba__card-title" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </h3>
+              <p class="ba__card-desc" data-i18n={`projects.${i}.description`}>
+                {p.description}
+              </p>
               <span class="ba__card-tags">
-                {p.tags.map((t) => (
-                  <span class="ba__tag">{t}</span>
+                {p.tags.map((t, j) => (
+                  <span class="ba__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                    {t}
+                  </span>
                 ))}
               </span>
             </a>
@@ -67,9 +79,9 @@ const total = String(data.projects.length).padStart(2, "0");
     </section>
 
     <section class="ba__skills">
-      <h2>Outils</h2>
+      <h2 data-i18n="ba.tools">Outils</h2>
       <ul>
-        {data.skills.map((s) => <li>{s}</li>)}
+        {data.skills.map((s, i) => <li data-i18n={`skills.${i}`}>{s}</li>)}
       </ul>
     </section>
 

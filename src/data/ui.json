@@ -1,0 +1,105 @@
+{
+  "ui.regen": { "fr": "Régénérer", "en": "Regenerate" },
+  "ui.share": { "fr": "Partager", "en": "Share" },
+  "ui.loaderGo": { "fr": "Générer l'univers", "en": "Generate the universe" },
+
+  "loader.departures": { "fr": "✦ Départs", "en": "✦ Departures" },
+  "loader.flight": {
+    "fr": "Portfolio · vol RF",
+    "en": "Portfolio · flight RF"
+  },
+  "loader.waiting": { "fr": "En attente", "en": "Waiting" },
+  "loader.sound": { "fr": "🔊 son", "en": "🔊 sound" },
+  "loader.boarding": { "fr": "Embarquement", "en": "Boarding" },
+  "loader.ontime": { "fr": "À l'heure", "en": "On time" },
+  "loader.gate": { "fr": "Porte", "en": "Gate" },
+
+  "tm.ready": { "fr": "système prêt", "en": "system ready" },
+  "tm.available": { "fr": "statut: DISPONIBLE", "en": "status: AVAILABLE" },
+  "tm.busy": { "fr": "statut: OCCUPÉ", "en": "status: BUSY" },
+  "tm.hintpre": {
+    "fr": "indice : commence à taper ou",
+    "en": "hint: start typing or"
+  },
+  "tm.hintpost": { "fr": "puis Entrée", "en": "then Enter" },
+
+  "sw.available": { "fr": "Disponible", "en": "Available" },
+  "sw.busy": { "fr": "Complet", "en": "Fully booked" },
+  "sw.about": { "fr": "À propos", "en": "About" },
+  "sw.selected": { "fr": "Travaux sélectionnés", "en": "Selected work" },
+  "sw.capabilities": { "fr": "Capacités", "en": "Capabilities" },
+
+  "ed.issue": { "fr": "Numéro", "en": "Issue" },
+  "ed.available": { "fr": "En commande", "en": "On assignment" },
+  "ed.busy": { "fr": "Complet", "en": "Fully booked" },
+  "ed.works": { "fr": "Les travaux", "en": "The work" },
+  "ed.skills": { "fr": "Savoir-faire", "en": "Craft" },
+  "ed.write": { "fr": "Écrire", "en": "Write" },
+
+  "y2.hi": { "fr": "bonjour, je suis", "en": "hi, i'm" },
+  "y2.contact": { "fr": "me contacter", "en": "contact me" },
+  "y2.projects": { "fr": "mes projets", "en": "my projects" },
+  "y2.together": { "fr": "on bosse ensemble ?", "en": "let's work together?" },
+
+  "cm.episodes": { "fr": "Épisodes", "en": "Episodes" },
+  "cm.powers": { "fr": "Super-pouvoirs", "en": "Superpowers" },
+  "cm.hey": { "fr": "HÉ !", "en": "HEY!" },
+  "cm.write": { "fr": "Écris-moi", "en": "Write to me" },
+  "cm.tbc": { "fr": "À suivre…", "en": "To be continued…" },
+  "cm.end": { "fr": "Fin", "en": "The end" },
+
+  "rz.stamp": { "fr": "RISO · ÉD. LIMITÉE", "en": "RISO · LIMITED ED." },
+  "rz.available": { "fr": "OUVERT", "en": "OPEN" },
+  "rz.busy": { "fr": "FERMÉ", "en": "CLOSED" },
+  "rz.about": { "fr": "À PROPOS", "en": "ABOUT" },
+  "rz.projects": { "fr": "Projets", "en": "Projects" },
+  "rz.madewith": { "fr": "FABRIQUÉ AVEC", "en": "MADE WITH" },
+  "rz.together": {
+    "fr": "On imprime un projet ensemble ?",
+    "en": "Let's print a project together?"
+  },
+  "rz.reg": {
+    "fr": "◉ ◉ RISOGRAPHIE · IMPRESSION 2 COULEURS ◉ ◉",
+    "en": "◉ ◉ RISOGRAPHY · 2-COLOUR PRINT ◉ ◉"
+  },
+
+  "bp.projection": {
+    "fr": "PROJECTION ORTHOGONALE",
+    "en": "ORTHOGONAL PROJECTION"
+  },
+  "bp.fig1": { "fr": "FIG. 1 — SUJET", "en": "FIG. 1 — SUBJECT" },
+  "bp.available": { "fr": "● OPÉRATIONNEL", "en": "● OPERATIONAL" },
+  "bp.busy": { "fr": "○ INDISPONIBLE", "en": "○ UNAVAILABLE" },
+  "bp.assemblies": { "fr": "ENSEMBLES", "en": "ASSEMBLIES" },
+  "bp.rev": { "fr": "RÉV.", "en": "REV." },
+  "bp.materials": {
+    "fr": "MATÉRIAUX & OUTILLAGE",
+    "en": "MATERIALS & TOOLING"
+  },
+  "bp.drawnby": { "fr": "DESSINÉ PAR", "en": "DRAWN BY" },
+  "bp.sheet": { "fr": "FEUILLE", "en": "SHEET" },
+  "bp.refs": { "fr": "RÉFÉRENCES", "en": "REFERENCES" },
+
+  "ba.available": { "fr": "Disponible", "en": "Available" },
+  "ba.busy": { "fr": "Complet", "en": "Fully booked" },
+  "ba.work": { "fr": "Travaux", "en": "Work" },
+  "ba.tools": { "fr": "Outils", "en": "Tools" },
+
+  "au.projects": { "fr": "Projets", "en": "Projects" },
+  "au.together": { "fr": "Travaillons ensemble", "en": "Let's work together" },
+
+  "mp.hi": { "fr": "Bonjour !", "en": "Hi there!" },
+  "mp.available": { "fr": "dispo ✦", "en": "open ✦" },
+  "mp.busy": { "fr": "complet", "en": "booked" },
+  "mp.projects": { "fr": "Mes projets", "en": "My projects" },
+  "mp.toolbox": { "fr": "Ma boîte à outils", "en": "My toolbox" },
+  "mp.chat": { "fr": "On papote ?", "en": "Let's chat?" },
+
+  "bo.plate": { "fr": "Herbier · Planche", "en": "Herbarium · Plate" },
+  "bo.note": { "fr": "Note du naturaliste", "en": "Naturalist's note" },
+  "bo.specimens": { "fr": "Spécimens", "en": "Specimens" },
+  "bo.flora": { "fr": "Flora — savoir-faire", "en": "Flora — craft" },
+  "bo.correspondence": { "fr": "Correspondance", "en": "Correspondence" },
+  "bo.available": { "fr": "Ouvert aux projets", "en": "Open to work" },
+  "bo.busy": { "fr": "Complet", "en": "Fully booked" }
+}

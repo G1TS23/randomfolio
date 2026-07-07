@@ -1,10 +1,54 @@
 ---
 import type { Portfolio } from "../data/schema";
+import portfolioEn from "../data/portfolio.en.json";
 interface Props {
   data: Portfolio;
 }
 const { data } = Astro.props;
 const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
+
+// Le REPL est bilingue : on lui passe le contenu FR et EN, et il choisit selon
+// <html lang>. Fonctions interdites dans define:vars (JSON) → chaînes seules.
+const replContent = (d: Portfolio) => ({
+  name: d.name,
+  role: d.role,
+  about: d.about,
+  location: d.location,
+  email: d.email,
+  projects: d.projects.map((p) => ({
+    title: p.title,
+    year: p.year,
+    description: p.description,
+  })),
+  skills: d.skills,
+  socials: d.socials,
+});
+const replText = {
+  fr: {
+    help: [
+      "commandes disponibles :",
+      "  help · whoami · about · ls · skills · contact",
+      "  echo <texte> · date · clear · sudo",
+    ],
+    sudo: "hé, pas de sudo ici 😏",
+    rm: "jamais je ne supprimerai mon propre portfolio 🙃",
+    hello: "salut 👋",
+    notfound: " : commande introuvable. Tape « help ».",
+    locale: "fr-FR",
+  },
+  en: {
+    help: [
+      "available commands:",
+      "  help · whoami · about · ls · skills · contact",
+      "  echo <text> · date · clear · sudo",
+    ],
+    sudo: "hey, no sudo here 😏",
+    rm: "I'll never delete my own portfolio 🙃",
+    hello: "hi 👋",
+    notfound: ': command not found. Type "help".',
+    locale: "en-US",
+  },
+};
 ---
 
 <section class="universe tm" data-universe-id="terminal">
@@ -21,33 +65,44 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
 
     <div class="tm__body">
       <p class="tm__boot">
-        [ ok ] système prêt · {data.location} · {
-          data.available ? "statut: DISPONIBLE" : "statut: OCCUPÉ"
+        [ ok ] <span data-i18n="tm.ready">système prêt</span> · {data.location} ·{
+          " "
         }
+        <span data-i18n={data.available ? "tm.available" : "tm.busy"}>
+          {data.available ? "statut: DISPONIBLE" : "statut: OCCUPÉ"}
+        </span>
       </p>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> whoami
       </p>
       <h1 class="tm__out tm__out--big">{data.name}</h1>
-      <p class="tm__out">{data.role} — {data.tagline}</p>
+      <p class="tm__out">
+        <span data-i18n="role">{data.role}</span> —{" "}
+        <span data-i18n="tagline">{data.tagline}</span>
+      </p>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> cat about.txt
       </p>
-      <p class="tm__out tm__wrap">{data.about}</p>
+      <p class="tm__out tm__wrap" data-i18n="about">{data.about}</p>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> ls -la ./projets
       </p>
       <div class="tm__projects">
         {
-          data.projects.map((p) => (
+          data.projects.map((p, i) => (
             <a class="tm__proj" href={p.url}>
               <span class="tm__proj-perm">drwxr-xr-x</span>
               <span class="tm__proj-name">{p.title}/</span>
               <span class="tm__proj-year">{p.year}</span>
-              <span class="tm__proj-desc">{p.description}</span>
+              <span
+                class="tm__proj-desc"
+                data-i18n={`projects.${i}.description`}
+              >
+                {p.description}
+              </span>
               <span class="tm__proj-tags"># {p.tags.join(" · ")}</span>
             </a>
           ))
@@ -104,7 +159,11 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
           />
         </div>
         <p class="tm__repl-hint">
-          indice&nbsp;: commence à taper ou <b>help</b> puis Entrée
+          <span data-i18n="tm.hintpre">indice&nbsp;: commence à taper ou</span>{
+            " "
+          }
+          <b>help</b>{" "}
+          <span data-i18n="tm.hintpost">puis Entrée</span>
         </p>
       </div>
     </div>
@@ -114,20 +173,8 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
     is:inline
     define:vars={{
       user,
-      P: {
-        name: data.name,
-        role: data.role,
-        about: data.about,
-        location: data.location,
-        email: data.email,
-        projects: data.projects.map((p) => ({
-          title: p.title,
-          year: p.year,
-          description: p.description,
-        })),
-        skills: data.skills,
-        socials: data.socials,
-      },
+      content: { fr: replContent(data), en: replContent(portfolioEn) },
+      STR: replText,
     }}
   >
     const root = document.querySelector("[data-repl]");
@@ -171,18 +218,18 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
         out.appendChild(d);
       }
 
+      const lang = () => (document.documentElement.lang === "en" ? "en" : "fr");
+
       function run(raw) {
+        const P = content[lang()];
+        const t = STR[lang()];
         const cmd = raw.trim();
         const [name, ...args] = cmd.split(/\s+/);
         switch ((name || "").toLowerCase()) {
           case "":
             return [];
           case "help":
-            return [
-              "commandes disponibles :",
-              "  help · whoami · about · ls · skills · contact",
-              "  echo <texte> · date · clear · sudo",
-            ];
+            return t.help;
           case "whoami":
             return [P.name + " — " + P.role, P.location];
           case "about":
@@ -208,18 +255,18 @@ const user = data.name.toLowerCase().replace(/[^a-z]+/g, "");
           case "echo":
             return [args.join(" ")];
           case "date":
-            return [new Date().toLocaleString("fr-FR")];
+            return [new Date().toLocaleString(t.locale)];
           case "sudo":
-            return ["hé, pas de sudo ici 😏"];
+            return [t.sudo];
           case "rm":
-            return ["jamais je ne supprimerai mon propre portfolio 🙃"];
+            return [t.rm];
           case "hello":
           case "salut":
-            return ["salut 👋"];
+            return [t.hello];
           case "clear":
             return "CLEAR";
           default:
-            return [name + " : commande introuvable. Tape « help »."];
+            return [name + t.notfound];
         }
       }
 

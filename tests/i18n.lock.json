@@ -1,0 +1,346 @@
+{
+  "about": {
+    "fr": "Après vingt ans à diriger des équipes, j'ai choisi de reconstruire mon métier autour du code. Développeur fullstack en alternance chez CGI à Bordeaux, je me forme à l'architecture logicielle : Java, Spring Boot et Quarkus côté serveur, Angular et TypeScript côté interface. Ce qui me guide n'a pas changé : le soin du détail et le goût des systèmes clairs. Ce portfolio en est un clin d'œil, il se réinvente à chaque visite.",
+    "en": "After twenty years leading teams, I chose to rebuild my craft around code. A full-stack developer on a work-study contract at CGI in Bordeaux, I'm training in software architecture: Java, Spring Boot and Quarkus on the server side, Angular and TypeScript on the interface. What drives me hasn't changed: care for detail and a taste for clear systems. This portfolio is a nod to that — it reinvents itself on every visit."
+  },
+  "au.projects": {
+    "fr": "Projets",
+    "en": "Projects"
+  },
+  "au.together": {
+    "fr": "Travaillons ensemble",
+    "en": "Let's work together"
+  },
+  "ba.available": {
+    "fr": "Disponible",
+    "en": "Available"
+  },
+  "ba.busy": {
+    "fr": "Complet",
+    "en": "Fully booked"
+  },
+  "ba.tools": {
+    "fr": "Outils",
+    "en": "Tools"
+  },
+  "ba.work": {
+    "fr": "Travaux",
+    "en": "Work"
+  },
+  "bo.available": {
+    "fr": "Ouvert aux projets",
+    "en": "Open to work"
+  },
+  "bo.busy": {
+    "fr": "Complet",
+    "en": "Fully booked"
+  },
+  "bo.correspondence": {
+    "fr": "Correspondance",
+    "en": "Correspondence"
+  },
+  "bo.flora": {
+    "fr": "Flora — savoir-faire",
+    "en": "Flora — craft"
+  },
+  "bo.note": {
+    "fr": "Note du naturaliste",
+    "en": "Naturalist's note"
+  },
+  "bo.plate": {
+    "fr": "Herbier · Planche",
+    "en": "Herbarium · Plate"
+  },
+  "bo.specimens": {
+    "fr": "Spécimens",
+    "en": "Specimens"
+  },
+  "bp.assemblies": {
+    "fr": "ENSEMBLES",
+    "en": "ASSEMBLIES"
+  },
+  "bp.available": {
+    "fr": "● OPÉRATIONNEL",
+    "en": "● OPERATIONAL"
+  },
+  "bp.busy": {
+    "fr": "○ INDISPONIBLE",
+    "en": "○ UNAVAILABLE"
+  },
+  "bp.drawnby": {
+    "fr": "DESSINÉ PAR",
+    "en": "DRAWN BY"
+  },
+  "bp.fig1": {
+    "fr": "FIG. 1 — SUJET",
+    "en": "FIG. 1 — SUBJECT"
+  },
+  "bp.materials": {
+    "fr": "MATÉRIAUX & OUTILLAGE",
+    "en": "MATERIALS & TOOLING"
+  },
+  "bp.projection": {
+    "fr": "PROJECTION ORTHOGONALE",
+    "en": "ORTHOGONAL PROJECTION"
+  },
+  "bp.refs": {
+    "fr": "RÉFÉRENCES",
+    "en": "REFERENCES"
+  },
+  "bp.rev": {
+    "fr": "RÉV.",
+    "en": "REV."
+  },
+  "bp.sheet": {
+    "fr": "FEUILLE",
+    "en": "SHEET"
+  },
+  "cm.end": {
+    "fr": "Fin",
+    "en": "The end"
+  },
+  "cm.episodes": {
+    "fr": "Épisodes",
+    "en": "Episodes"
+  },
+  "cm.hey": {
+    "fr": "HÉ !",
+    "en": "HEY!"
+  },
+  "cm.powers": {
+    "fr": "Super-pouvoirs",
+    "en": "Superpowers"
+  },
+  "cm.tbc": {
+    "fr": "À suivre…",
+    "en": "To be continued…"
+  },
+  "cm.write": {
+    "fr": "Écris-moi",
+    "en": "Write to me"
+  },
+  "ed.available": {
+    "fr": "En commande",
+    "en": "On assignment"
+  },
+  "ed.busy": {
+    "fr": "Complet",
+    "en": "Fully booked"
+  },
+  "ed.issue": {
+    "fr": "Numéro",
+    "en": "Issue"
+  },
+  "ed.skills": {
+    "fr": "Savoir-faire",
+    "en": "Craft"
+  },
+  "ed.works": {
+    "fr": "Les travaux",
+    "en": "The work"
+  },
+  "ed.write": {
+    "fr": "Écrire",
+    "en": "Write"
+  },
+  "loader.boarding": {
+    "fr": "Embarquement",
+    "en": "Boarding"
+  },
+  "loader.departures": {
+    "fr": "✦ Départs",
+    "en": "✦ Departures"
+  },
+  "loader.flight": {
+    "fr": "Portfolio · vol RF",
+    "en": "Portfolio · flight RF"
+  },
+  "loader.gate": {
+    "fr": "Porte",
+    "en": "Gate"
+  },
+  "loader.ontime": {
+    "fr": "À l'heure",
+    "en": "On time"
+  },
+  "loader.sound": {
+    "fr": "🔊 son",
+    "en": "🔊 sound"
+  },
+  "loader.waiting": {
+    "fr": "En attente",
+    "en": "Waiting"
+  },
+  "mp.available": {
+    "fr": "dispo ✦",
+    "en": "open ✦"
+  },
+  "mp.busy": {
+    "fr": "complet",
+    "en": "booked"
+  },
+  "mp.chat": {
+    "fr": "On papote ?",
+    "en": "Let's chat?"
+  },
+  "mp.hi": {
+    "fr": "Bonjour !",
+    "en": "Hi there!"
+  },
+  "mp.projects": {
+    "fr": "Mes projets",
+    "en": "My projects"
+  },
+  "mp.toolbox": {
+    "fr": "Ma boîte à outils",
+    "en": "My toolbox"
+  },
+  "projects.0.description": {
+    "fr": "Puzzle minimaliste en terminal : retourner des blocs 2×2 jusqu'à obtenir une grille uniforme.",
+    "en": "A minimalist terminal puzzle: flip 2×2 blocks until the grid is uniform."
+  },
+  "projects.0.role": {
+    "fr": "Design & Développeur",
+    "en": "Design & Developer"
+  },
+  "projects.1.description": {
+    "fr": "Calendrier des fermetures du pont Chaban-Delmas à Bordeaux",
+    "en": "Closure calendar for the Chaban-Delmas bridge in Bordeaux"
+  },
+  "projects.1.role": {
+    "fr": "Design & Développeur",
+    "en": "Design & Developer"
+  },
+  "projects.1.tags.2": {
+    "fr": "Calendrier",
+    "en": "Calendar"
+  },
+  "projects.2.description": {
+    "fr": "Jeu de démineur.",
+    "en": "A minesweeper game."
+  },
+  "projects.2.role": {
+    "fr": "Design & Développeur",
+    "en": "Design & Developer"
+  },
+  "projects.3.description": {
+    "fr": "Application de gestion de bibliothèque en Quarkus : CDI, Panache, Repository pattern et client REST vers OpenLibrary.",
+    "en": "A library management app in Quarkus: CDI, Panache, Repository pattern and a REST client to OpenLibrary."
+  },
+  "projects.3.role": {
+    "fr": "Développeur",
+    "en": "Developer"
+  },
+  "role": {
+    "fr": "Développeur fullstack",
+    "en": "Full-stack developer"
+  },
+  "rz.about": {
+    "fr": "À PROPOS",
+    "en": "ABOUT"
+  },
+  "rz.available": {
+    "fr": "OUVERT",
+    "en": "OPEN"
+  },
+  "rz.busy": {
+    "fr": "FERMÉ",
+    "en": "CLOSED"
+  },
+  "rz.madewith": {
+    "fr": "FABRIQUÉ AVEC",
+    "en": "MADE WITH"
+  },
+  "rz.projects": {
+    "fr": "Projets",
+    "en": "Projects"
+  },
+  "rz.reg": {
+    "fr": "◉ ◉ RISOGRAPHIE · IMPRESSION 2 COULEURS ◉ ◉",
+    "en": "◉ ◉ RISOGRAPHY · 2-COLOUR PRINT ◉ ◉"
+  },
+  "rz.stamp": {
+    "fr": "RISO · ÉD. LIMITÉE",
+    "en": "RISO · LIMITED ED."
+  },
+  "rz.together": {
+    "fr": "On imprime un projet ensemble ?",
+    "en": "Let's print a project together?"
+  },
+  "skills.10": {
+    "fr": "Accessibilité",
+    "en": "Accessibility"
+  },
+  "sw.about": {
+    "fr": "À propos",
+    "en": "About"
+  },
+  "sw.available": {
+    "fr": "Disponible",
+    "en": "Available"
+  },
+  "sw.busy": {
+    "fr": "Complet",
+    "en": "Fully booked"
+  },
+  "sw.capabilities": {
+    "fr": "Capacités",
+    "en": "Capabilities"
+  },
+  "sw.selected": {
+    "fr": "Travaux sélectionnés",
+    "en": "Selected work"
+  },
+  "tagline": {
+    "fr": "De la conduite d'équipes à l'architecture logicielle.",
+    "en": "From leading teams to software architecture."
+  },
+  "tm.available": {
+    "fr": "statut: DISPONIBLE",
+    "en": "status: AVAILABLE"
+  },
+  "tm.busy": {
+    "fr": "statut: OCCUPÉ",
+    "en": "status: BUSY"
+  },
+  "tm.hintpost": {
+    "fr": "puis Entrée",
+    "en": "then Enter"
+  },
+  "tm.hintpre": {
+    "fr": "indice : commence à taper ou",
+    "en": "hint: start typing or"
+  },
+  "tm.ready": {
+    "fr": "système prêt",
+    "en": "system ready"
+  },
+  "ui.loaderGo": {
+    "fr": "Générer l'univers",
+    "en": "Generate the universe"
+  },
+  "ui.regen": {
+    "fr": "Régénérer",
+    "en": "Regenerate"
+  },
+  "ui.share": {
+    "fr": "Partager",
+    "en": "Share"
+  },
+  "y2.contact": {
+    "fr": "me contacter",
+    "en": "contact me"
+  },
+  "y2.hi": {
+    "fr": "bonjour, je suis",
+    "en": "hi, i'm"
+  },
+  "y2.projects": {
+    "fr": "mes projets",
+    "en": "my projects"
+  },
+  "y2.together": {
+    "fr": "on bosse ensemble ?",
+    "en": "let's work together?"
+  }
+}
