@@ -54,14 +54,15 @@
   ],
   "skills": [
     "TypeScript",
-    "React",
+    "Java",
+    "Angular",
+    "Spring Boot",
+    "Quarkus",
     "Astro",
+    "React",
     "Design systems",
     "Figma",
     "Motion design",
-    "Accessibilité",
-    "Angular",
-    "Spring Boot",
-    "Quarkus"
+    "Accessibilité"
   ]
 }
