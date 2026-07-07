@@ -304,8 +304,8 @@
     "en": "status: BUSY"
   },
   "tm.hintpost": {
-    "fr": " puis Entrée",
-    "en": " then Enter"
+    "fr": "puis Entrée",
+    "en": "then Enter"
   },
   "tm.hintpre": {
     "fr": "indice : commence à taper ou",
@@ -316,11 +316,11 @@
     "en": "system ready"
   },
   "ui.loaderGo": {
-    "fr": "Générer mon univers",
-    "en": "Generate my universe"
+    "fr": "Générer l'univers",
+    "en": "Generate the universe"
   },
   "ui.regen": {
-    "fr": "Regénérer",
+    "fr": "Régénérer",
     "en": "Regenerate"
   },
   "ui.share": {
