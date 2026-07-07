@@ -3,6 +3,7 @@ import { UNIVERSE_IDS, UNIVERSES } from "../universes";
 import portfolio from "../data/portfolio.json";
 import portfolioEn from "../data/portfolio.en.json";
 import uiStrings from "../data/ui.json";
+import { buildI18nDict, type Dict } from "../lib/i18n";
 
 // Génère les règles de révélation à partir du registre : chaque univers est
 // masqué par défaut, seul celui qui correspond à l'attribut <html data-universe>
@@ -39,39 +40,11 @@ const jsonLd = {
   knowsAbout: portfolio.skills,
 };
 
-// Dictionnaire i18n {clé: {fr, en}} pour la bascule de langue côté client.
-// On aplatit récursivement les deux versions du contenu (portfolio.json = FR,
-// portfolio.en.json = EN) et on ne garde que les chaînes qui diffèrent — le
-// reste (nom, e-mail, URLs…) n'a pas besoin de traduction. On y ajoute les
-// libellés d'interface (ui.json). Les univers marquent chaque texte traduisible
-// avec `data-i18n="<clé>"` ; le script client échange le texte selon la langue.
-type FlatStrings = Record<string, string>;
-function flattenStrings(
-  value: unknown,
-  prefix = "",
-  out: FlatStrings = {},
-): FlatStrings {
-  if (typeof value === "string") {
-    out[prefix] = value;
-  } else if (Array.isArray(value)) {
-    value.forEach((v, i) =>
-      flattenStrings(v, prefix ? `${prefix}.${i}` : String(i), out),
-    );
-  } else if (value && typeof value === "object") {
-    for (const [k, v] of Object.entries(value)) {
-      flattenStrings(v, prefix ? `${prefix}.${k}` : k, out);
-    }
-  }
-  return out;
-}
-const frFlat = flattenStrings(portfolio);
-const enFlat = flattenStrings(portfolioEn);
-const i18n: Record<string, { fr: string; en: string }> = {};
-for (const [key, fr] of Object.entries(frFlat)) {
-  const en = enFlat[key];
-  if (en != null && en !== fr) i18n[key] = { fr, en };
-}
-Object.assign(i18n, uiStrings);
+// Dictionnaire i18n {clé: {fr, en}} injecté côté client pour la bascule de
+// langue (contenu traduit + libellés d'interface). Logique dans src/lib/i18n.ts,
+// couverte par les tests. Les univers marquent chaque texte traduisible avec
+// `data-i18n="<clé>"` ; le script client échange le texte selon la langue.
+const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 ---
 
 <!doctype html>

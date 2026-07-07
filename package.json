@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
+    "i18n:lock": "node scripts/i18n-lock.mjs",
     "astro": "astro"
   },
   "dependencies": {
