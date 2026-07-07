@@ -73,6 +73,35 @@ Un panneau à palettes façon aéroport (Solari) qui égrène les lettres jusqu'
 - Ouvrir un lien `?u=<id>&t=<teinte>` reproduit exactement l'univers et sa teinte.
   (Regénérer/rechargement nettoient `u` et `t` → on repart en aléatoire.)
 
+## Langue (FR / EN)
+
+Un bouton **FR/EN** dans la barre bascule toute la page — contenu **et**
+interface, sur les 11 univers, le loader et le REPL du Terminal. Bascule **côté
+client** (même URL), préférence mémorisée en `localStorage` ; `<html lang>` est
+mis à jour.
+
+- **Contenu** : `src/data/portfolio.json` (FR) + `src/data/portfolio.en.json`
+  (EN), même structure.
+- **Libellés d'interface** : `src/data/ui.json` (`{ "clé": { "fr", "en" } }`).
+- Chaque texte traduisible porte `data-i18n="<clé>"` ; le script du Layout échange
+  le texte selon la langue. Le dictionnaire est construit dans `src/lib/i18n.ts`.
+
+Deux garde-fous testés (`tests/i18n.test.ts`) :
+
+- **parité** — chaque libellé UI a `fr`+`en` non vides, et les deux fichiers de
+  contenu ont exactement les mêmes chemins (aucune clé manquante) ;
+- **synchronisation** — compare le dictionnaire au lock (`tests/i18n.lock.json`)
+  et signale toute traduction changée d'un seul côté (FR sans EN, ou l'inverse).
+
+Après avoir mis à jour **FR et EN**, régénère la référence :
+
+```bash
+npm run i18n:lock
+```
+
+> Bascule client → une seule URL indexée (FR) côté SEO. Quelques listes jointes
+> (tags/compétences d'Editorial et Botanical) et la marquee Y2K restent en FR.
+
 ## Ajouter un univers
 
 1. Copie un fichier de `src/universes/` comme patron (garde un préfixe de classe
@@ -80,7 +109,10 @@ Un panneau à palettes façon aéroport (Solari) qui égrène les lettres jusqu'
 2. Mets la racine à `class="universe" data-universe-id="mon-id"`.
 3. Ajoute `{ id: "mon-id", name: "Mon univers" }` dans `src/universes/index.ts`.
 4. Importe et rends le composant dans `src/pages/index.astro`.
-5. (Optionnel) règle l'amplitude de teinte dans la map `TINT` de `Layout.astro`
+5. Marque chaque texte traduisible avec `data-i18n="<clé>"` (contenu :
+   `tagline`, `about`, `projects.N.…`, `skills.N` ; libellés : ajoute-les dans
+   `src/data/ui.json`), puis `npm run i18n:lock`.
+6. (Optionnel) règle l'amplitude de teinte dans la map `TINT` de `Layout.astro`
    (défaut : 40°).
 
 La CSS de révélation et la barre de contrôle se recâblent automatiquement à
@@ -94,18 +126,21 @@ npm run lint          # eslint
 npm run format        # prettier --write   (format:check en lecture seule)
 npm run check         # astro check (types)
 npm test              # vitest
+npm run i18n:lock     # régénère la référence de traduction (après édition fr+en)
 ```
 
 Les tests (`tests/`) couvrent la validité de `portfolio.json`, la cohérence du
-registre d'univers, et les fonctions pures du moteur (`src/lib/` : anti-répétition
-et encodage de la teinte pour le partage).
+registre d'univers, les fonctions pures du moteur (`src/lib/` : anti-répétition,
+encodage de la teinte, construction du dictionnaire i18n), et la parité +
+synchronisation des traductions FR/EN (cf. [Langue](#langue-fr--en)).
 
 Une **CI GitHub Actions** (`.github/workflows/ci.yml`) rejoue Lint · Typecheck ·
 Test · Build à chaque push et PR.
 
 ## Personnaliser
 
-- **Contenu** : `src/data/portfolio.json`.
+- **Contenu** : `src/data/portfolio.json` (FR) + `src/data/portfolio.en.json`
+  (EN) ; libellés d'interface dans `src/data/ui.json`.
 - **Polices** : déclarées une fois dans `Layout.astro` (Google Fonts).
 - **URL de prod** : `site` dans `astro.config.mjs` (sert au canonical, à l'OG et
   au sitemap).
