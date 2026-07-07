@@ -79,7 +79,7 @@ const { data } = Astro.props;
 
 <style>
   .rz {
-    --paper: #f2ebdd;
+    --paper: #f4edd6;
     --pink: #ff4d79;
     --blue: #2f3bd6;
     --ink: #241a12;
@@ -91,16 +91,31 @@ const { data } = Astro.props;
     padding: clamp(18px, 4vw, 56px) clamp(18px, 4vw, 56px) 104px;
     overflow: hidden;
   }
-  /* grain d'impression riso */
+  /* grain de fibre du papier (bruit SVG, derrière le contenu) */
   .rz::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.35;
     mix-blend-mode: multiply;
-    background-image: radial-gradient(var(--ink) 0.5px, transparent 0.6px);
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+  }
+  /* trame d'impression (points) par-dessus tout → aspect risographié */
+  .rz::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+    background-image: radial-gradient(
+      rgba(20, 12, 30, 0.5) 0.5px,
+      transparent 0.9px
+    );
     background-size: 3px 3px;
   }
   .rz__paper {
@@ -150,18 +165,25 @@ const { data } = Astro.props;
     font-size: clamp(3rem, 15vw, 9rem);
     line-height: 0.9;
     letter-spacing: -0.02em;
-    color: var(--blue);
+    color: transparent; /* le visuel vient des 2 couches ci-dessous */
     margin: 0;
+    isolation: isolate; /* les 2 couches se multiplient entre elles */
+  }
+  /* surimpression : ombre (rose) + encre (bleu) qui se multiplient à l'overlap */
+  .rz__name::before,
+  .rz__name::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
     mix-blend-mode: multiply;
   }
   .rz__name::before {
-    content: attr(data-text);
-    position: absolute;
-    left: 4px;
-    top: 3px;
     color: var(--pink);
-    z-index: -1;
-    mix-blend-mode: multiply;
+    transform: translate(10px, 8px);
+  }
+  .rz__name::after {
+    color: var(--blue);
   }
   .rz__tag {
     font-size: clamp(1.2rem, 3vw, 2rem);
@@ -200,18 +222,24 @@ const { data } = Astro.props;
     display: inline-block;
     font-family: "Archivo Black", sans-serif;
     font-size: clamp(2.2rem, 8vw, 4.5rem);
-    color: var(--blue);
+    color: transparent;
     margin: 50px 0 28px;
+    isolation: isolate;
+  }
+  .rz__h2::before,
+  .rz__h2::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
     mix-blend-mode: multiply;
   }
   .rz__h2::before {
-    content: attr(data-text);
-    position: absolute;
-    left: 3px;
-    top: 2px;
     color: var(--pink);
-    z-index: -1;
-    mix-blend-mode: multiply;
+    transform: translate(7px, 6px);
+  }
+  .rz__h2::after {
+    color: var(--blue);
   }
 
   .rz__zine {
