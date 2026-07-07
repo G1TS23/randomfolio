@@ -1,6 +1,8 @@
 ---
 import { UNIVERSE_IDS, UNIVERSES } from "../universes";
 import portfolio from "../data/portfolio.json";
+import portfolioEn from "../data/portfolio.en.json";
+import uiStrings from "../data/ui.json";
 
 // Génère les règles de révélation à partir du registre : chaque univers est
 // masqué par défaut, seul celui qui correspond à l'attribut <html data-universe>
@@ -36,6 +38,40 @@ const jsonLd = {
   sameAs: portfolio.socials.map((s) => s.url),
   knowsAbout: portfolio.skills,
 };
+
+// Dictionnaire i18n {clé: {fr, en}} pour la bascule de langue côté client.
+// On aplatit récursivement les deux versions du contenu (portfolio.json = FR,
+// portfolio.en.json = EN) et on ne garde que les chaînes qui diffèrent — le
+// reste (nom, e-mail, URLs…) n'a pas besoin de traduction. On y ajoute les
+// libellés d'interface (ui.json). Les univers marquent chaque texte traduisible
+// avec `data-i18n="<clé>"` ; le script client échange le texte selon la langue.
+type FlatStrings = Record<string, string>;
+function flattenStrings(
+  value: unknown,
+  prefix = "",
+  out: FlatStrings = {},
+): FlatStrings {
+  if (typeof value === "string") {
+    out[prefix] = value;
+  } else if (Array.isArray(value)) {
+    value.forEach((v, i) =>
+      flattenStrings(v, prefix ? `${prefix}.${i}` : String(i), out),
+    );
+  } else if (value && typeof value === "object") {
+    for (const [k, v] of Object.entries(value)) {
+      flattenStrings(v, prefix ? `${prefix}.${k}` : k, out);
+    }
+  }
+  return out;
+}
+const frFlat = flattenStrings(portfolio);
+const enFlat = flattenStrings(portfolioEn);
+const i18n: Record<string, { fr: string; en: string }> = {};
+for (const [key, fr] of Object.entries(frFlat)) {
+  const en = enFlat[key];
+  if (en != null && en !== fr) i18n[key] = { fr, en };
+}
+Object.assign(i18n, uiStrings);
 ---
 
 <!doctype html>
@@ -498,7 +534,7 @@ const jsonLd = {
           </div>
           <div class="sf__board" data-sf-board aria-hidden="true"></div>
           <button class="sf__go" data-sf-go type="button">
-            🎲 Générer mon univers
+            🎲 <span data-i18n="ui.loaderGo">Générer mon univers</span>
           </button>
           <div class="sf__meta">
             <span class="sf__status" data-sf-status>Embarquement</span>
@@ -518,7 +554,7 @@ const jsonLd = {
         aria-label="Générer un nouvel univers"
       >
         <span class="switcher__dice" aria-hidden="true">🎲</span>
-        <span>Regénérer</span>
+        <span data-i18n="ui.regen">Regénérer</span>
       </button>
       <span class="switcher__label" data-current>—</span>
       <button
@@ -526,7 +562,15 @@ const jsonLd = {
         data-action="share"
         aria-label="Copier le lien de cette variante"
       >
-        🔗 Partager
+        🔗 <span data-i18n="ui.share">Partager</span>
+      </button>
+      <button
+        type="button"
+        data-action="lang"
+        class="switcher__icon"
+        aria-label="Changer la langue (français / anglais)"
+      >
+        <span data-lang-label>EN</span>
       </button>
       <button
         type="button"
@@ -540,7 +584,7 @@ const jsonLd = {
     </nav>
     <div class="switcher__toast" role="status" aria-live="polite"></div>
 
-    <script is:inline define:vars={{ universes: UNIVERSES }}>
+    <script is:inline define:vars={{ universes: UNIVERSES, i18n }}>
       const root = document.documentElement;
       const ids = universes.map((u) => u.id);
       const nameOf = (id) =>
@@ -552,6 +596,40 @@ const jsonLd = {
 
       const switcher = document.querySelector(".switcher");
       const loader = document.querySelector(".genloader");
+
+      // --- i18n : bascule FR/EN côté client (préférence en localStorage) ---
+      // Chaque texte traduisible porte data-i18n="<clé>". On échange son contenu
+      // (et son data-text, ex. surimpression Riso) selon la langue.
+      const langLabel = document.querySelector("[data-lang-label]");
+      function currentLang() {
+        try {
+          return localStorage.getItem("rf.lang") === "en" ? "en" : "fr";
+        } catch {
+          return "fr";
+        }
+      }
+      function applyLang(lang) {
+        for (const el of document.querySelectorAll("[data-i18n]")) {
+          const entry = i18n[el.getAttribute("data-i18n")];
+          if (!entry || entry[lang] == null) continue;
+          el.textContent = entry[lang];
+          if (el.hasAttribute("data-text"))
+            el.setAttribute("data-text", entry[lang]);
+        }
+        root.lang = lang;
+        if (langLabel) langLabel.textContent = lang === "fr" ? "EN" : "FR";
+        try {
+          localStorage.setItem("rf.lang", lang);
+        } catch {
+          /* pas de stockage : la langue ne persiste pas */
+        }
+      }
+      document
+        .querySelector('[data-action="lang"]')
+        ?.addEventListener("click", () =>
+          applyLang(root.lang === "en" ? "fr" : "en"),
+        );
+      applyLang(currentLang());
       const board = loader && loader.querySelector("[data-sf-board]");
       const statusEl = loader && loader.querySelector("[data-sf-status]");
       const gateEl = loader && loader.querySelector("[data-sf-gate]");

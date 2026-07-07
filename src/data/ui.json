@@ -1,0 +1,11 @@
+{
+  "ui.regen": { "fr": "Regénérer", "en": "Regenerate" },
+  "ui.share": { "fr": "Partager", "en": "Share" },
+  "ui.loaderGo": { "fr": "Générer mon univers", "en": "Generate my universe" },
+
+  "sw.available": { "fr": "Disponible", "en": "Available" },
+  "sw.busy": { "fr": "Complet", "en": "Fully booked" },
+  "sw.about": { "fr": "À propos", "en": "About" },
+  "sw.selected": { "fr": "Travaux sélectionnés", "en": "Selected work" },
+  "sw.capabilities": { "fr": "Capacités", "en": "Capabilities" }
+}
