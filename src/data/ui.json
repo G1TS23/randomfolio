@@ -7,5 +7,24 @@
   "sw.busy": { "fr": "Complet", "en": "Fully booked" },
   "sw.about": { "fr": "À propos", "en": "About" },
   "sw.selected": { "fr": "Travaux sélectionnés", "en": "Selected work" },
-  "sw.capabilities": { "fr": "Capacités", "en": "Capabilities" }
+  "sw.capabilities": { "fr": "Capacités", "en": "Capabilities" },
+
+  "ed.issue": { "fr": "Numéro", "en": "Issue" },
+  "ed.available": { "fr": "En commande", "en": "On assignment" },
+  "ed.busy": { "fr": "Complet", "en": "Fully booked" },
+  "ed.works": { "fr": "Les travaux", "en": "The work" },
+  "ed.skills": { "fr": "Savoir-faire", "en": "Craft" },
+  "ed.write": { "fr": "Écrire", "en": "Write" },
+
+  "y2.hi": { "fr": "bonjour, je suis", "en": "hi, i'm" },
+  "y2.contact": { "fr": "me contacter", "en": "contact me" },
+  "y2.projects": { "fr": "mes projets", "en": "my projects" },
+  "y2.together": { "fr": "on bosse ensemble ?", "en": "let's work together?" },
+
+  "cm.episodes": { "fr": "Épisodes", "en": "Episodes" },
+  "cm.powers": { "fr": "Super-pouvoirs", "en": "Superpowers" },
+  "cm.hey": { "fr": "HÉ !", "en": "HEY!" },
+  "cm.write": { "fr": "Écris-moi", "en": "Write to me" },
+  "cm.tbc": { "fr": "À suivre…", "en": "To be continued…" },
+  "cm.end": { "fr": "Fin", "en": "The end" }
 }

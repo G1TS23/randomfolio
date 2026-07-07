@@ -11,33 +11,38 @@ const total = String(data.projects.length).padStart(2, "0");
 <section class="universe ed" data-universe-id="editorial">
   <div class="ed__page">
     <header class="ed__masthead">
-      <span class="ed__issue">Numéro {year} · {data.location}</span>
+      <span class="ed__issue">
+        <span data-i18n="ed.issue">Numéro</span>
+        {year} · {data.location}
+      </span>
       <span class="ed__folio">Portfolio</span>
-      <span class="ed__status"
+      <span
+        class="ed__status"
+        data-i18n={data.available ? "ed.available" : "ed.busy"}
         >{data.available ? "En commande" : "Complet"}</span
       >
     </header>
 
     <div class="ed__hero">
-      <p class="ed__kicker">{data.role}</p>
+      <p class="ed__kicker" data-i18n="role">{data.role}</p>
       <h1 class="ed__name">{data.name}</h1>
-      <p class="ed__tagline">{data.tagline}</p>
+      <p class="ed__tagline" data-i18n="tagline">{data.tagline}</p>
     </div>
 
     <div class="ed__lede">
-      <p class="ed__about" data-dropcap={data.about.charAt(0)}>
-        {data.about.slice(1)}
-      </p>
+      <p class="ed__about" data-i18n="about">{data.about}</p>
     </div>
 
     <figure class="ed__quote">
-      <blockquote>« {data.tagline} »</blockquote>
+      <blockquote>
+        « <span data-i18n="tagline">{data.tagline}</span> »
+      </blockquote>
       <figcaption>— {data.name}</figcaption>
     </figure>
 
     <section class="ed__features" aria-label="Projets">
       <div class="ed__section-head">
-        <h2>Les travaux</h2>
+        <h2 data-i18n="ed.works">Les travaux</h2>
         <span class="ed__count">01–{total}</span>
       </div>
       {
@@ -48,11 +53,18 @@ const total = String(data.projects.length).padStart(2, "0");
             </span>
             <div class="ed__feature-body">
               <div class="ed__feature-meta">
-                <span>{p.role}</span>
+                <span data-i18n={`projects.${i}.role`}>{p.role}</span>
                 <span class="ed__feature-year">{p.year}</span>
               </div>
-              <h3 class="ed__feature-title">{p.title}</h3>
-              <p class="ed__feature-desc">{p.description}</p>
+              <h3 class="ed__feature-title" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </h3>
+              <p
+                class="ed__feature-desc"
+                data-i18n={`projects.${i}.description`}
+              >
+                {p.description}
+              </p>
               <p class="ed__feature-tags">{p.tags.join(" / ")}</p>
             </div>
           </a>
@@ -62,11 +74,11 @@ const total = String(data.projects.length).padStart(2, "0");
 
     <section class="ed__colophon">
       <div class="ed__colophon-col">
-        <h4>Savoir-faire</h4>
+        <h4 data-i18n="ed.skills">Savoir-faire</h4>
         <p>{data.skills.join(" · ")}</p>
       </div>
       <div class="ed__colophon-col">
-        <h4>Écrire</h4>
+        <h4 data-i18n="ed.write">Écrire</h4>
         <a class="ed__mail" href={`mailto:${data.email}`}>{data.email}</a>
         <ul class="ed__socials">
           {
@@ -170,8 +182,7 @@ const total = String(data.projects.length).padStart(2, "0");
     text-align: justify;
     hyphens: auto;
   }
-  .ed__about::before {
-    content: attr(data-dropcap);
+  .ed__about::first-letter {
     float: left;
     font-family: "Fraunces", serif;
     font-weight: 900;
