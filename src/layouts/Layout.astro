@@ -950,7 +950,21 @@ const jsonLd = {
         current(),
         parseTint(new URLSearchParams(location.search).get("t")),
       );
-      armLoader();
+      // Le panneau d'accueil « Générer » (clic → débloque le son) n'apparaît qu'à
+      // la première arrivée d'une session. Ensuite dans la même session
+      // (rechargement, Regénérer, touche R), l'animation se relance directement.
+      // sessionStorage plutôt que localStorage : le besoin (débloquer l'audio)
+      // est lié à la session, et le navigateur reverrouille l'audio à chaque
+      // nouvelle session — donc reproposer le geste à une nouvelle arrivée a du sens.
+      let firstArrival = false; // pas de stockage → reste false, jamais de blocage
+      try {
+        firstArrival = !sessionStorage.getItem("rf.arrived.session");
+        sessionStorage.setItem("rf.arrived.session", "1");
+      } catch {
+        // sessionStorage indisponible : on garde firstArrival = false
+      }
+      if (firstArrival) armLoader();
+      else runGenerator(nameOf(current()), {});
     </script>
   </body>
 </html>
