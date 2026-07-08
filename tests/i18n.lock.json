@@ -144,20 +144,20 @@
     "en": "Write"
   },
   "loader.boarding": {
-    "fr": "Embarquement",
-    "en": "Boarding"
+    "fr": "En voiture !",
+    "en": "All aboard!"
   },
   "loader.departures": {
     "fr": "✦ Départs",
     "en": "✦ Departures"
   },
   "loader.flight": {
-    "fr": "Portfolio · vol RF",
-    "en": "Portfolio · flight RF"
+    "fr": "Portfolio · train RF",
+    "en": "Portfolio · train RF"
   },
   "loader.gate": {
-    "fr": "Porte",
-    "en": "Gate"
+    "fr": "Voie",
+    "en": "Platform"
   },
   "loader.ontime": {
     "fr": "À l'heure",

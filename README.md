@@ -49,8 +49,8 @@ npm run build    # site statique dans dist/
 
 ## L'écran de chargement
 
-Un panneau à palettes façon aéroport (Solari) qui égrène les lettres jusqu'à
-« annoncer » l'univers, puis se lève comme un rideau.
+Un panneau à palettes façon tableau des départs de gare (Solari) qui égrène les
+lettres jusqu'à « annoncer » l'univers, puis se lève comme un rideau.
 
 - À la **première arrivée d'une session**, un bouton **🎲 Générer mon univers**
   lance l'animation **avec le son** (un clac mécanique synthétisé en Web Audio —
