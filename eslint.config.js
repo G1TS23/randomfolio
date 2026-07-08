@@ -19,9 +19,10 @@ export default [
     rules: { "no-undef": "off" },
   },
   {
-    // Scripts d'outillage exécutés en Node
+    // Scripts d'outillage : Node + globals navigateur (callbacks page.evaluate
+    // de Playwright, ex. génération de l'image OG, tournent dans la page)
     files: ["scripts/**/*.mjs"],
-    languageOptions: { globals: { ...globals.node } },
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   // désactive les règles de style en conflit avec Prettier — doit rester en dernier
   prettier,
