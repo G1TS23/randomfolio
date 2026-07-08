@@ -5,6 +5,10 @@ on:
     branches: [main]
   pull_request:
 
+# Moindre privilège : le jeton de la CI n'a qu'un accès en lecture
+permissions:
+  contents: read
+
 # Annule un run en cours si un nouveau commit arrive sur la même réf
 concurrency:
   group: ci-${{ github.ref }}
@@ -50,6 +54,19 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+
+  a11y:
+    name: A11y (axe)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:a11y
 
   build:
     name: Build

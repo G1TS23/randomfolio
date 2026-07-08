@@ -128,17 +128,22 @@ composants présents.
 npm run lint          # eslint
 npm run format        # prettier --write   (format:check en lecture seule)
 npm run check         # astro check (types)
-npm test              # vitest
+npm test              # vitest (tests unitaires)
+npm run test:a11y     # audit d'accessibilité axe des 11 univers (Playwright)
 npm run i18n:lock     # régénère la référence de traduction (après édition fr+en)
 ```
 
-Les tests (`tests/`) couvrent la validité de `portfolio.json`, la cohérence du
-registre d'univers, les fonctions pures du moteur (`src/lib/` : anti-répétition,
-encodage de la teinte, construction du dictionnaire i18n), et la parité +
+Les tests unitaires (`tests/`) couvrent la validité de `portfolio.json`, la
+cohérence du registre d'univers, les fonctions pures du moteur (`src/lib/` :
+anti-répétition, encodage de la teinte, dictionnaire i18n) et la parité +
 synchronisation des traductions FR/EN (cf. [Langue](#langue-fr--en)).
 
-Une **CI GitHub Actions** (`.github/workflows/ci.yml`) rejoue Lint · Typecheck ·
-Test · Build à chaque push et PR.
+Un audit **accessibilité** (`e2e/a11y.spec.ts`) fait passer **axe-core** sur les
+11 univers → **0 violation** (contraste WCAG AA, landmarks). Lighthouse : **100**
+en performance, accessibilité, best-practices et SEO.
+
+Une **CI GitHub Actions** (`.github/workflows/ci.yml`, jeton en lecture seule)
+rejoue **Lint · Typecheck · Test · A11y (axe) · Build** à chaque push et PR.
 
 ## Personnaliser
 
@@ -148,13 +153,19 @@ Test · Build à chaque push et PR.
 - **URL de prod** : `site` dans `astro.config.mjs` (sert au canonical, à l'OG et
   au sitemap).
 
-## SEO & déploiement
+## Sécurité, SEO & déploiement
 
 - **Statique** → déployable sur Netlify, Vercel, GitHub Pages… (config Netlify
   dans `netlify.toml`).
+- **Sécurité** : en-têtes dans `netlify.toml` (Content-Security-Policy, HSTS,
+  `X-Frame-Options`, `X-Content-Type-Options`, Referrer/Permissions-Policy) ;
+  **Dependabot** (npm + github-actions) pour les correctifs ; politique de
+  divulgation dans [`SECURITY.md`](.github/SECURITY.md).
 - **SEO** : `<title>` / meta / `canonical` fixes (indépendants de l'univers),
   **JSON-LD `schema.org/Person`** comme source canonique, `sitemap.xml`,
   `robots.txt`, et une **image Open Graph** (`public/og.png`).
+- **Perf** : la feuille Google Fonts est injectée de façon non bloquante (le
+  rendu ne l'attend pas ; le texte s'affiche en repli puis bascule).
 
 ## Licence
 
