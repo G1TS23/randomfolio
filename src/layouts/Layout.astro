@@ -20,6 +20,11 @@ const description = portfolio.tagline;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.png", Astro.site).href;
 
+// Feuille de polices Google chargée de façon asynchrone (non bloquante) : le
+// rendu ne l'attend pas, le texte s'affiche en repli puis bascule (display=swap).
+const fontsHref =
+  "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=VT323&family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap";
+
 // Données structurées schema.org : une source canonique et unique pour les
 // moteurs, indépendante de l'univers tiré. Contourne la duplication du DOM.
 const [locality, country] = portfolio.location.split(",").map((s) => s.trim());
@@ -85,9 +90,12 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=VT323&family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href={fontsHref}
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
 
     <!--
       MOTEUR DE TIRAGE — anti-flash.
