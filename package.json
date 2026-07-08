@@ -16,7 +16,8 @@
     "test": "vitest run",
     "test:a11y": "playwright test",
     "i18n:lock": "node scripts/i18n-lock.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "og": "node scripts/og.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
