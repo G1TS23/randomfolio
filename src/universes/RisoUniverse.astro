@@ -102,6 +102,7 @@ const { data } = Astro.props;
   .rz {
     --paper: #f4edd6;
     --pink: #ff4d79;
+    --pink-ink: #cb1a50; /* rose assombri : texte/fond à texte clair (AA) */
     --blue: #2f3bd6;
     --ink: #241a12;
     background: var(--paper);
@@ -161,7 +162,7 @@ const { data } = Astro.props;
     transform: rotate(-1.5deg);
   }
   .rz__stamp--pink {
-    color: var(--pink);
+    color: var(--pink-ink);
     border-color: var(--pink);
     transform: rotate(1.5deg);
   }
@@ -229,7 +230,7 @@ const { data } = Astro.props;
   }
   .rz__ticket {
     display: inline-block;
-    background: var(--pink);
+    background: var(--pink-ink);
     color: var(--paper);
     font-size: 13px;
     font-weight: 700;
@@ -316,7 +317,7 @@ const { data } = Astro.props;
   }
   .rz__card-year {
     font-weight: 700;
-    color: var(--pink);
+    color: var(--pink-ink);
     font-size: 15px;
   }
   .rz__card-role {
@@ -364,7 +365,7 @@ const { data } = Astro.props;
     transform: rotate(-1deg);
   }
   .rz__skill:nth-child(even) {
-    background: var(--pink);
+    background: var(--pink-ink);
     transform: rotate(1.2deg);
   }
 
@@ -383,7 +384,7 @@ const { data } = Astro.props;
     font-family: "Archivo Black", sans-serif;
     font-size: clamp(1.4rem, 4vw, 2.4rem);
     text-decoration: none;
-    background: var(--pink);
+    background: var(--pink-ink);
     color: var(--paper);
     padding: 4px 14px;
     display: inline-block;
@@ -411,7 +412,7 @@ const { data } = Astro.props;
   .rz__reg {
     font-size: 13px;
     letter-spacing: 0.14em;
-    color: var(--pink);
+    color: var(--pink-ink);
     margin-top: 26px;
   }
 
