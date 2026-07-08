@@ -89,12 +89,13 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
     <!-- Polices : chaque univers pioche dans ce jeu -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href={fontsHref}
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
+    <!-- Injection non bloquante : le rendu n'attend pas la feuille de polices -->
+    <script is:inline define:vars={{ fontsHref }}>
+      const rfFonts = document.createElement("link");
+      rfFonts.rel = "stylesheet";
+      rfFonts.href = fontsHref;
+      document.head.appendChild(rfFonts);
+    </script>
     <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
 
     <!--
