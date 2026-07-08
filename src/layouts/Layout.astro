@@ -521,7 +521,10 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       </div>
     </div>
 
-    <slot />
+    <!-- Landmark principal : englobe l'univers tiré (accessibilité) -->
+    <main>
+      <slot />
+    </main>
 
     <!-- Barre de contrôle : regénérer + partager la variante -->
     <nav class="switcher" aria-label="Générateur d'univers">

@@ -8,6 +8,22 @@ import { flattenStrings, buildI18nDict, type Dict } from "../src/lib/i18n";
 const ui = uiRaw as Dict;
 const lock = lockRaw as Dict;
 
+describe("flattenStrings", () => {
+  it("indexe un tableau à la racine par des chemins numériques", () => {
+    expect(flattenStrings(["a", "b"])).toEqual({ "0": "a", "1": "b" });
+  });
+  it("aplati objets et tableaux imbriqués", () => {
+    expect(flattenStrings({ x: "1", y: ["a", { z: "b" }] })).toEqual({
+      x: "1",
+      "y.0": "a",
+      "y.1.z": "b",
+    });
+  });
+  it("ignore les valeurs non-chaînes (nombres, null…)", () => {
+    expect(flattenStrings({ a: "s", n: 3, z: null })).toEqual({ a: "s" });
+  });
+});
+
 describe("i18n — parité des clés (aucune manquante)", () => {
   it("chaque libellé UI a fr et en, non vides", () => {
     for (const [key, val] of Object.entries(ui)) {
