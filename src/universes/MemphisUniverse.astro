@@ -397,14 +397,13 @@ const accents = ["teal", "coral", "yellow", "purple"];
     border: 3px solid var(--ink);
     border-radius: 999px;
     background: #fff;
+    color: var(--ink); /* texte foncé lisible sur pastilles claires (AA) */
   }
   .mp__pill:nth-child(4n + 1) {
     background: var(--teal);
-    color: #fff;
   }
   .mp__pill:nth-child(4n + 2) {
     background: var(--coral);
-    color: #fff;
   }
   .mp__pill:nth-child(4n + 3) {
     background: var(--yellow);
@@ -422,7 +421,7 @@ const accents = ["teal", "coral", "yellow", "purple"];
     font-family: "Archivo Black", sans-serif;
     font-weight: 400;
     font-size: clamp(1.6rem, 5vw, 2.8rem);
-    color: var(--teal);
+    color: var(--purple);
     margin: 0 0 14px;
   }
   .mp__mail {
