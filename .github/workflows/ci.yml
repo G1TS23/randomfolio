@@ -5,6 +5,10 @@ on:
     branches: [main]
   pull_request:
 
+# Moindre privilège : le jeton de la CI n'a qu'un accès en lecture
+permissions:
+  contents: read
+
 # Annule un run en cours si un nouveau commit arrive sur la même réf
 concurrency:
   group: ci-${{ github.ref }}
