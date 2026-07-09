@@ -172,6 +172,18 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       a {
         color: inherit;
       }
+      /* Visible pour les moteurs et lecteurs d'écran, masqué visuellement. */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
       img {
         max-width: 100%;
         display: block;
@@ -532,6 +544,10 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 
     <!-- Landmark principal : englobe l'univers tiré (accessibilité) -->
     <main>
+      {/* Titre canonique unique de la page : un seul titre de niveau 1 dans le
+          HTML quel que soit l'univers tiré (les titres d'univers sont de niveau
+          2). Masqué à l'œil, mais lu par les moteurs et les lecteurs d'écran. */}
+      <h1 class="sr-only">{title}</h1>
       <slot />
     </main>
 
