@@ -544,9 +544,11 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 
     <!-- Landmark principal : englobe l'univers tiré (accessibilité) -->
     <main>
-      {/* Titre canonique unique de la page : un seul titre de niveau 1 dans le
+      {
+        /* Titre canonique unique de la page : un seul titre de niveau 1 dans le
           HTML quel que soit l'univers tiré (les titres d'univers sont de niveau
-          2). Masqué à l'œil, mais lu par les moteurs et les lecteurs d'écran. */}
+          2). Masqué à l'œil, mais lu par les moteurs et les lecteurs d'écran. */
+      }
       <h1 class="sr-only">{title}</h1>
       <slot />
     </main>
