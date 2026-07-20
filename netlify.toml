@@ -6,8 +6,8 @@
   publish = "dist"
 
 [build.environment]
-  # Même version que la CI, pour un build identique
-  NODE_VERSION = "22.12.0"
+  # Même version que la CI et .nvmrc, pour un build identique
+  NODE_VERSION = "24.18.0"
 
 # Redirige l'ancienne URL Netlify vers le domaine principal (301).
 # Le host est spécifié dans `from`, donc seule randomfolio.netlify.app est
