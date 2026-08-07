@@ -166,7 +166,9 @@ rejoue **Lint · Typecheck · Test · A11y (axe) · Build** à chaque push et PR
   **Dependabot** (npm + github-actions) pour les correctifs ; politique de
   divulgation dans [`SECURITY.md`](.github/SECURITY.md).
 - **SEO** : `<title>` / meta / `canonical` fixes (indépendants de l'univers),
-  **JSON-LD `schema.org/Person`** comme source canonique, `sitemap.xml`,
+  **JSON-LD `schema.org/Person`** comme source canonique, **`schema.org/WebSite`**
+  pour que Google affiche « Randomfolio » plutôt que le domaine brut,
+  `sitemap.xml`,
   `robots.txt`, une **image Open Graph** (`public/og.png`) et des **favicons
   servies en fichiers** — Googlebot-Image doit pouvoir les crawler pour les
   afficher dans les résultats, ce qu'un `data:` URI ne permet pas.

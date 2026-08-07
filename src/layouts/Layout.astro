@@ -19,6 +19,12 @@ const description = portfolio.tagline;
 // URL canonique (Astro.site vient de astro.config.mjs)
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.png", Astro.site).href;
+const home = new URL("/", Astro.site).href;
+
+// Nom affiché par Google à la place du domaine brut dans les résultats. Distinct
+// du <title>, qui porte déjà le nom et le rôle : la ligne du haut installe la
+// marque, celle du dessous décrit la page.
+const siteName = "Randomfolio";
 
 // Feuille de polices Google chargée de façon asynchrone (non bloquante) : le
 // rendu ne l'attend pas, le texte s'affiche en repli puis bascule (display=swap).
@@ -43,6 +49,17 @@ const jsonLd = {
   },
   sameAs: portfolio.socials.map((s) => s.url),
   knowsAbout: portfolio.skills,
+};
+
+// `WebSite` est ce qui décide du nom de site affiché dans les résultats Google
+// (developers.google.com/search/docs/appearance/site-names) : `og:site_name` et
+// le <title> ne sont que des signaux secondaires. Bloc séparé de `Person`, qui
+// lui ne produit aucun résultat enrichi et sert la compréhension d'entité.
+const jsonLdSite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  url: home,
 };
 
 // Dictionnaire i18n {clé: {fr, en}} injecté côté client pour la bascule de
@@ -72,6 +89,7 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:image" content={ogImage} />
@@ -87,6 +105,12 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
     <script
       type="application/ld+json"
       set:html={JSON.stringify(jsonLd)}
+      is:inline
+    />
+    <!-- Données structurées (schema.org/WebSite) : nom de site dans Google -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLdSite)}
       is:inline
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
