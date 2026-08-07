@@ -135,8 +135,9 @@ npm run i18n:lock     # régénère la référence de traduction (après éditio
 
 Les tests unitaires (`tests/`) couvrent la validité de `portfolio.json`, la
 cohérence du registre d'univers, les fonctions pures du moteur (`src/lib/` :
-anti-répétition, encodage de la teinte, dictionnaire i18n) et la parité +
-synchronisation des traductions FR/EN (cf. [Langue](#langue-fr--en)).
+anti-répétition, encodage de la teinte, dictionnaire i18n), la parité +
+synchronisation des traductions FR/EN (cf. [Langue](#langue-fr--en)) et les
+déclarations de favicons (fichiers existants, jamais de `data:` URI).
 
 Un audit **accessibilité** (`e2e/a11y.spec.ts`) fait passer **axe-core** sur les
 11 univers → **0 violation** (contraste WCAG AA, landmarks). Lighthouse : **100**
@@ -150,6 +151,9 @@ rejoue **Lint · Typecheck · Test · A11y (axe) · Build** à chaque push et PR
 - **Contenu** : `src/data/portfolio.json` (FR) + `src/data/portfolio.en.json`
   (EN) ; libellés d'interface dans `src/data/ui.json`.
 - **Polices** : déclarées une fois dans `Layout.astro` (Google Fonts).
+- **Icônes** : `public/favicon.svg` est la source unique. Après l'avoir éditée,
+  `npm run favicon` régénère `favicon.ico`, `apple-touch-icon.png` et
+  `icon-192/512.png` ; `npm run og` régénère l'image Open Graph.
 - **URL de prod** : `site` dans `astro.config.mjs` (sert au canonical, à l'OG et
   au sitemap).
 
@@ -163,7 +167,9 @@ rejoue **Lint · Typecheck · Test · A11y (axe) · Build** à chaque push et PR
   divulgation dans [`SECURITY.md`](.github/SECURITY.md).
 - **SEO** : `<title>` / meta / `canonical` fixes (indépendants de l'univers),
   **JSON-LD `schema.org/Person`** comme source canonique, `sitemap.xml`,
-  `robots.txt`, et une **image Open Graph** (`public/og.png`).
+  `robots.txt`, une **image Open Graph** (`public/og.png`) et des **favicons
+  servies en fichiers** — Googlebot-Image doit pouvoir les crawler pour les
+  afficher dans les résultats, ce qu'un `data:` URI ne permet pas.
 - **Perf** : la feuille Google Fonts est injectée de façon non bloquante (le
   rendu ne l'attend pas ; le texte s'affiche en repli puis bascule).
 
