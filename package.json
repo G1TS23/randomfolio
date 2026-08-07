@@ -20,7 +20,8 @@
     "test:a11y": "playwright test",
     "i18n:lock": "node scripts/i18n-lock.mjs",
     "astro": "astro",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "favicon": "node scripts/favicon.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

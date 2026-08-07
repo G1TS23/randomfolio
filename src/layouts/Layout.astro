@@ -57,10 +57,15 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E"
-    />
+    {
+      /* Fichiers plutôt qu'un data: URI : Googlebot-Image doit pouvoir crawler
+         l'icône pour l'afficher dans les résultats de recherche. Régénérées
+         depuis public/favicon.svg avec `npm run favicon`. */
+    }
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
