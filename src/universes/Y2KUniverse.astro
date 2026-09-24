@@ -10,15 +10,13 @@ const tilts = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.2deg", "1deg"];
 <section class="universe y2 y2--noise" data-universe-id="y2k">
   <div class="y2__marquee" aria-hidden="true">
     <div class="y2__marquee-track">
-      {
-        Array.from({ length: 4 }).map(() => (
-          <span>
-            ★ {data.role} ★ {data.location} ★{" "}
-            {data.available ? "OUVERT AUX PROJETS" : "COMPLET"} ★ WELCOME TO MY
-            CORNER OF THE WEB&nbsp;
-          </span>
-        ))
-      }
+      {Array.from({ length: 4 }).map(() => (
+        <span>
+          ★ {data.role} ★ {data.location} ★{" "}
+          {data.available ? "OUVERT AUX PROJETS" : "COMPLET"} ★ WELCOME TO MY
+          CORNER OF THE WEB&nbsp;
+        </span>
+      ))}
     </div>
   </div>
 
@@ -29,10 +27,12 @@ const tilts = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.2deg", "1deg"];
         ·:¦:· <span data-i18n="y2.hi">bonjour, je suis</span> ·:¦:·
       </p>
       <h2 class="y2__name">{data.name}</h2>
-      <p class="y2__tag" data-i18n="tagline">{data.tagline}</p>
-      <a class="y2__enter" href={`mailto:${data.email}`}
-        >&gt;&gt; <span data-i18n="y2.contact">me contacter</span> &lt;&lt;</a
-      >
+      <p class="y2__tag" data-i18n="tagline">
+        {data.tagline}
+      </p>
+      <a class="y2__enter" href={`mailto:${data.email}`}>
+        &gt;&gt; <span data-i18n="y2.contact">me contacter</span> &lt;&lt;
+      </a>
     </header>
 
     <div class="y2__panel y2__about">
@@ -40,49 +40,47 @@ const tilts = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.2deg", "1deg"];
       <p data-i18n="about">{data.about}</p>
     </div>
 
-    <h2 class="y2__h2">◆ <span data-i18n="y2.projects">mes projets</span> ◆</h2>
+    <h2 class="y2__h2">
+      ◆ <span data-i18n="y2.projects">mes projets</span> ◆
+    </h2>
     <div class="y2__cards">
-      {
-        data.projects.map((p, i) => (
-          <a
-            class="y2__card"
-            href={p.url}
-            style={`--tilt:${tilts[i % tilts.length]}`}
-          >
-            <div class="y2__card-top">
-              <span class="y2__card-year">{p.year}</span>
-              <span class="y2__card-role" data-i18n={`projects.${i}.role`}>
-                {p.role}
+      {data.projects.map((p, i) => (
+        <a
+          class="y2__card"
+          href={p.url}
+          style={`--tilt:${tilts[i % tilts.length]}`}
+        >
+          <div class="y2__card-top">
+            <span class="y2__card-year">{p.year}</span>
+            <span class="y2__card-role" data-i18n={`projects.${i}.role`}>
+              {p.role}
+            </span>
+          </div>
+          <h3 class="y2__card-title" data-i18n={`projects.${i}.title`}>
+            {p.title}
+          </h3>
+          <p class="y2__card-desc" data-i18n={`projects.${i}.description`}>
+            {p.description}
+          </p>
+          <div class="y2__card-tags">
+            {p.tags.map((t, j) => (
+              <span class="y2__chip" data-i18n={`projects.${i}.tags.${j}`}>
+                {t}
               </span>
-            </div>
-            <h3 class="y2__card-title" data-i18n={`projects.${i}.title`}>
-              {p.title}
-            </h3>
-            <p class="y2__card-desc" data-i18n={`projects.${i}.description`}>
-              {p.description}
-            </p>
-            <div class="y2__card-tags">
-              {p.tags.map((t, j) => (
-                <span class="y2__chip" data-i18n={`projects.${i}.tags.${j}`}>
-                  {t}
-                </span>
-              ))}
-            </div>
-          </a>
-        ))
-      }
+            ))}
+          </div>
+        </a>
+      ))}
     </div>
 
     <div class="y2__panel y2__skills">
       <span class="y2__badge">// stack.dll</span>
       <div class="y2__skill-grid">
-        {
-          data.skills.map((s, i) => (
-            <span class="y2__skill" data-i18n={`skills.${i}`}>
-              {s}
-            </span>
-          ))
-        }
+        {data.skills.map((s, i) => (
+          <span class="y2__skill" data-i18n={`skills.${i}`}>
+            {s}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -90,15 +88,15 @@ const tilts = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.2deg", "1deg"];
       <p class="y2__foot-title">
         ·:¦:· <span data-i18n="y2.together">on bosse ensemble ?</span> ·:¦:·
       </p>
-      <a class="y2__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <a class="y2__mail" href={`mailto:${data.email}`}>
+        {data.email}
+      </a>
       <div class="y2__socials">
-        {
-          data.socials.map((s) => (
-            <a class="y2__soc" href={s.url}>
-              {s.label}
-            </a>
-          ))
-        }
+        {data.socials.map((s) => (
+          <a class="y2__soc" href={s.url}>
+            {s.label}
+          </a>
+        ))}
       </div>
       <p class="y2__blink">▓▒░ best viewed with imagination ░▒▓</p>
     </footer>

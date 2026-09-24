@@ -11,7 +11,9 @@ const fills = ["red", "blue", "yellow"];
 <section class="universe cm" data-universe-id="comic">
   <div class="cm__wrap">
     <header class="cm__hero">
-      <span class="cm__burst" aria-hidden="true">{pows[0]}</span>
+      <span class="cm__burst" aria-hidden="true">
+        {pows[0]}
+      </span>
       <p class="cm__kicker">
         <span data-i18n="role">{data.role}</span> — {data.location}
       </p>
@@ -26,46 +28,43 @@ const fills = ["red", "blue", "yellow"];
       <p data-i18n="about">{data.about}</p>
     </div>
 
-    <h2 class="cm__h2"><span data-i18n="cm.episodes">Épisodes</span></h2>
+    <h2 class="cm__h2">
+      <span data-i18n="cm.episodes">Épisodes</span>
+    </h2>
     <div class="cm__grid">
-      {
-        data.projects.map((p, i) => (
-          <a
-            class={`cm__card cm__card--${fills[i % fills.length]}`}
-            href={p.url}
-          >
-            <div class="cm__card-top">
-              <span>{p.year}</span>
-              <span data-i18n={`projects.${i}.role`}>{p.role}</span>
-            </div>
-            <h3 class="cm__card-title" data-i18n={`projects.${i}.title`}>
-              {p.title}
-            </h3>
-            <p class="cm__card-desc" data-i18n={`projects.${i}.description`}>
-              {p.description}
-            </p>
-            <div class="cm__tags">
-              {p.tags.map((t, j) => (
-                <span class="cm__tag" data-i18n={`projects.${i}.tags.${j}`}>
-                  {t}
-                </span>
-              ))}
-            </div>
-          </a>
-        ))
-      }
+      {data.projects.map((p, i) => (
+        <a class={`cm__card cm__card--${fills[i % fills.length]}`} href={p.url}>
+          <div class="cm__card-top">
+            <span>{p.year}</span>
+            <span data-i18n={`projects.${i}.role`}>{p.role}</span>
+          </div>
+          <h3 class="cm__card-title" data-i18n={`projects.${i}.title`}>
+            {p.title}
+          </h3>
+          <p class="cm__card-desc" data-i18n={`projects.${i}.description`}>
+            {p.description}
+          </p>
+          <div class="cm__tags">
+            {p.tags.map((t, j) => (
+              <span class="cm__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
     </div>
 
     <div class="cm__panel cm__skills">
-      <span class="cm__caption" data-i18n="cm.powers">Super-pouvoirs</span>
+      <span class="cm__caption" data-i18n="cm.powers">
+        Super-pouvoirs
+      </span>
       <div class="cm__pills">
-        {
-          data.skills.map((s, i) => (
-            <span class="cm__pill" data-i18n={`skills.${i}`}>
-              {s}
-            </span>
-          ))
-        }
+        {data.skills.map((s, i) => (
+          <span class="cm__pill" data-i18n={`skills.${i}`}>
+            {s}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -73,12 +72,20 @@ const fills = ["red", "blue", "yellow"];
       <span
         class="cm__burst cm__burst--sm"
         aria-hidden="true"
-        data-i18n="cm.hey">HÉ !</span
+        data-i18n="cm.hey"
       >
-      <p class="cm__foot-hi" data-i18n="cm.write">Écris-moi</p>
-      <a class="cm__mail" href={`mailto:${data.email}`}>{data.email}</a>
+        HÉ !
+      </span>
+      <p class="cm__foot-hi" data-i18n="cm.write">
+        Écris-moi
+      </p>
+      <a class="cm__mail" href={`mailto:${data.email}`}>
+        {data.email}
+      </a>
       <div class="cm__socials">
-        {data.socials.map((s) => <a href={s.url}>{s.label}</a>)}
+        {data.socials.map((s) => (
+          <a href={s.url}>{s.label}</a>
+        ))}
       </div>
       <span class="cm__end" data-i18n={data.available ? "cm.tbc" : "cm.end"}>
         {data.available ? "À suivre…" : "Fin"}

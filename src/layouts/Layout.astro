@@ -74,11 +74,9 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {
-      /* Fichiers plutôt qu'un data: URI : Googlebot-Image doit pouvoir crawler
+    {/* Fichiers plutôt qu'un data: URI : Googlebot-Image doit pouvoir crawler
          l'icône pour l'afficher dans les résultats de recherche. Régénérées
-         depuis public/favicon.svg avec `npm run favicon`. */
-    }
+         depuis public/favicon.svg avec `npm run favicon`. */}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
@@ -106,13 +104,13 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       type="application/ld+json"
       set:html={JSON.stringify(jsonLd)}
       is:inline
-    />
+    ></script>
     <!-- Données structurées (schema.org/WebSite) : nom de site dans Google -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify(jsonLdSite)}
       is:inline
-    />
+    ></script>
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Polices : chaque univers pioche dans ce jeu -->
@@ -125,7 +123,9 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       rfFonts.href = fontsHref;
       document.head.appendChild(rfFonts);
     </script>
-    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
+    <noscript>
+      <link rel="stylesheet" href={fontsHref} />
+    </noscript>
 
     <!--
       MOTEUR DE TIRAGE — anti-flash.
@@ -181,7 +181,6 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
         document.documentElement.classList.add("js");
       })();
     </script>
-
     <style set:html={`.universe{display:none}\n${revealRules}`}></style>
 
     <style is:global>
@@ -552,9 +551,9 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       <div class="genloader__inner">
         <div class="sf">
           <div class="sf__head">
-            <span class="sf__head-l" data-i18n="loader.departures"
-              >✦ Départs</span
-            >
+            <span class="sf__head-l" data-i18n="loader.departures">
+              ✦ Départs
+            </span>
             <span class="sf__head-r" data-i18n="loader.flight">
               Portfolio · train RF
             </span>
@@ -564,8 +563,12 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
             🎲 <span data-i18n="ui.loaderGo">Générer l'univers</span>
           </button>
           <div class="sf__meta">
-            <span class="sf__status" data-sf-status>En voiture !</span>
-            <span class="sf__gate" data-sf-gate>Voie ∞</span>
+            <span class="sf__status" data-sf-status>
+              En voiture !
+            </span>
+            <span class="sf__gate" data-sf-gate>
+              Voie ∞
+            </span>
           </div>
         </div>
       </div>
@@ -573,11 +576,9 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 
     <!-- Landmark principal : englobe l'univers tiré (accessibilité) -->
     <main>
-      {
-        /* Titre canonique unique de la page : un seul titre de niveau 1 dans le
+      {/* Titre canonique unique de la page : un seul titre de niveau 1 dans le
           HTML quel que soit l'univers tiré (les titres d'univers sont de niveau
-          2). Masqué à l'œil, mais lu par les moteurs et les lecteurs d'écran. */
-      }
+          2). Masqué à l'œil, mais lu par les moteurs et les lecteurs d'écran. */}
       <h1 class="sr-only">{title}</h1>
       <slot />
     </main>
@@ -589,10 +590,14 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
         data-action="regen"
         aria-label="Générer un nouvel univers"
       >
-        <span class="switcher__dice" aria-hidden="true">🎲</span>
+        <span class="switcher__dice" aria-hidden="true">
+          🎲
+        </span>
         <span data-i18n="ui.regen">Régénérer</span>
       </button>
-      <span class="switcher__label" data-current>—</span>
+      <span class="switcher__label" data-current>
+        —
+      </span>
       <button
         type="button"
         data-action="share"

@@ -31,20 +31,29 @@ const ref = data.name
         <span class="bp__dim bp__dim--top" aria-hidden="true">
           <span class="bp__dim-label">{data.name.length} car.</span>
         </span>
-        <p class="bp__label" data-i18n="bp.fig1">FIG. 1 — SUJET</p>
+        <p class="bp__label" data-i18n="bp.fig1">
+          FIG. 1 — SUJET
+        </p>
         <h2 class="bp__name">{data.name}</h2>
-        <p class="bp__role" data-i18n="role">{data.role}</p>
-        <p class="bp__tagline" data-i18n="tagline">{data.tagline}</p>
+        <p class="bp__role" data-i18n="role">
+          {data.role}
+        </p>
+        <p class="bp__tagline" data-i18n="tagline">
+          {data.tagline}
+        </p>
         <span
           class="bp__badge"
           data-i18n={data.available ? "bp.available" : "bp.busy"}
-          >{data.available ? "● OPÉRATIONNEL" : "○ INDISPONIBLE"}</span
         >
+          {data.available ? "● OPÉRATIONNEL" : "○ INDISPONIBLE"}
+        </span>
       </div>
 
       <section class="bp__section">
         <p class="bp__label">NOTE 01 — DESCRIPTION</p>
-        <p class="bp__note" data-i18n="about">{data.about}</p>
+        <p class="bp__note" data-i18n="about">
+          {data.about}
+        </p>
       </section>
 
       <section class="bp__section">
@@ -53,84 +62,85 @@ const ref = data.name
           <span data-i18n="bp.assemblies">ENSEMBLES</span>
         </p>
         <div class="bp__parts">
-          {
-            data.projects.map((p, i) => (
-              <a class="bp__part" href={p.url}>
-                <span class="bp__part-ref">
-                  {ref}-{String(i + 1).padStart(3, "0")}
-                </span>
-                <span class="bp__part-name" data-i18n={`projects.${i}.title`}>
-                  {p.title}
-                </span>
-                <span class="bp__part-year">
-                  <span data-i18n="bp.rev">RÉV.</span> {p.year}
-                </span>
-                <span
-                  class="bp__part-desc"
-                  data-i18n={`projects.${i}.description`}
-                >
-                  {p.description}
-                </span>
-                <span class="bp__part-spec">
-                  {p.tags.map((t, j) => (
-                    <span
-                      class="bp__spec"
-                      data-i18n={`projects.${i}.tags.${j}`}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </span>
-              </a>
-            ))
-          }
+          {data.projects.map((p, i) => (
+            <a class="bp__part" href={p.url}>
+              <span class="bp__part-ref">
+                {ref}-{String(i + 1).padStart(3, "0")}
+              </span>
+              <span class="bp__part-name" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </span>
+              <span class="bp__part-year">
+                <span data-i18n="bp.rev">RÉV.</span> {p.year}
+              </span>
+              <span
+                class="bp__part-desc"
+                data-i18n={`projects.${i}.description`}
+              >
+                {p.description}
+              </span>
+              <span class="bp__part-spec">
+                {p.tags.map((t, j) => (
+                  <span class="bp__spec" data-i18n={`projects.${i}.tags.${j}`}>
+                    {t}
+                  </span>
+                ))}
+              </span>
+            </a>
+          ))}
         </div>
       </section>
 
       <section class="bp__section">
-        <p class="bp__label" data-i18n="bp.materials">MATÉRIAUX & OUTILLAGE</p>
+        <p class="bp__label" data-i18n="bp.materials">
+          MATÉRIAUX & OUTILLAGE
+        </p>
         <ul class="bp__materials">
-          {
-            data.skills.map((s, i) => (
-              <li>
-                <span class="bp__mat-n">{String(i + 1).padStart(2, "0")}</span>
-                <span data-i18n={`skills.${i}`}>{s}</span>
-              </li>
-            ))
-          }
+          {data.skills.map((s, i) => (
+            <li>
+              <span class="bp__mat-n">{String(i + 1).padStart(2, "0")}</span>
+              <span data-i18n={`skills.${i}`}>{s}</span>
+            </li>
+          ))}
         </ul>
       </section>
 
       <!-- Cartouche façon plan technique -->
       <div class="bp__titleblock">
         <div class="bp__tb-cell bp__tb-cell--wide">
-          <span class="bp__tb-k" data-i18n="bp.drawnby">DESSINÉ PAR</span>
+          <span class="bp__tb-k" data-i18n="bp.drawnby">
+            DESSINÉ PAR
+          </span>
           <span class="bp__tb-v">{data.name}</span>
         </div>
         <div class="bp__tb-cell">
-          <span class="bp__tb-k" data-i18n="bp.rev">RÉV.</span>
+          <span class="bp__tb-k" data-i18n="bp.rev">
+            RÉV.
+          </span>
           <span class="bp__tb-v">{rev}</span>
         </div>
         <div class="bp__tb-cell bp__tb-cell--wide">
           <span class="bp__tb-k">CONTACT</span>
-          <a class="bp__tb-v bp__tb-link" href={`mailto:${data.email}`}
-            >{data.email}</a
-          >
+          <a class="bp__tb-v bp__tb-link" href={`mailto:${data.email}`}>
+            {data.email}
+          </a>
         </div>
         <div class="bp__tb-cell">
-          <span class="bp__tb-k" data-i18n="bp.sheet">FEUILLE</span>
+          <span class="bp__tb-k" data-i18n="bp.sheet">
+            FEUILLE
+          </span>
           <span class="bp__tb-v">1 / 1</span>
         </div>
         <div class="bp__tb-cell bp__tb-cell--full">
-          <span class="bp__tb-k" data-i18n="bp.refs">RÉFÉRENCES</span>
+          <span class="bp__tb-k" data-i18n="bp.refs">
+            RÉFÉRENCES
+          </span>
           <span class="bp__tb-links">
-            {
-              data.socials.map((s) => (
-                <a href={s.url}>
-                  {s.label} · {s.handle}
-                </a>
-              ))
-            }
+            {data.socials.map((s) => (
+              <a href={s.url}>
+                {s.label} · {s.handle}
+              </a>
+            ))}
           </span>
         </div>
       </div>
