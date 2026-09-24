@@ -196,38 +196,50 @@
     "en": "My toolbox"
   },
   "projects.0.description": {
-    "fr": "Puzzle minimaliste en terminal : retourner des blocs 2×2 jusqu'à obtenir une grille uniforme.",
-    "en": "A minimalist terminal puzzle: flip 2×2 blocks until the grid is uniform."
+    "fr": "Navigue directement à l'épisode voulu dans les lectures-interprétations de Kaamelott par Shisheyu — recherche par titre, résumé ou personnage.",
+    "en": "Jump straight to the episode you want in Shisheyu's Kaamelott read-throughs — search by title, summary or character."
   },
   "projects.0.role": {
     "fr": "Design & Développeur",
     "en": "Design & Developer"
   },
+  "projects.0.tags.3": {
+    "fr": "Accessibilité",
+    "en": "Accessibility"
+  },
   "projects.1.description": {
-    "fr": "Calendrier des fermetures du pont Chaban-Delmas à Bordeaux",
-    "en": "Closure calendar for the Chaban-Delmas bridge in Bordeaux"
+    "fr": "Puzzle minimaliste en terminal : retourner des blocs 2×2 jusqu'à obtenir une grille uniforme.",
+    "en": "A minimalist terminal puzzle: flip 2×2 blocks until the grid is uniform."
   },
   "projects.1.role": {
     "fr": "Design & Développeur",
     "en": "Design & Developer"
   },
-  "projects.1.tags.2": {
-    "fr": "Calendrier",
-    "en": "Calendar"
-  },
   "projects.2.description": {
-    "fr": "Jeu de démineur.",
-    "en": "A minesweeper game."
+    "fr": "Calendrier des fermetures du pont Chaban-Delmas à Bordeaux",
+    "en": "Closure calendar for the Chaban-Delmas bridge in Bordeaux"
   },
   "projects.2.role": {
     "fr": "Design & Développeur",
     "en": "Design & Developer"
   },
+  "projects.2.tags.2": {
+    "fr": "Calendrier",
+    "en": "Calendar"
+  },
   "projects.3.description": {
+    "fr": "Jeu de démineur.",
+    "en": "A minesweeper game."
+  },
+  "projects.3.role": {
+    "fr": "Design & Développeur",
+    "en": "Design & Developer"
+  },
+  "projects.4.description": {
     "fr": "Application de gestion de bibliothèque en Quarkus : CDI, Panache, Repository pattern et client REST vers OpenLibrary.",
     "en": "A library management app in Quarkus: CDI, Panache, Repository pattern and a REST client to OpenLibrary."
   },
-  "projects.3.role": {
+  "projects.4.role": {
     "fr": "Développeur",
     "en": "Developer"
   },
