@@ -20,6 +20,14 @@
   ],
   "projects": [
     {
+      "title": "Le Marque-Page de la Relecture",
+      "year": "2026",
+      "role": "Design & Developer",
+      "description": "Jump straight to the episode you want in Shisheyu's Kaamelott read-throughs — search by title, summary or character.",
+      "tags": ["Astro", "Svelte", "Claude", "Accessibility"],
+      "url": "https://kaamelott.falahi.org"
+    },
+    {
       "title": "radiant-radiation",
       "year": "2026",
       "role": "Design & Developer",
