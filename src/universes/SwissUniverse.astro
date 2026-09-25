@@ -23,15 +23,22 @@ const total = String(data.projects.length).padStart(2, "0");
     </header>
 
     <h2 class="sw__name">
-      {data.name}<span class="sw__period">.</span>
+      {data.name}
+      <span class="sw__period">.</span>
     </h2>
-    <p class="sw__tagline" data-i18n="tagline">{data.tagline}</p>
+    <p class="sw__tagline" data-i18n="tagline">
+      {data.tagline}
+    </p>
 
     <hr class="sw__rule" />
 
     <div class="sw__intro">
-      <span class="sw__eyebrow" data-i18n="sw.about">À propos</span>
-      <p class="sw__about" data-i18n="about">{data.about}</p>
+      <span class="sw__eyebrow" data-i18n="sw.about">
+        À propos
+      </span>
+      <p class="sw__about" data-i18n="about">
+        {data.about}
+      </p>
     </div>
 
     <section class="sw__work" aria-label="Projets">
@@ -42,51 +49,54 @@ const total = String(data.projects.length).padStart(2, "0");
         <span class="sw__count">01 — {total}</span>
       </div>
       <ol class="sw__list">
-        {
-          data.projects.map((p, i) => (
-            <li class="sw__item">
-              <a class="sw__link" href={p.url}>
-                <span class="sw__num">{String(i + 1).padStart(2, "0")}</span>
-                <span class="sw__title" data-i18n={`projects.${i}.title`}>
-                  {p.title}
-                </span>
-                <span class="sw__desc" data-i18n={`projects.${i}.description`}>
-                  {p.description}
-                </span>
-                <span class="sw__tags">
-                  {p.tags.map((t, j) => (
-                    <span class="sw__tag" data-i18n={`projects.${i}.tags.${j}`}>
-                      {t}
-                    </span>
-                  ))}
-                </span>
-                <span class="sw__year">{p.year}</span>
-              </a>
-            </li>
-          ))
-        }
+        {data.projects.map((p, i) => (
+          <li class="sw__item">
+            <a class="sw__link" href={p.url}>
+              <span class="sw__num">{String(i + 1).padStart(2, "0")}</span>
+              <span class="sw__title" data-i18n={`projects.${i}.title`}>
+                {p.title}
+              </span>
+              <span class="sw__desc" data-i18n={`projects.${i}.description`}>
+                {p.description}
+              </span>
+              <span class="sw__tags">
+                {p.tags.map((t, j) => (
+                  <span class="sw__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                    {t}
+                  </span>
+                ))}
+              </span>
+              <span class="sw__year">{p.year}</span>
+            </a>
+          </li>
+        ))}
       </ol>
     </section>
 
     <section class="sw__skills" aria-label="Compétences">
-      <span class="sw__eyebrow" data-i18n="sw.capabilities">Capacités</span>
+      <span class="sw__eyebrow" data-i18n="sw.capabilities">
+        Capacités
+      </span>
       <ul class="sw__skill-list">
-        {data.skills.map((s, i) => <li data-i18n={`skills.${i}`}>{s}</li>)}
+        {data.skills.map((s, i) => (
+          <li data-i18n={`skills.${i}`}>{s}</li>
+        ))}
       </ul>
     </section>
 
     <footer class="sw__foot">
       <a class="sw__cta" href={`mailto:${data.email}`}>
-        {data.email}<span class="sw__arrow" aria-hidden="true">→</span>
+        {data.email}
+        <span class="sw__arrow" aria-hidden="true">
+          →
+        </span>
       </a>
       <ul class="sw__socials">
-        {
-          data.socials.map((s) => (
-            <li>
-              <a href={s.url}>{s.label}</a>
-            </li>
-          ))
-        }
+        {data.socials.map((s) => (
+          <li>
+            <a href={s.url}>{s.label}</a>
+          </li>
+        ))}
       </ul>
     </footer>
   </div>

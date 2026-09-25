@@ -65,9 +65,8 @@ const replText = {
 
     <div class="tm__body">
       <p class="tm__boot">
-        [ ok ] <span data-i18n="tm.ready">système prêt</span> · {data.location} ·{
-          " "
-        }
+        [ ok ] <span data-i18n="tm.ready">système prêt</span> · {data.location}{" "}
+        ·{" "}
         <span data-i18n={data.available ? "tm.available" : "tm.busy"}>
           {data.available ? "statut: DISPONIBLE" : "statut: OCCUPÉ"}
         </span>
@@ -85,69 +84,59 @@ const replText = {
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> cat about.txt
       </p>
-      <p class="tm__out tm__wrap" data-i18n="about">{data.about}</p>
+      <p class="tm__out tm__wrap" data-i18n="about">
+        {data.about}
+      </p>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> ls -la ./projets
       </p>
       <div class="tm__projects">
-        {
-          data.projects.map((p, i) => (
-            <a class="tm__proj" href={p.url}>
-              <span class="tm__proj-perm">drwxr-xr-x</span>
-              <span class="tm__proj-name">{p.title}/</span>
-              <span class="tm__proj-year">{p.year}</span>
-              <span
-                class="tm__proj-desc"
-                data-i18n={`projects.${i}.description`}
-              >
-                {p.description}
-              </span>
-              <span class="tm__proj-tags"># {p.tags.join(" · ")}</span>
-            </a>
-          ))
-        }
+        {data.projects.map((p, i) => (
+          <a class="tm__proj" href={p.url}>
+            <span class="tm__proj-perm">drwxr-xr-x</span>
+            <span class="tm__proj-name">{p.title}/</span>
+            <span class="tm__proj-year">{p.year}</span>
+            <span class="tm__proj-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </span>
+            <span class="tm__proj-tags"># {p.tags.join(" · ")}</span>
+          </a>
+        ))}
       </div>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> which -a $(skills)
       </p>
       <p class="tm__out tm__skills">
-        {
-          data.skills
-            .map(
-              (s) => `/usr/bin/${s.toLowerCase().replace(/[^a-z0-9]+/g, "")}`,
-            )
-            .join("\n")
-        }
+        {data.skills
+          .map((s) => `/usr/bin/${s.toLowerCase().replace(/[^a-z0-9]+/g, "")}`)
+          .join("\n")}
       </p>
 
       <p class="tm__line">
         <span class="tm__prompt">{user}@site ~ %</span> contact --now
       </p>
       <p class="tm__out">
-        <a class="tm__mail" href={`mailto:${data.email}`}>&gt; {data.email}</a>
+        <a class="tm__mail" href={`mailto:${data.email}`}>
+          &gt; {data.email}
+        </a>
       </p>
       <p class="tm__out tm__links">
-        {
-          data.socials.map((s) => (
-            <a href={s.url}>
-              [{s.label}: {s.handle}]
-            </a>
-          ))
-        }
+        {data.socials.map((s) => (
+          <a href={s.url}>
+            [{s.label}: {s.handle}]
+          </a>
+        ))}
       </p>
 
       <!-- REPL interactif (easter egg) -->
       <div class="tm__repl" data-repl>
         <div class="tm__repl-out" data-repl-out></div>
         <div class="tm__line tm__repl-line">
-          <span class="tm__prompt">{user}@site ~ %</span><span
-            class="tm__echo"
-            data-repl-echo></span><span
-            class="tm__cursor"
-            data-repl-cursor
-            aria-hidden="true"></span>
+          <span class="tm__prompt">{user}@site ~ %</span>
+          <span class="tm__echo" data-repl-echo></span>
+          <span class="tm__cursor" data-repl-cursor aria-hidden="true"></span>
           <input
             class="tm__cmd"
             data-repl-input
@@ -159,11 +148,8 @@ const replText = {
           />
         </div>
         <p class="tm__repl-hint">
-          <span data-i18n="tm.hintpre">indice&nbsp;: commence à taper ou</span>{
-            " "
-          }
-          <b>help</b>{" "}
-          <span data-i18n="tm.hintpost">puis Entrée</span>
+          <span data-i18n="tm.hintpre">indice&nbsp;: commence à taper ou</span>{" "}
+          <b>help</b> <span data-i18n="tm.hintpost">puis Entrée</span>
         </p>
       </div>
     </div>

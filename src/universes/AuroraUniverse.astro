@@ -20,7 +20,9 @@ const { data } = Astro.props;
         <span data-i18n="role">{data.role}</span> · {data.location}
       </span>
       <h2 class="au__name">{data.name}</h2>
-      <p class="au__tagline" data-i18n="tagline">{data.tagline}</p>
+      <p class="au__tagline" data-i18n="tagline">
+        {data.tagline}
+      </p>
     </header>
 
     <div class="au__card au__about">
@@ -28,58 +30,58 @@ const { data } = Astro.props;
     </div>
 
     <section class="au__work" aria-label="Projets">
-      <h2 class="au__h2" data-i18n="au.projects">Projets</h2>
+      <h2 class="au__h2" data-i18n="au.projects">
+        Projets
+      </h2>
       <div class="au__grid">
-        {
-          data.projects.map((p, i) => (
-            <a class="au__card au__proj" href={p.url}>
-              <div class="au__proj-top">
-                <span data-i18n={`projects.${i}.role`}>{p.role}</span>
-                <span>{p.year}</span>
-              </div>
-              <h3 class="au__proj-title" data-i18n={`projects.${i}.title`}>
-                {p.title}
-              </h3>
-              <p class="au__proj-desc" data-i18n={`projects.${i}.description`}>
-                {p.description}
-              </p>
-              <div class="au__tags">
-                {p.tags.map((t, j) => (
-                  <span class="au__tag" data-i18n={`projects.${i}.tags.${j}`}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </a>
-          ))
-        }
+        {data.projects.map((p, i) => (
+          <a class="au__card au__proj" href={p.url}>
+            <div class="au__proj-top">
+              <span data-i18n={`projects.${i}.role`}>{p.role}</span>
+              <span>{p.year}</span>
+            </div>
+            <h3 class="au__proj-title" data-i18n={`projects.${i}.title`}>
+              {p.title}
+            </h3>
+            <p class="au__proj-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </p>
+            <div class="au__tags">
+              {p.tags.map((t, j) => (
+                <span class="au__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
       </div>
     </section>
 
     <section class="au__card au__skills">
       <h2 class="au__h2">Stack</h2>
       <div class="au__pills">
-        {
-          data.skills.map((s, i) => (
-            <span class="au__pill" data-i18n={`skills.${i}`}>
-              {s}
-            </span>
-          ))
-        }
+        {data.skills.map((s, i) => (
+          <span class="au__pill" data-i18n={`skills.${i}`}>
+            {s}
+          </span>
+        ))}
       </div>
     </section>
 
     <footer class="au__foot">
-      <p class="au__foot-hi" data-i18n="au.together">Travaillons ensemble</p>
-      <a class="au__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <p class="au__foot-hi" data-i18n="au.together">
+        Travaillons ensemble
+      </p>
+      <a class="au__mail" href={`mailto:${data.email}`}>
+        {data.email}
+      </a>
       <div class="au__socials">
-        {
-          data.socials.map((s) => (
-            <a class="au__card au__soc" href={s.url}>
-              {s.label}
-            </a>
-          ))
-        }
+        {data.socials.map((s) => (
+          <a class="au__card au__soc" href={s.url}>
+            {s.label}
+          </a>
+        ))}
       </div>
     </footer>
   </div>

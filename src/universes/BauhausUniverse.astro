@@ -24,7 +24,9 @@ const total = String(data.projects.length).padStart(2, "0");
           <span class="ba__shape ba__shape--bar"></span>
         </div>
       </div>
-      <p class="ba__tagline" data-i18n="tagline">{data.tagline}</p>
+      <p class="ba__tagline" data-i18n="tagline">
+        {data.tagline}
+      </p>
       <span
         class="ba__status"
         data-on={data.available}
@@ -45,43 +47,40 @@ const total = String(data.projects.length).padStart(2, "0");
         <span class="ba__count">01 / {total}</span>
       </div>
       <div class="ba__grid">
-        {
-          data.projects.map((p, i) => (
-            <a
-              class={`ba__card ba__card--${hues[i % hues.length]}`}
-              href={p.url}
-            >
-              <span
-                class={`ba__mark ba__mark--${shapes[i % shapes.length]}`}
-                aria-hidden="true"
-              />
-              <span class="ba__card-meta">
-                <span data-i18n={`projects.${i}.role`}>{p.role}</span>
-                <span>{p.year}</span>
-              </span>
-              <h3 class="ba__card-title" data-i18n={`projects.${i}.title`}>
-                {p.title}
-              </h3>
-              <p class="ba__card-desc" data-i18n={`projects.${i}.description`}>
-                {p.description}
-              </p>
-              <span class="ba__card-tags">
-                {p.tags.map((t, j) => (
-                  <span class="ba__tag" data-i18n={`projects.${i}.tags.${j}`}>
-                    {t}
-                  </span>
-                ))}
-              </span>
-            </a>
-          ))
-        }
+        {data.projects.map((p, i) => (
+          <a class={`ba__card ba__card--${hues[i % hues.length]}`} href={p.url}>
+            <span
+              class={`ba__mark ba__mark--${shapes[i % shapes.length]}`}
+              aria-hidden="true"
+            />
+            <span class="ba__card-meta">
+              <span data-i18n={`projects.${i}.role`}>{p.role}</span>
+              <span>{p.year}</span>
+            </span>
+            <h3 class="ba__card-title" data-i18n={`projects.${i}.title`}>
+              {p.title}
+            </h3>
+            <p class="ba__card-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </p>
+            <span class="ba__card-tags">
+              {p.tags.map((t, j) => (
+                <span class="ba__tag" data-i18n={`projects.${i}.tags.${j}`}>
+                  {t}
+                </span>
+              ))}
+            </span>
+          </a>
+        ))}
       </div>
     </section>
 
     <section class="ba__skills">
       <h2 data-i18n="ba.tools">Outils</h2>
       <ul>
-        {data.skills.map((s, i) => <li data-i18n={`skills.${i}`}>{s}</li>)}
+        {data.skills.map((s, i) => (
+          <li data-i18n={`skills.${i}`}>{s}</li>
+        ))}
       </ul>
     </section>
 
@@ -90,15 +89,15 @@ const total = String(data.projects.length).padStart(2, "0");
         <span class="ba__shape ba__shape--circle ba__shape--sm"></span>
         <span class="ba__shape ba__shape--sq"></span>
       </div>
-      <a class="ba__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <a class="ba__mail" href={`mailto:${data.email}`}>
+        {data.email}
+      </a>
       <ul class="ba__socials">
-        {
-          data.socials.map((s) => (
-            <li>
-              <a href={s.url}>{s.label}</a>
-            </li>
-          ))
-        }
+        {data.socials.map((s) => (
+          <li>
+            <a href={s.url}>{s.label}</a>
+          </li>
+        ))}
       </ul>
     </footer>
   </div>

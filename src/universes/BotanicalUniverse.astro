@@ -19,9 +19,13 @@ const total = String(data.projects.length).padStart(2, "0");
     </header>
 
     <div class="bo__hero">
-      <p class="bo__kicker" data-i18n="role">{data.role}</p>
+      <p class="bo__kicker" data-i18n="role">
+        {data.role}
+      </p>
       <h2 class="bo__name">{data.name}</h2>
-      <p class="bo__tagline" data-i18n="tagline">{data.tagline}</p>
+      <p class="bo__tagline" data-i18n="tagline">
+        {data.tagline}
+      </p>
       <svg
         class="bo__branch"
         viewBox="0 0 200 60"
@@ -32,7 +36,8 @@ const total = String(data.projects.length).padStart(2, "0");
           d="M10 30 H190"
           stroke="currentColor"
           stroke-width="1.5"
-          stroke-linecap="round"></path>
+          stroke-linecap="round"
+        ></path>
         <g stroke="currentColor" stroke-width="1.5" fill="none">
           <path d="M60 30 q-14 -18 -30 -14 q6 16 30 14Z"></path>
           <path d="M100 30 q14 -18 30 -14 q-6 16 -30 14Z"></path>
@@ -43,7 +48,9 @@ const total = String(data.projects.length).padStart(2, "0");
     </div>
 
     <div class="bo__about">
-      <span class="bo__note" data-i18n="bo.note">Note du naturaliste</span>
+      <span class="bo__note" data-i18n="bo.note">
+        Note du naturaliste
+      </span>
       <p data-i18n="about">{data.about}</p>
     </div>
 
@@ -52,30 +59,28 @@ const total = String(data.projects.length).padStart(2, "0");
         <h2 data-i18n="bo.specimens">Spécimens</h2>
         <span class="bo__label">01 – {total}</span>
       </div>
-      {
-        data.projects.map((p, i) => (
-          <a class="bo__item" href={p.url}>
-            <span class="bo__item-n">
-              N<sup>o</sup> {String(i + 1).padStart(2, "0")}
-            </span>
-            <div class="bo__item-body">
-              <div class="bo__item-meta">
-                <span class="bo__latin" data-i18n={`projects.${i}.role`}>
-                  {p.role}
-                </span>
-                <span>{p.year}</span>
-              </div>
-              <h3 class="bo__item-title" data-i18n={`projects.${i}.title`}>
-                {p.title}
-              </h3>
-              <p class="bo__item-desc" data-i18n={`projects.${i}.description`}>
-                {p.description}
-              </p>
-              <p class="bo__item-tags">{p.tags.join(" · ")}</p>
+      {data.projects.map((p, i) => (
+        <a class="bo__item" href={p.url}>
+          <span class="bo__item-n">
+            N<sup>o</sup> {String(i + 1).padStart(2, "0")}
+          </span>
+          <div class="bo__item-body">
+            <div class="bo__item-meta">
+              <span class="bo__latin" data-i18n={`projects.${i}.role`}>
+                {p.role}
+              </span>
+              <span>{p.year}</span>
             </div>
-          </a>
-        ))
-      }
+            <h3 class="bo__item-title" data-i18n={`projects.${i}.title`}>
+              {p.title}
+            </h3>
+            <p class="bo__item-desc" data-i18n={`projects.${i}.description`}>
+              {p.description}
+            </p>
+            <p class="bo__item-tags">{p.tags.join(" · ")}</p>
+          </div>
+        </a>
+      ))}
     </section>
 
     <section class="bo__flora">
@@ -84,16 +89,18 @@ const total = String(data.projects.length).padStart(2, "0");
     </section>
 
     <footer class="bo__foot">
-      <span class="bo__note" data-i18n="bo.correspondence">Correspondance</span>
-      <a class="bo__mail" href={`mailto:${data.email}`}>{data.email}</a>
+      <span class="bo__note" data-i18n="bo.correspondence">
+        Correspondance
+      </span>
+      <a class="bo__mail" href={`mailto:${data.email}`}>
+        {data.email}
+      </a>
       <ul class="bo__socials">
-        {
-          data.socials.map((s) => (
-            <li>
-              <a href={s.url}>{s.label}</a>
-            </li>
-          ))
-        }
+        {data.socials.map((s) => (
+          <li>
+            <a href={s.url}>{s.label}</a>
+          </li>
+        ))}
       </ul>
       <span class="bo__stamp">
         ✿{" "}
