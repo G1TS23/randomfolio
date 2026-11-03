@@ -585,11 +585,7 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
 
     <!-- Barre de contrôle : regénérer + partager la variante -->
     <nav class="switcher" aria-label="Générateur d'univers">
-      <button
-        type="button"
-        data-action="regen"
-        aria-label="Générer un nouvel univers"
-      >
+      <button type="button" data-action="regen">
         <span class="switcher__dice" aria-hidden="true">
           🎲
         </span>
@@ -598,18 +594,14 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
       <span class="switcher__label" data-current>
         —
       </span>
-      <button
-        type="button"
-        data-action="share"
-        aria-label="Copier le lien de cette variante"
-      >
+      <button type="button" data-action="share">
         🔗 <span data-i18n="ui.share">Partager</span>
       </button>
       <button
         type="button"
         data-action="lang"
         class="switcher__icon"
-        aria-label="Changer la langue (français / anglais)"
+        aria-label="EN : passer en anglais"
       >
         <span data-lang-label>EN</span>
       </button>
@@ -663,7 +655,14 @@ const i18n = buildI18nDict(portfolio, portfolioEn, uiStrings as Dict);
             el.setAttribute("data-text", entry[lang]);
         }
         root.lang = lang;
-        if (langLabel) langLabel.textContent = lang === "fr" ? "EN" : "FR";
+        if (langLabel) {
+          langLabel.textContent = lang === "fr" ? "EN" : "FR";
+          // le nom accessible doit contenir le texte visible (WCAG 2.5.3)
+          langLabel.parentElement.setAttribute(
+            "aria-label",
+            lang === "fr" ? "EN : passer en anglais" : "FR : switch to French",
+          );
+        }
         try {
           localStorage.setItem("rf.lang", lang);
         } catch {
