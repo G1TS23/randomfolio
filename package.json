@@ -24,8 +24,8 @@
     "favicon": "node scripts/favicon.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.5",
-    "astro": "^7.4.12"
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13"
   },
   "allowScripts": {
     "esbuild@0.28.1": true
@@ -44,6 +44,6 @@
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.73.0",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   }
 }
